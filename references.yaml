@@ -1,0 +1,25 @@
+exception-model:
+  type: article
+  title: "Failure is Not an Option: An Exceptional Type Theory"
+  page-range: 245-271
+  author:
+    - Pédrot, Pierre-Marie
+    - Tabareau, Nicolas
+  parent:
+    # - type: conference
+    #   title: 27th European Symposium on Programming
+    #   location: Thessaloniki, Greece
+    - type: conference
+      title: Lecture Notes in Computer Science
+      volume: 10801
+      date: 2018
+  serial-number:
+    doi: 10.1007/978-3-319-89884-1_9
+
+exception-agda:
+  type: repository
+  author: András Kovács
+  title: Antifunext
+  date: 2024
+  url: https://github.com/AndrasKovacs/antifunext
+  note: GitHub repository
