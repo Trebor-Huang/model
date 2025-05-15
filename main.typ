@@ -2,6 +2,7 @@
 #show math.equation: set text(font: ("New Computer Modern Math", "Source Han Serif SC"))
 #let par-indent = 2em
 #set par(leading: 0.85em, spacing: 1em, first-line-indent: (amount: par-indent, all: true), justify: true)
+#show math.equation.where(block: true): set par(leading: 0.5em)
 #set list(indent: 0.7em)
 #set enum(indent: 0.7em)
 
@@ -303,7 +304,7 @@ $)
 
 === 正规形式与典范形式
 
-为了实现依值类型论的类型检查，我们需要能够判定表达式之间是否有判值相等。 这可以依靠#translate[正规形式][normal form] 实现。如果每个表达式都等于唯一一个正规形式，那么只要计算出正规形式并比较即可。传统中，往往可以在表达式上定义一系列重写关系，例如 $1 + 1 arrow.squiggly 2$ 或者 $pi_1 (a, b) arrow.squiggly a$，使得正规形式是不能通过重写化简的表达式，不过这不是必须的。对于常见的依值类型论而言，可以直接定义出所有的正规形式，而不需要依赖重写关系。同时，重写关系的技术难以处理 $eta$ 等价关系，以及许多更加复杂的判值相等。
+为了实现依值类型论的类型检查，我们需要能够判定表达式之间是否有判值相等。 这可以依靠#translate[正规形式][normal form] 实现。如果每个表达式都等于唯一一个正规形式，那么只要计算出正规形式并比较即可。传统中，往往可以在表达式上定义一系列重写关系，例如 $1 + 1 ~> 2$ 或者 $pi_1 (a, b) ~> a$，使得正规形式是不能通过重写化简的表达式，不过这不是必须的。对于常见的依值类型论而言，可以直接定义出所有的正规形式，而不需要依赖重写关系。同时，重写关系的技术难以处理 $eta$ 等价关系，以及许多更加复杂的判值相等。
 
 正规形式是与#translate[中性形式][neutral form] 互相归纳定义的。直观而言，正规形式是一系列#footnote[可以是零个、一个或多个，下同。]构造子的嵌套，嵌套的最底层是中性形式。中性形式则是一系列消去子卡在某个变量上。例如，$lambda n bind "suc"(n)$ 是正规形式，从外向内分别是函数类型的构造子与自然数类型的构造子。再者，$lambda b bind ite(b, 1, 2)$ 也是正规形式，最外侧是函数类型构造子，而内部是 Boole 类型的消去子卡在 $b$ 上。
 
@@ -558,7 +559,7 @@ Consistency, consistency/independence of funext, UIP etc.
 ]
 这里有向图允许有自环和重边，在范畴论中也称作#define[箭图][quiver]。
 #definition[
-  给定两个有向图，其间的*同态*给出顶点到顶点，与边到边之间的映射，保持边与顶点之间的连接关系。换言之，图同态 $sigma : Gamma -> Delta$ 对于所有边 $e : x -> y$，都满足 $sigma(e) : sigma(x) -> sigma(y)$.
+  给定两个有向图，其间的*同态*给出顶点到顶点、边到边之间的映射，保持边与顶点之间的连接关系。换言之，图同态 $sigma : Gamma -> Delta$ 对于所有边 $e : x -> y$，都满足 $sigma(e) : sigma(x) -> sigma(y)$.
 ]
 若要用有向图构建模型，就需要定义依值有向图的概念。
 #definition[
