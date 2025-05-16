@@ -22,6 +22,10 @@
   it
 }
 
+#set footnote(numbering: it => text(numbering("①", it), font: "Source Han Serif SC", weight: 600))
+#show footnote: set super(baseline: -0.5em, size: 0.65em)
+#show footnote.entry: set super(baseline: 0pt, size: 1em)
+
 // Translation (used for indexing)
 #let translation-table = state("translations", ())
 #let add-entry(zh, en) = translation-table.update(it => {
@@ -96,6 +100,7 @@ Trebor\ #v(1em)
 #show heading: set block(above: 1.25em, below: 0.9em)
 #show heading.where(level: 1): it => [
   #pagebreak(weak: true)
+  #counter(footnote).update(0)
   #set align(center)
   #set text(size: 20pt)
   #it
