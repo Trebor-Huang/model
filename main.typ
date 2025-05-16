@@ -485,7 +485,7 @@ $)
 
 我们从上文讨论的直观里抽取出模型的一套定义。为了区分某个语法概念与它对应的语义解释，我们将语境的解释称作*语义语境*，类型的解释称为*语义类型*，以此类推。例如在集合模型中，语义语境的意思就是集合。不过，我们仍然会采用同样的字母指代这些对象，例如语法语境与语义语境都用 $Gamma, Delta, Theta$ 等字母表示，否则排版容易叠床架屋。
 
-在 #[@sec:explicit-substitution]中，我们提到不应该将语境的长度视为本质属性，因此变量代换需要视作新的语法构造，而非在语法上递归定义的函数。在模型的定义中这样的好处是明显的：我们将表达式解释为数学对象之后，递归定义的代换就行不通了。因为两个语法上不同的表达式在模型中可能对应相同的数学对象，因此在这个模型中就不能靠递归定义这两个表达式的代换。#footnote[那么，干脆去掉代换的概念，能否行得通呢? 类型论里有许多规则需要用代换来表达，例如 $beta$ 判值相等 $(lambda x. t) s = t[x\/s]$。倘若能不用代换表达此类规则，那么在模型中也能免去讨论代换结构。个中道理留给读者推敲。]
+在 #[@sec:explicit-substitution]中，我们提到不应该将语境的长度视为本质属性，因此变量代换需要视作新的语法构造，而非在语法上递归定义的函数。在模型的定义中这样的好处是明显的：我们将表达式解释为数学对象之后，递归定义的代换就行不通了。因为两个语法上不同的表达式在模型中可能对应相同的数学对象，因此在这个模型中就不能靠递归定义这两个表达式的代换.#footnote[那么，干脆去掉代换的概念，能否行得通呢? 类型论里有许多规则需要用代换来表达，例如 $beta$ 判值相等 $(lambda x. t) s = t[x\/s]$。倘若能不用代换表达此类规则，那么在模型中也能免去讨论代换结构。个中道理留给读者推敲。]
 
 === 基本框架
 
@@ -497,9 +497,10 @@ $)
   - 给定两个语义语境 $Gamma, Delta$，有集合 $hom(Gamma, Delta)$ 作为代换的解释。其中的元素写作 $sigma : Gamma -> Delta$，称作语义代换。
   - 有恒等代换 $id : Gamma -> Gamma$ 与代换复合操作，给定 $sigma : Gamma -> Delta$ 与 $tau : Delta -> Xi$，给出 $tau compose sigma : Gamma -> Xi$。它们满足单位律与结合律。
   - 对于每个语义语境 $Gamma$，有集合 $"Tp"(Gamma)$ 作为类型的解释，其中的元素称作语义类型。
-  - 对于每个语义语境 $Gamma$ 与语义类型 $A in "Tp"(Gamma)$，有集合 $"Tm"(Gamma, A)$，作为类型元素的解释，其中的元素称作语义元素。也可以不限定类型，给出所有元素的集合 $"Tm"(Gamma)$。
+  - 对于每个语义语境 $Gamma$ 与语义类型 $A in "Tp"(Gamma)$，有集合 $"Tm"(Gamma, A)$，作为类型元素的解释，其中的元素称作语义元素。
   - 对于语义类型 $A in "Tp"(Gamma)$ 与代换 $sigma : Delta -> Gamma$，有语义代换运算 $A sigma in "Tp"(Delta)$ —— 注意代换的方向 —— 满足 $A id = A$ 与 $A (sigma compose tau) = (A sigma) tau$。 因此我们将连续代换不加括号地写作 $A sigma tau$。
   - 对语义元素 $a in "Tm"(Gamma, A)$ 与代换 $sigma : Delta -> Gamma$，有语义代换运算 $a sigma in "Tm"(Delta, A sigma)$，满足 $a id = a$ 与 $a (sigma compose tau) = (a sigma) tau$。
+  - 有空语境 $()$，或者写作 $1$，使得任何语义语境 $Gamma$ 到 $1$ 都只有一个代换。
   - 给定语义语境 $Gamma$ 与类型 $A in "Tp"(Gamma)$，有语境延拓运算 $(Gamma, A) in "Ctx"$，投影代换 $frak(p) : (Gamma, A) -> Gamma$ 与变量 $frak(q) in "Tm"((Gamma, A), A)$。
   - 给定语义代换 $sigma : Gamma -> Delta$、语义类型 $A in "Tp"(Delta)$ 与语义元素 $a in "Tm"(Gamma, A sigma)$，有代换延拓运算 $(sigma, a) : Gamma -> (Delta, A)$，并且它是唯一满足 $frak(p) compose (sigma, a) = sigma$ 与 $frak(q) (sigma, a) = a$ 的代换。
 ]
@@ -513,7 +514,11 @@ Algebraic nature of models, generalized algebraic theories
 
 ==== $Sigma$ 类型
 
+==== 单元素类型
+
 ==== $Pi$ 类型
+
+==== 空类型
 
 ==== 不交并
 
@@ -523,11 +528,21 @@ Algebraic nature of models, generalized algebraic theories
 
 == 相容性与独立性
 
-在数理逻辑中，模型的一大用途是
+在数理逻辑中，模型的一大用途是说明某个命题无法在公理系统中证明或者证伪。如果类型论 $TT$ 中，某个类型 $A$ (视作命题) 没有元素，就说此命题#define[不可证][unprovable]。特别地，如果空类型没有元素，就说这个类型论是#define[自洽][consistent] 的。倘若类型论 $TT$ 添加了公理 $A$ 后仍然自洽，就说它们是#define[相容][consistent] 的。
 
-Consistency, consistency/independence of funext, UIP etc.
+不难看出，某个命题的否定不可证，等价于这个命题本身与类型论相容。不过在没有排中律的情况下，某个命题不可证要弱于这个命题的否定与类型论相容。如果这两者都和类型论相容，我们就说这个命题是#define[独立][independent] 于该类型论的。不熟悉逻辑学的读者对这些术语之间的联系感到困惑十分正常，多做辨析，熟练即可。
 
-#translate[自洽][consistent], #translate[相容][consistent], #translate[独立][independent]，#translate[反模型][contermodel]
+证明这些性质的办法是构造模型。具体来说，假如类型 $A$ 有元素 $tack t : A$，那么任何模型中都会有其解释 $interpret(t) in "Tm"(1, interpret(A))$。那么，如果能构造某个模型，使得 $"Tm"(1, interpret(A))$ 是空集，就可以说明不存在这样的语法表达式 $t$。我们称之为 $A$ 的#define[反模型][counter\-model]。读者可以类推写出相容性、独立性等等的证明办法，以此熟悉定义。
+
+在 #[@sec:set-model]中，我们已经定义了集合模型。不难在集合模型中给出空类型的语义 —— 就是空集。因此，这就证明了类型论的自洽性。具体是哪个类型论的自洽性，取决于我们为集合模型构造了哪些类型结构。请读者验证，以上提到的所有类型结构都可以定义在集合模型上，因此 Martin-Löf 类型论是自洽的。(... size issue and metatheory strength)
+
+集合模型还可以给出许多公理的相容性。例如#define[函数外延性][function extensionality] 是类型
+#eq($
+  product_(f, g : A -> B) [product_(x : A) f(x) = g(x)] -> f = g.
+$)
+在集合模型中这是显然成立的。因此函数外延性与 Martin-Löf 类型论相容。类似地，读者也可以验证 Martin-Löf 类型论与 *K 原理*#footnote[也称为#define[相等证明的唯一性][uniqueness of identity proofs]，缩写为 UIP。K 原理的名字来自 Thomas Streicher，顺承 J 原理的名字选择了下一个字母。]
+#eq($ product_(x,y : A) product_(p,q : x = y) p = q $)
+相容。之后我们会介绍这两条公理各自的反模型，也就能分别说明它们与 Martin-Löf 类型论独立。
 
 = 例海拾珠 <ch:examples>
 
