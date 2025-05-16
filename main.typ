@@ -131,6 +131,8 @@ Trebor\ #v(1em)
 
 #heading(numbering: none)[前言]
 
+- Motivation for models
+
 = 前置知识
 
 == 类型论拾遗
@@ -444,14 +446,14 @@ $)
 
 
 
-= 模型的定义
+= 概论
 
-模型，语义与解释的区别
+我们希望为类型论的语法赋予 “含义”。这些含义可以是任何数学对象，我们称作#define[语义][semantics]，而从语法到语义的映射称作#define[解释][interpretation]。不过，有用的语义应当满足一些要求，使得语义对象的性质可以与语法相对应。一套满足要求的语义就是#define[模型][model]。
 
-- Start from examples, then extract definition
-- Later package definition more elegantly
+我们先从具体的例子出发，思考模型的定义应该满足什么条件。最直观的模型是集合模型，在 #[@sec:set-model]会讲解。因此，我们需要保证模型的定义能让集合构成模型。
+另外，既然语义可以是任何数学对象，而语法本身也是一种数学对象，那么应当有一个平凡的模型，将每个表达式都解释为自身。所以我们也需要确保语法也可构成模型。
 
-== 集合模型
+== 集合模型 <sec:set-model>
 
 直观上说，对于大多数类型论而言，每个类型可以理解为集合，函数类型对应集合之间的函数构成的集合，乘积类型对应集合的 Descartes 乘积，等等。(同伦类型论不在此列.) 因此，我们理应能够构造出类型论的集合模型。
 依值类型论中，依值类型 $x : A tack B(x) istype$ 可以解释为集合族 ${B(x)}_(x in A)$，即为每个元素 $x in A$ 赋予一个集合 $B(x)$。 $Sigma$ 类型对应不交并
@@ -479,24 +481,18 @@ $)
   ) $)
 - 这些类型对应的元素，例如 $lambda$ 函数抽象、函数应用、有序对的配对与投影映射等等，读者可先行思考，稍后给出模型的定义后会再讨论。
 
-== 语法模型
-
-模型将语法解释为各种数学对象。但是语法本身也是一种数学对象，因此应当有一个平凡的模型，将每个表达式都解释为自身。换言之，我们需要确保模型的定义能让语法本身构成模型。
-
-(nothing more to say here, demote to section 0)
-
-== 依值类型论的自然模型
-
-=== 定义
+== 模型的定义
 
 我们从上文讨论的直观里抽取出模型的一套定义。为了区分某个语法概念与它对应的语义解释，我们将语境的解释称作*语义语境*，类型的解释称为*语义类型*，以此类推。例如在集合模型中，语义语境的意思就是集合。不过，我们仍然会采用同样的字母指代这些对象，例如语法语境与语义语境都用 $Gamma, Delta, Theta$ 等字母表示，否则排版容易叠床架屋。
 
-在 #[@sec:explicit-substitution]中，我们提到不应该将语境的长度视为本质属性，因此变量代换需要视作新的语法构造，而非在语法上递归定义的函数。在模型的定义中这样的好处是明显的：我们将表达式解释为数学对象之后，递归定义的代换就行不通了。因为两个语法上不同的表达式在模型中可能对应相同的数学对象，因此在这个模型中就不能靠递归定义这两个表达式的代换。但是，因为类型论的规则中用到了不少代换，所以我们需要在模型里额外添加代换的资料。
+在 #[@sec:explicit-substitution]中，我们提到不应该将语境的长度视为本质属性，因此变量代换需要视作新的语法构造，而非在语法上递归定义的函数。在模型的定义中这样的好处是明显的：我们将表达式解释为数学对象之后，递归定义的代换就行不通了。因为两个语法上不同的表达式在模型中可能对应相同的数学对象，因此在这个模型中就不能靠递归定义这两个表达式的代换。#footnote[那么，干脆去掉代换的概念，能否行得通呢? 类型论里有许多规则需要用代换来表达，例如 $beta$ 判值相等 $(lambda x. t) s = t[x\/s]$。倘若能不用代换表达此类规则，那么在模型中也能免去讨论代换结构。个中道理留给读者推敲。]
+
+=== 基本框架
 
 模型的定义大致与类型论的规则一一对应，其中关于代换的部分可以参考@fig:substitution。
 
 #definition[
-  依值类型论的#define[自然模型][natural model] 包含以下资料。
+  依值类型论的*模型*包含以下资料。
   - 有一类数学对象 $"Ctx"$，作为语境的解释，称作语义语境。
   - 给定两个语义语境 $Gamma, Delta$，有集合 $hom(Gamma, Delta)$ 作为代换的解释。其中的元素写作 $sigma : Gamma -> Delta$，称作语义代换。
   - 有恒等代换 $id : Gamma -> Gamma$ 与代换复合操作，给定 $sigma : Gamma -> Delta$ 与 $tau : Delta -> Xi$，给出 $tau compose sigma : Gamma -> Xi$。它们满足单位律与结合律。
@@ -525,7 +521,9 @@ Algebraic nature of models, generalized algebraic theories
 
 ==== 相等类型
 
-=== 相容性与独立性
+== 相容性与独立性
+
+在数理逻辑中，模型的一大用途是
 
 Consistency, consistency/independence of funext, UIP etc.
 
@@ -648,8 +646,7 @@ mention sconing and gluing
 #set par(justify: false)
 // #set text(size: 0.9em)
 #context {
-  let final = translation-table.final()
-  let final = final.sorted(key : ((zh, en)) => en.text)
+  let final = translation-table.final()//.sorted(key : ((zh, en)) => en.text)
   for (zh, en) in final [
     / #zh: #en
 
