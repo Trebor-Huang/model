@@ -302,7 +302,7 @@ $)
   rule(Gamma tack A -> B istype_max{kappa, lambda}, Gamma tack A istype_kappa, Gamma tack B istype_lambda) quad
   rule(Gamma tack cal(U)_kappa istype_(kappa^+)).
 $)
-这样，控制大小的功能就与宇宙为类型提供名字的功能独立了。这种办法称作 *Coquand 层级*。另外一个好处是，在这种情况下可以引入 $"El"$ 的逆运算，给定 $A istype_kappa$，给出它的一个名字 $ceil(A) : cal(U)_kappa$。Tarski 宇宙因为同时承担了控制大小与提供名字的功能，因此不能引入这种算符：$A istype$ 无法确定应该让 $ceil(A)$ 处在哪个宇宙中。
+这样，控制大小的功能就与宇宙为类型提供名字的功能独立了。这种办法称作 *Coquand 层级*。另外一个好处是，在这种情况下可以引入 $"El"$ 的逆运算，给定 $A istype_kappa$，给出它的一个名字 $ceil(A) : cal(U)_kappa$。Tarski 宇宙因为同时承担了控制大小与提供名字的功能，因此不能引入这种算符：$A istype$ 无法确定应该让 $ceil(A)$ 处在哪个宇宙中。这样还可以避免 Tarski 宇宙中分别引入类型构造子与 $cal(U)$ 元素的构造子的重复劳作。例如只需将 $A, B : cal(U)$ 的乘积定义为 $A dot(times) B = ceil("El"(A) times "El"(B))$ 即可。
 
 === 正规形式与典范形式
 
@@ -415,9 +415,22 @@ $)
     Gamma tack A dot(times) B : cal(U) isnf,
     Gamma tack A : cal(U) isnf,
     Gamma tack B : cal(U) isnf
+  ) quad dots.c
+$)
+在 Coquand 宇宙中，则不需要为类型名字的运算各自添加规则，只需以下三条。
+#eq($
+  rule(
+    Gamma tack cal(U) isnf istype
+  ) quad
+  rule(
+    Gamma tack "El"(A) isne istype,
+    Gamma tack A : cal(U) isne
+  ) quad
+  rule(
+    Gamma tack ceil(X) : cal(U) isnf,
+    Gamma tack X isnf istype
   )
 $)
-(...What happens for Coquand universes?)
 
 代换 $Gamma tack sigma : Delta$ 也可以规定正规形式，直观上说 $sigma = [x_1 \/ t_1, x_2 \/ t_2, ...]$ 是正规形式当且仅当每个 $t_i$ 都是正规形式。严格来说可以写成如下规则：
 #eq($
