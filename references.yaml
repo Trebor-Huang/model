@@ -18,8 +18,16 @@ exception-model:
 
 exception-agda:
   type: repository
-  author: András Kovács
+  author: Kovács, András
   title: Antifunext
   date: 2024
   url: https://github.com/AndrasKovacs/antifunext
   note: GitHub repository
+
+mltt-1971:
+  type: misc
+  author: Martin-Löf, Per
+  title: A Theory of Types
+  date: 1971
+  url: "https://github.com/michaelt/martin-lof/blob/master/pdfs/martin-loef1971%20-%20A%20Theory%20of%20Types.pdf"
+  note: Unpublished manuscript

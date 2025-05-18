@@ -31,12 +31,16 @@
 
 // Translation (used for indexing)
 #let translation-table = state("translations", ())
-#let add-entry(zh, en) = translation-table.update(it => {
-  it.push((zh, en))
+#let add-entry(zh, en, key) = translation-table.update(it => {
+  let actual = key
+  if actual == none {
+    actual = en.at("text", default: "")
+  }
+  it.push((zh, en, actual))
   it
 })
-#let translate(zh, en) = [#zh #text(fill: luma(40%))[(#en)]#add-entry(zh,en)]
-#let define(zh, en) = [*#zh* #text(fill: luma(40%))[(#en)]#add-entry(zh,en)]
+#let translate(zh, en, key:none) = [#zh #text(fill: luma(40%))[(#en)]#add-entry(zh,en,key)]
+#let define(zh, en, key:none) = [*#zh* #text(fill: luma(40%))[(#en)]#add-entry(zh,en,key)]
 
 // Defintions
 #import "@preview/ctheorems:1.1.3": *
@@ -140,6 +144,10 @@ Trebor\ #v(1em)
 #heading(numbering: none)[前言]
 
 - Motivation for models
+
+- How to read this book
+
+- Don't be afraid to skip ahead
 
 = 前置知识
 
@@ -457,13 +465,25 @@ $)
 
 本文采用的思路是尽可能晚引入范畴语言。不熟悉范畴的读者也可以跳过此节继续阅读。这一节对范畴论基础蜻蜓点水，同时也确定一些有歧义的记号的写法。
 
+#definition[
+  一个*范畴* $cal(C)$ 包含一些对象 $X, Y, Z, dots in "Obj"(cal(C))$，并且每个对象之间有集合 $hom(X, Y)$，其元素称作*态射*或者*箭头*，写作 $f : X -> Y$。态射之间有复合操作，将 $f : X -> Y$ 与 $g : Y -> Z$ 复合为 $g compose f : X -> Z$。这里复合的顺序与函数复合保持一致。复合满足结合律 $(h compose g) compose f = h compose (g compose f)$，并且每个对象都配有单位箭头 $id_X$，满足 $f compose id_X = f = id_Y compose f$。
+]
+
 - Diagrammatic reasoning
 
 - Natural isomorphism chains
 
 == 集合论撷英 <sec:set-theory>
 
-- Set of sets
+// Doesn't work, try looking at wwli
+
+依值类型论的模型不可避免涉及集合论与大基数的理论。例如直观上类型可以解释为集合，函数类型对应函数的集合，宇宙类型则是一定大小以内全体集合的集合。然而这是行不通的。例如在 ZFC 集合论中，就算限定集合只能包含一个元素，全体一元集也无法构成集合 #eq($ V_1 = {y mid(|) exists x bind y = {x}}. $) 假设不然，那么并集 $union.big V_1$ 按照公理也应该构成集合，但这恰好是全体集合的集合，在 ZFC 中是不能存在的。因此，我们需要发展一套理论，描述 “包含了足够多集合” 的集合。
+
+倘若我们的元理论也是类型论，并且本身包含宇宙的概念，那么可以利用元理论中的宇宙解释宇宙。但是这样做往往不很方便，并且需要元理论的规则高度匹配。有轶事一则： Martin–Löf~@mltt-1971 曾提出一套类型论，其中有 $cal(U) : cal(U)$，是不自洽的。但是论文中给出了自洽性的证明，其中元理论中也有 $cal(U) : cal(U)$ 的宇宙规则!
+
+在 ZFC 集合论中，给定基数 $kappa$，前面提到我们无法将全体元素个数少于 $kappa$ 的集合构成集合，这是因为尽管这些集合本身的大小有限制，但是它们的元素可以是任何别的集合，因此在数量上没有限制。假如我们要求不仅这些集合的元素个数少于 $kappa$，并且它们元素的元素个数也少于 $kappa$，元素的元素的元素等等都做如此要求，得到的东西称作#define(key: "hereditarily kappa-small set")[继承 $kappa$ 小集][hereditarily $kappa$-small set] $H_kappa$。例如，${varnothing, {varnothing}}$ 是继承有限集。可以证明 $H_kappa$ 构成集合。
+
+
 - Strongly inaccessible cardinals and Grothendieck universes
 
 - Set theory for category theory
@@ -810,8 +830,8 @@ mention sconing and gluing
 #set par(justify: false)
 // #set text(size: 0.9em)
 #context {
-  let final = translation-table.final().sorted(key : ((zh, en)) => en.at("text", default: ""))
-  for (zh, en) in final [
+  let final = translation-table.final().sorted(key : ((zh, en, key)) => key)
+  for (zh, en, _) in final [
     / #zh: #en
 
   ]
