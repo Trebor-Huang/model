@@ -73,7 +73,16 @@
 #let cal = text.with(font: "KaTeX_Caligraphic")
 
 // Inference rules
-#let rule(concl, ..prem) = math.frac(prem.pos().intersperse(math.quad).join(),concl)
+#let rule(concl, ..prem) = if type(prem.at(0, default: none)) == array {
+    math.frac(box(
+      prem.pos()
+      .map(it => math.equation(it.intersperse(math.quad).join()))
+      .intersperse("\n").join()
+    ),
+      concl.intersperse(math.quad).join())
+  } else {
+    math.frac(prem.pos().intersperse(math.quad).join(),concl)
+  }
 #let partir(..rules) = for rule in rules.pos() {
   box(math.equation(rule, block: true), inset: (left: 1em, right: 1em))
   // TODO box inherit baseline
@@ -644,19 +653,68 @@ $)
     Gamma tack t : A
   )
 $)
-这两条规则分别对应一元运算 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B[id, t])$。 $beta$ 与 $eta$ 等式分别是
+这两条规则分别对应一元运算 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B[id, t])$。 代换需要满足 $"lam"(t) sigma = "lam"(t sigma')$ 与 $"app"(f, t) sigma = "app"(f sigma, t sigma)$。同样， $sigma' = [sigma compose frak(p), frak(q)]$ 表示最后一个变量不变，而其他变量按 $sigma$ 代换。
+$beta$ 与 $eta$ 等式分别是
 #eq($
   "app"("lam"(t), s) &= t[id, s] \
-  "lam"("app"(t frak(p), frak(q))) &= 
+  "lam"("app"(t frak(p), frak(q))) &= t.
 $)
 
 ==== 空类型
+类似单元素类型，我们要求每个语境下选出类型 $"Empty"_Gamma in "Tp"(Gamma)$，并且在代换下 $"Empty"_Delta sigma = "Empty"_Gamma$。空类型没有构造子，只有消去子：
+#eq($
+  rule(
+    Gamma tack "abort"_A (p) : A,
+    Gamma tack p : "Empty",
+    Gamma tack A istype
+  )
+$)
+严格来说，应该允许 $A$ 依赖于一个空类型的变量，才是完整的依值消去子。不过由于空类型可以推出一切，这并没有太大区别。在语义中，我们需要为每个 $A$ 配备运算 #eq($ "abort"_A : "Tm"(Gamma, "Empty") -> "Tm"(Gamma, A), $) 满足 $"abort"_A (p) sigma = "abort"_(A sigma) (p sigma)$。
+由于没有构造子，空类型没有 $beta$ 等式。需要注意的是它一般也没有 $eta$ 等式。假如有的话，它应该形如这样：
+#eq($
+  rule(
+    Gamma tack "abort"_A (p) = t : A,
+    Gamma tack p : "Empty",
+    Gamma tack A istype,
+    Gamma tack t : A
+  ).
+$)
+换句话说，如果集合 $"Tm"(Gamma, "Empty")$ 有元素，那么所有集合 $"Tm"(Gamma, A)$ 都必须有唯一的元素。在集合模型中，这样的道理在于定义域为空的函数集 $varnothing -> X$，或者零个集合的乘积 $product_(p in varnothing) X_p$，都恰好有一个元素。但是在语法中，这意味着类型检查需要能判定任意语境是否能推出矛盾，这是不现实的。
 
 ==== 不交并
+不交并是类型上的二元运算 $"Tp"(Gamma) times "Tp"(Gamma) -> "Tp"(Gamma)$，满足 $(A + B)sigma = A sigma + B sigma$。有两个函数
+#eq($
+  "inj"_1 &: "Tm"(Gamma, A) -> "Tm"(Gamma, A + B), \
+  "inj"_2 &: "Tm"(Gamma, B) -> "Tm"(Gamma, A + B).
+$)
+分类讨论运算的规则如下：
+#eq($
+  rule(
+    Gamma tack "case"_P (p, l, r) : P[id, p];
+    Gamma tack p : A + B,
+    Gamma\, x : A + B tack P istype;
+    Gamma\, a : A tack l : P[id, "inj"_1 (a)],
+    Gamma\, b : B tack r : P[id, "inj"_2 (b)],
+  )
+$)
+读者应该可以写出它对应的运算。对应的代换等式是
+#eq($
+  "case"_P (p, l, r) sigma = "case"_(P sigma') (p sigma, l sigma', r sigma').
+$)
+同样， $sigma' = [sigma compose frak(p), frak(q)]$。与空类型类似，不交并一般有 $beta$ 等式而无 $eta$ 等式。$beta$ 等式形如
+#eq($
+  "case"_P ("inj"_1 (a), l, r) &= l[id, a], \
+  "case"_P ("inj"_2 (b), l, r) &= r[id, b].
+$)
+$eta$ 等式虽然困难不及空类型的情形，但是仍可产生神奇的推论。注意到 Boole 类型与 $"Unit" + "Unit"$ 基本相同，考虑 $f : "Bool" -> "Bool"$，则有判值相等 $f(f(f(x))) = f(x)$。读者可以观察 Gabriel Scherer~@stlc-sum-eta 的工作。
 
-==== 自然数类型
+// ==== 自然数类型
 
 ==== 相等类型
+
+(equality reflection)
+
+==== 层级与宇宙
 
 == 相容性与独立性
 

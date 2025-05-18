@@ -31,3 +31,12 @@ mltt-1971:
   date: 1971
   url: "https://github.com/michaelt/martin-lof/blob/master/pdfs/martin-loef1971%20-%20A%20Theory%20of%20Types.pdf"
   note: Unpublished manuscript
+
+stlc-sum-eta:
+  type: misc
+  author: Scherer, Gabriel
+  title: Deciding equivalence with sums and the empty type
+  date: 2016
+  note: ArXiv preprint
+  serial-number:
+    doi: 10.48550/arXiv.1610.01213
