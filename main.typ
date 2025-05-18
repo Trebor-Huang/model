@@ -598,7 +598,7 @@ $)
     Gamma tack b : B(id, a)
   )
 $)
-注意使用了代换 $(id, a) : Gamma -> (Gamma, A)$ 使得类型正确，其中 $id$ 表示语境中的其他变量不改变。用具名变量的语言，就是 $B[x\/a]$。在模型中，这就对应一个二元运算 $"pair"(a,b)$，将 $a in "Tm"(Gamma, A)$ 与 $b in "Tm"(Gamma, B(id, a))$ 映射到 $"Tm"(Gamma, Sigma A B)$。
+注意使用了代换 $(id, a) : Gamma -> (Gamma, A)$ 使得类型正确，表示语境中的其他变量不改变，而将最后一个变量换为 $a$。用具名变量的语言，就是 $B[x\/a]$。在模型中，这就对应一个二元运算 $"pair"(a,b)$，将 $a in "Tm"(Gamma, A)$ 与 $b in "Tm"(Gamma, B(id, a))$ 映射到 $"Tm"(Gamma, Sigma A B)$。
 
 $Sigma$ 类型的消去子是投影操作：
 #eq($
@@ -637,7 +637,17 @@ $)
   rule(
     Gamma tack lambda x bind t : Pi A B,
     Gamma\, x : A tack t : B
+  ) quad
+  rule(
+    Gamma tack f(t) : B(id, t),
+    Gamma tack f : Pi A B,
+    Gamma tack t : A
   )
+$)
+这两条规则分别对应一元运算 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B(id, t))$。 $beta$ 与 $eta$ 等式分别是
+#eq($
+  "app"("lam"(t), s) &= t(id, s) \
+  "lam"("app"(t frak(p), frak(q))) &= 
 $)
 
 ==== 空类型
