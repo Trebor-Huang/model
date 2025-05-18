@@ -183,7 +183,7 @@ $)
 
 代换的方向对初学者或许有些反直觉。例如假设 $Delta = (x : NN, y : NN)$ 与 $Gamma = (z : NN)$，那么 $sigma = [x \/ 3, y \/ f(z)]$ 乍看应当是从 $Delta$ 到 $Gamma$ 的代换。不过，如果 $Delta = (x : A)$ 与 $Gamma = (y : B)$ 都只有一个类型，那么代换 $sigma = [x \/ t]$ 就与从 $B$ 到 $A$ 的函数一一对应。因此我们将代换的方向写作 $Gamma -> Delta$，或者仿照元素的写法 $Gamma tack sigma : Delta$。
 
-我们把空语境和空代换都写作 $()$，而给定 $Gamma -> Delta$ 的代换 $sigma$，我们可以在 $Delta$ 中添加一个变量 $(Delta, x : A)$，那么代换也需要增加对新变量的代换结果，我们写作 $(sigma, x\/t)$。在不使用变量名的写法中，则写作 $(sigma, t) : Gamma -> (Delta, A)$。
+我们把空语境写作 $()$，空代换写作 $[]$。给定 $Gamma -> Delta$ 的代换 $sigma$，我们可以在 $Delta$ 中添加一个变量 $(Delta, x : A)$，那么代换也需要增加对新变量的代换结果，我们写作 $[sigma, x\/t]$。在不使用变量名的写法中，则写作 $[sigma, t] : Gamma -> (Delta, A)$。
 
 在类型论的规则中，语境和代换有两种解释方式。通常的介绍中，会认为代换是从当前变量集到表达式的映射。
 代换在表达式上的操作是在表达式上递归定义的，例如
@@ -259,15 +259,15 @@ $)
     )$,
     // Empty context
     $rule(
-      Gamma tack () : ()
+      Gamma tack [] : ()
     )$,
     $rule(
-      Gamma tack sigma = () : (),
+      Gamma tack sigma = [] : (),
       Gamma tack sigma : ()
     )$,
     // Context extension
     $rule(
-      Gamma tack (sigma, t) : (Delta, A), 
+      Gamma tack [sigma, t] : (Delta, A), 
       Gamma tack sigma : Delta,
       Delta tack A istype,
       Gamma tack t : A sigma
@@ -282,20 +282,20 @@ $)
     )$,
     // beta
     $rule(
-      Gamma tack frak(p) compose (sigma, t) = sigma : Delta,
+      Gamma tack frak(p) compose [sigma, t] = sigma : Delta,
       Gamma tack sigma : Delta,
       Delta tack A istype,
       Gamma tack t : A sigma
     )$,
     $rule(
-      Gamma tack frak(q) (sigma, t) = t : A sigma,
+      Gamma tack frak(q) [sigma, t] = t : A sigma,
       Gamma tack sigma : Delta,
       Delta tack A istype,
       Gamma tack t : A sigma
     )$,
     // eta
     $rule(
-      Gamma tack sigma = (frak(p) compose sigma, frak(q) sigma) : (Delta, A),
+      Gamma tack sigma = [frak(p) compose sigma, frak(q) sigma] : (Delta, A),
       Delta tack A istype,
       Gamma tack sigma : (Delta, A),
     )$
@@ -450,9 +450,9 @@ $)
 
 代换 $Gamma tack sigma : Delta$ 也可以规定正规形式，直观上说 $sigma = [x_1 \/ t_1, x_2 \/ t_2, ...]$ 是正规形式当且仅当每个 $t_i$ 都是正规形式。严格来说可以写成如下规则：
 #eq($
-  rule(Gamma tack () : () isnf) quad
+  rule(Gamma tack [] : () isnf) quad
   rule(
-    Gamma tack (sigma, t) : (Delta, A) isnf,
+    Gamma tack [sigma, t] : (Delta, A) isnf,
     Gamma tack sigma : Delta isnf,
     Gamma tack t : A sigma isnf
   ).
@@ -545,8 +545,8 @@ $)
   - 对于语义类型 $A in "Tp"(Gamma)$ 与代换 $sigma : Delta -> Gamma$，有语义代换运算 $A sigma in "Tp"(Delta)$ —— 注意代换的方向 —— 满足 $A id = A$ 与 $A (sigma compose tau) = (A sigma) tau$。 因此我们将连续代换不加括号地写作 $A sigma tau$。
   - 对语义元素 $a in "Tm"(Gamma, A)$ 与代换 $sigma : Delta -> Gamma$，有语义代换运算 $a sigma in "Tm"(Delta, A sigma)$，满足 $a id = a$ 与 $a (sigma compose tau) = (a sigma) tau$。
   - 有空语境 $()$，或者写作 $1$，使得任何语义语境 $Gamma$ 到 $1$ 都只有一个代换。
-  - 给定语义语境 $Gamma$ 与类型 $A in "Tp"(Gamma)$，有语境延拓运算 $(Gamma, A) in "Ctx"$，投影代换 $frak(p) : (Gamma, A) -> Gamma$ 与变量 $frak(q) in "Tm"((Gamma, A), A)$。
-  - 给定语义代换 $sigma : Gamma -> Delta$、语义类型 $A in "Tp"(Delta)$ 与语义元素 $a in "Tm"(Gamma, A sigma)$，有代换延拓运算 $(sigma, a) : Gamma -> (Delta, A)$，并且它是唯一满足 $frak(p) compose (sigma, a) = sigma$ 与 $frak(q) (sigma, a) = a$ 的代换。
+  - 给定语义语境 $Gamma$ 与类型 $A in "Tp"(Gamma)$，有语境延拓运算 $(Gamma, A) in "Ctx"$，投影代换 $frak(p) : (Gamma, A) -> Gamma$ 与变量 $frak(q) in "Tm"((Gamma, A), A frak(p))$。
+  - 给定语义代换 $sigma : Gamma -> Delta$、语义类型 $A in "Tp"(Delta)$ 与语义元素 $a in "Tm"(Gamma, A sigma)$，有代换延拓运算 $[sigma, a] : Gamma -> (Delta, A)$，并且它是唯一满足 $frak(p) compose [sigma, a] = sigma$ 与 $frak(q) [sigma, a] = a$ 的代换。
 ]
 乍看之下模型的定义让人眼花缭乱，但读者浏览#[@ch:examples]中的例子后就会发现定义中大部分内容都会化作简单的概念，或者能显然给出，一般无需多虑。在#[@ch:category]中我们还会引入更多打包简化定义的办法。
 
@@ -595,10 +595,10 @@ $)
   rule(
     Gamma tack (a, b) : Sigma A B,
     Gamma tack a : A,
-    Gamma tack b : B(id, a)
+    Gamma tack b : B[id, a]
   )
 $)
-注意使用了代换 $(id, a) : Gamma -> (Gamma, A)$ 使得类型正确，表示语境中的其他变量不改变，而将最后一个变量换为 $a$。用具名变量的语言，就是 $B[x\/a]$。在模型中，这就对应一个二元运算 $"pair"(a,b)$，将 $a in "Tm"(Gamma, A)$ 与 $b in "Tm"(Gamma, B(id, a))$ 映射到 $"Tm"(Gamma, Sigma A B)$。
+注意使用了代换 $[id, a] : Gamma -> (Gamma, A)$ 使得类型正确，表示语境中的其他变量不改变，而将最后一个变量换为 $a$。用具名变量的语言，就是 $B[x\/a]$。在模型中，这就对应一个二元运算 $"pair"(a,b)$，将 $a in "Tm"(Gamma, A)$ 与 $b in "Tm"(Gamma, B[id, a])$ 映射到 $"Tm"(Gamma, Sigma A B)$。
 
 $Sigma$ 类型的消去子是投影操作：
 #eq($
@@ -607,11 +607,11 @@ $Sigma$ 类型的消去子是投影操作：
     Gamma tack p : Sigma A B
   ) quad
   rule(
-    Gamma tack pi_2 (p) : B(id, pi_1 (p)),
+    Gamma tack pi_2 (p) : B[id, pi_1 (p)],
     Gamma tack p : Sigma A B
   )
 $)
-注意我们不认为 $pi_1$ 是能单独出现的函数，而必须形如 $pi_1 (p)$ 才符合语法。要构造函数 $Sigma A B -> A$，需要写成 $lambda p bind pi_1 (p)$。否则，函数类型和 $Sigma$ 类型就相耦合，破坏了各个功能之间的独立性。投影在模型中的对应就是两个映射 $"proj"_1$ 与 $"proj"_2$，分别把语义元素 $p in "Tm"(Gamma, Sigma A B)$ 映射到 $"Tm"(Gamma, A)$ 与 $"Tm"(Gamma, B(id, "proj"_1 (p)))$。
+注意我们不认为 $pi_1$ 是能单独出现的函数，而必须形如 $pi_1 (p)$ 才符合语法。要构造函数 $Sigma A B -> A$，需要写成 $lambda p bind pi_1 (p)$。否则，函数类型和 $Sigma$ 类型就相耦合，破坏了各个功能之间的独立性。投影在模型中的对应就是两个映射 $"proj"_1$ 与 $"proj"_2$，分别把语义元素 $p in "Tm"(Gamma, Sigma A B)$ 映射到 $"Tm"(Gamma, A)$ 与 $"Tm"(Gamma, B[id, "proj"_1 (p)])$。
 
 $Sigma$ 类型的 $beta$ 与 $eta$ 相等，分别对应等式
 #eq($
@@ -623,7 +623,7 @@ $)
 #eq($
   (Sigma A B)sigma = Sigma (A sigma) (B sigma')
 $)
-其中 $sigma' = (sigma compose frak(p), frak(q))$ 表示除了最后一个变量不变以外，对其他所有变量用 $sigma$ 代换。同样，对表达式也有等式
+其中 $sigma' = [sigma compose frak(p), frak(q)]$ 表示除了最后一个变量不变以外，对其他所有变量用 $sigma$ 代换。同样，对表达式也有等式
 #eq($
   "pair"(a, b) sigma &= "pair"(a sigma, b sigma) \
   "proj"_1 (p) sigma &= "proj"_1 (p sigma) \
@@ -639,14 +639,14 @@ $)
     Gamma\, x : A tack t : B
   ) quad
   rule(
-    Gamma tack f(t) : B(id, t),
+    Gamma tack f(t) : B[id, t],
     Gamma tack f : Pi A B,
     Gamma tack t : A
   )
 $)
-这两条规则分别对应一元运算 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B(id, t))$。 $beta$ 与 $eta$ 等式分别是
+这两条规则分别对应一元运算 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B[id, t])$。 $beta$ 与 $eta$ 等式分别是
 #eq($
-  "app"("lam"(t), s) &= t(id, s) \
+  "app"("lam"(t), s) &= t[id, s] \
   "lam"("app"(t frak(p), frak(q))) &= 
 $)
 
