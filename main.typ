@@ -6,6 +6,9 @@
 #set list(indent: 0.7em)
 #set enum(indent: 0.7em)
 
+#import "@preview/cetz:0.3.4": canvas, draw
+#import "@preview/fletcher:0.5.7" as fletcher: diagram, node, edge
+
 // CJK punctuation
 #show "。": "." + h(0.5em, weak: true)
 #show "：": ":" + h(0.4em, weak: true)
@@ -533,7 +536,7 @@ $)
 
 代数结构的一大特征是可以自由生成。换言之，给定一些元素，可以构造出_仅仅_满足代数结构本身要求的等式的结构。例如，一个元素 $x$ 在环的加法、减法、乘法下可以生成表达式 $x^2 + x - 2x$。这些表达式构成的环称作多项式环 $ZZ[x]$。具体来说，我们将给定的元素利用代数结构中的运算自由组合，将构造出的所有表达式商去需要满足的等式关系，得到的就是自由代数结构。当然，假如这个代数结构中有指定元素 (也就是零元运算，例如环公理要求乘法单位元 $1$)，那么不用给定元素，也能生成非平凡的代数结构。
 
-这样的描述看上去与 #[@sec:prelim-type-theory]对语法的描述不谋而合。事实上，语法正是自由生成的模型。换句话说，语法是依靠模型中的运算自由组合生成的结构，并且除了模型要求的等式之外不满足任何额外的等式。
+这样的描述看上去与 #[@sec:prelim-type-theory]对语法的描述不谋而合。事实上，语法正是自由生成的模型，记作 $cal(T)$。换句话说，语法是依靠模型中的运算自由组合生成的结构，并且除了模型要求的等式之外不满足任何额外的等式。这就是为何我们对语法和语义使用同样的记号：语法是特殊的语义。如果有多个模型 $cal(M), cal(N)$，我们用 $"Tp"_cal(M)$ 等记号区分语义对象来自哪个模型。这样，如果要强调某个对象是语法对象，也可以直接写 $"Tp"_cal(T)$。
 
 === 类型结构
 
@@ -677,11 +680,58 @@ $)
 #definition[
   给定有向图 $Gamma$，*依值有向图*包含如下资料：对于每个顶点 $x in Gamma$，有一族集合 $V_x$，对于每条边 $e : x -> y$，有一族集合 $E_e$，配有两个函数 $s : E_e -> V_x$ 与 $t : E_e -> V_y$。其中的元素写作 $epsilon : alpha xarrow(e) beta$.
 ]
-不难看出，依值有向图就是依值集合 (即集合族) 的简单推广。
+不难看出，依值有向图就是依值集合 (即集合族) 的简单推广。给定有向图 $Gamma$ 与依值有向图 $A$，可以将 $A$ 中的所有顶点与边合在一起构成新的有向图 $integral A$，称作*全图*。其顶点形如 $(x, y)$，其中 $x$ 是 $Gamma$ 的顶点，而 $y$ 是关于 $x$ 的依值顶点。类似地，其边形如 $(e, epsilon)$。这条边的起点和终点分别是 $(s(e), s(epsilon))$ 与 $(t(e), t(epsilon))$。请读者构造图同态 $frak(p) : integral A -> Gamma$。
 
-(...)
+#numbered-figure(caption: [依值有向图], placement: auto)[
+  #let bull = node.with(fill: black, radius: 0.2em, outset: 0.5em)
+  #let chosen = color.oklch(50%, 70%, 70deg)
+  #diagram(
+    spacing: (5em, 3em),
+    bull((0, 0), name: <n1>),
+    bull((1, 0.5), name: <n2>),
+    bull((2, 0), name: <n3>),
+    edge(<n1>, "->", <n2>, bend: 25deg),
+    edge(<n1>, "~>", <n2>, bend: -25deg),
+    edge(<n2>, "->", <n3>),
+    edge(<n3>, "->", <n3>, loop-angle: 0deg, bend: 130deg),
+    node((-0.5, 0), $Gamma$),
+
+    bull((0, -2), name: <n1-1>),
+    bull((-0.1, -1.5), name: <n1-2>, radius: 0.25em, fill: chosen),
+    bull((1, -1.7), name: <n2-1>),
+    bull((1, -1.35), name: <n2-2>),
+    bull((1, -1), name: <n2-3>, radius: 0.25em, fill: chosen),
+    bull((2, -1.7), name: <n3-1>, radius: 0.25em, fill: chosen),
+    edge(<n1-1>, "->", <n2-1>, bend: 30deg),
+    edge(<n1-1>, "->", <n2-1>),
+    edge(<n1-1>, "~>", <n2-2>, bend: -10deg),
+    edge(<n1-2>, "->", <n2-1>, bend: -5deg),
+    edge(<n1-2>, "->", <n2-3>, bend: 5deg, stroke: chosen),
+    edge(<n1-2>, "~>", <n2-3>, bend: -30deg, stroke: chosen),
+    edge(<n2-1>, "->", <n3-1>, bend: 15deg),
+    edge(<n2-3>, "->", <n3-1>, bend: -20deg),
+    edge(<n2-3>, "->", <n3-1>, bend: 10deg, stroke: chosen),
+    edge(<n3-1>, "->", <n3-1>, loop-angle: 0deg, bend: 130deg, stroke: chosen),
+
+    node((-0.5, -1.7), $A$),
+    node((2.5, -1.7), text(fill: chosen, $a$)),
+  )
+] <fig:dependent-graph>
+
+有了语境和类型的解释，下一步是定义元素的解释。在集合模型中，集合族 $A_x$ 的元素 $a_x$ 对于每个 $x in Gamma$ 都选择了元素 $a_x in A_x$。对于依值有向图而言，就是对每个顶点 $x in Gamma$ 都选择 $x$ 上的依值顶点 $a_x$，对每条边 $e : x -> y$ 都选择依值边 $epsilon : a_x xarrow(e) a_y$。
+
+#[@fig:dependent-graph] 中画出了一个依值有向图。 $Gamma$ 有三个顶点，而 $A$ 中对应的依值顶点分别有两个、三个、一个。 $Gamma$ 的每条边上方都有 (零个或多个) 对应的依值边。其中 $Gamma$ 左侧两个顶点之间有两条边，用不同的画法加以区分。如果将 $A$ 视作单独的有向图，忘记与 $Gamma$ 的对应关系，得到的就是 $integral A$。标红的部分则选出了 $A$ 的一个元素 $a$。
+
+以上结构组成类型论模型的基本框架，道理与集合模型类似。难点在于构造各种类型的结构。
+
+- Sigma, simple
+- Disjoint union and empty type
+- Plain function type
+- Pi
 
 countermodel of excluded middle
+
+关于有向图的定义，读者或许已经发现它是一种代数结构。其特殊之处在于所有的运算都恰好是一元运算.#footnote[有向图的另一个特点是它的运算 $s, t$ 之间没有任何等式，不过这一点似乎没法做文章。] 这种代数结构称作#define[预层][presheaf]。正因所有运算都是一元的，有许多构造在预层中可以大大简化。
 
 == 异常
 
