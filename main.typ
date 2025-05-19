@@ -77,7 +77,7 @@ Trebor\ #v(1em)
       if el.level == 1 {
         link(it.target)[第#numbering("一", ..counter(heading).at(it.target))章]
       } else {
-        link(it.target)[#numbering("1.1", ..counter(heading).at(it.target))节]
+        link(it.target)[#numbering("1.1", ..counter(heading).at(it.target)) 节]
       }
     }
   } else {

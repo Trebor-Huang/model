@@ -9,6 +9,7 @@
 - [ ] Pick font and include in repo
 - [ ] Modularize
 - [ ] Chinese readme
+- [ ] Text operator font
 
 ## 大纲
 
