@@ -7,7 +7,7 @@
 
 本文不会花费过多笔墨讨论变量的处理。我们在公式中一般直接使用具名变量，但是 $lambda x. x$ 与 $lambda y. y$ 直接视作等同，不加额外说明。对于#translate[语境][context] 而言，如果希望强调其不依赖变量名的属性，可能将 $(Gamma, x:A)$ 写作 $(Gamma, A)$。为了方便书写，我们也将 $Sigma$ 类型写成 $(x : A) times B(x)$，与非依值的 $A times B$ 对应。$Pi$ 类型写成 $(x : A) -> B(x)$。不依赖变量名时，则直接写作 $Sigma A B$ 与 $Pi A B$。
 
-依值类型论的定义中，往往先定义不考虑类型的表达式集合，称作#translate[原始表达式][raw term]，再定义类型规则剔除类型不合的表达式，以及#translate[判值相等][judgmental equality] 关系。这样可以得到一系列集合
+依值类型论的定义中，往往先定义不考虑类型的表达式集合，称作#translate[原始表达式][raw term]，再定义类型规则剔除类型不合的表达式，并给出#translate[判值相等][judgmental equality] 关系。这样可以得到一系列集合
 #eq($"Ctx" quad "Tp"(Gamma) quad "Tm"(Gamma, A)$)
 分别代表类型正确的语境、类型与元素表达式，商去判值相等后构成的集合。其中 $Gamma in "Ctx"$, $A in "Tp"(Gamma)$。不过，如果可以从一开始就确保类型的正确性，在数学处理上会更加优雅。这可以由归纳定义的办法构造。
 
