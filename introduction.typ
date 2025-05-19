@@ -54,7 +54,7 @@
   - 对于语义类型 $A in "Tp"(Gamma)$ 与代换 $sigma : Delta -> Gamma$，有语义代换运算 $A sigma in "Tp"(Delta)$ —— 注意代换的方向 —— 满足 $A id = A$ 与 $A (sigma compose tau) = (A sigma) tau$。 因此我们将连续代换不加括号地写作 $A sigma tau$。
   - 对语义元素 $a in "Tm"(Gamma, A)$ 与代换 $sigma : Delta -> Gamma$，有语义代换运算 $a sigma in "Tm"(Delta, A sigma)$，满足 $a id = a$ 与 $a (sigma compose tau) = (a sigma) tau$。
   - 有空语境 $()$，或者写作 $1$，使得任何语义语境 $Gamma$ 到 $1$ 都只有一个代换。
-  - 给定语义语境 $Gamma$ 与类型 $A in "Tp"(Gamma)$，有语境延拓运算 $(Gamma, A) in "Ctx"$，投影代换 $frak(p) : (Gamma, A) -> Gamma$ 与变量 $frak(q) in "Tm"((Gamma, A), A frak(p))$。
+  - 给定语义语境 $Gamma$ 与类型 $A in "Tp"(Gamma)$，有语境扩展运算 $(Gamma, A) in "Ctx"$，投影代换 $frak(p) : (Gamma, A) -> Gamma$ 与变量 $frak(q) in "Tm"((Gamma, A), A frak(p))$。
   - 给定语义代换 $sigma : Gamma -> Delta$、语义类型 $A in "Tp"(Delta)$ 与语义元素 $a in "Tm"(Gamma, A sigma)$，有代换延拓运算 $[sigma, a] : Gamma -> (Delta, A)$，并且它是唯一满足 $frak(p) compose [sigma, a] = sigma$ 与 $frak(q) [sigma, a] = a$ 的代换。
 ]
 乍看之下模型的定义让人眼花缭乱，但读者浏览#[@ch:examples]中的例子后就会发现定义中大部分内容都会化作简单的概念，或者能显然给出，一般无需多虑。在#[@ch:category]中我们还会引入更多打包简化定义的办法。
@@ -160,7 +160,7 @@ $beta$ 与 $eta$ 等式分别是
   "lam"("app"(t frak(p), frak(q))) &= t.
 $)
 
-==== 空类型
+==== 空类型 <sec:empty-type>
 类似单元素类型，我们要求每个语境下选出类型 $"Empty"_Gamma in "Tp"(Gamma)$，并且在代换下 $"Empty"_Delta sigma = "Empty"_Gamma$。空类型没有构造子，只有消去子：
 #eq($
   rule(

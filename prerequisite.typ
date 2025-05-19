@@ -33,7 +33,7 @@ $)
 
 代换的方向对初学者或许有些反直觉。例如假设 $Delta = (x : NN, y : NN)$ 与 $Gamma = (z : NN)$，那么 $sigma = [x \/ 3, y \/ f(z)]$ 乍看应当是从 $Delta$ 到 $Gamma$ 的代换。不过，如果 $Delta = (x : A)$ 与 $Gamma = (y : B)$ 都只有一个类型，那么代换 $sigma = [x \/ t]$ 就与从 $B$ 到 $A$ 的函数一一对应。因此我们将代换的方向写作 $Gamma -> Delta$，或者仿照元素的写法 $Gamma tack sigma : Delta$。
 
-我们把空语境写作 $()$，空代换写作 $[]$。给定 $Gamma -> Delta$ 的代换 $sigma$，我们可以在 $Delta$ 中添加一个变量 $(Delta, x : A)$，那么代换也需要增加对新变量的代换结果，我们写作 $[sigma, x\/t]$。在不使用变量名的写法中，则写作 $[sigma, t] : Gamma -> (Delta, A)$。
+给定 $Gamma -> Delta$ 的代换 $sigma$，我们可以在 $Delta$ 中添加一个变量 $(Delta, x : A)$，那么代换也需要增加对新变量的代换结果，我们写作 $[sigma, x\/t]$。在不使用变量名的写法中，则写作 $[sigma, t] : Gamma -> (Delta, A)$。我们把空语境写作 $()$，空代换写作 $[]$。
 
 在类型论的规则中，语境和代换有两种解释方式。通常的介绍中，会认为代换是从当前变量集到表达式的映射。
 代换在表达式上的操作是在表达式上递归定义的，例如
@@ -281,7 +281,7 @@ $)
     Gamma tack A dot(times) B : cal(U) isnf,
     Gamma tack A : cal(U) isnf,
     Gamma tack B : cal(U) isnf
-  ) quad dots.c
+  )
 $)
 在 Coquand 宇宙中，则不需要为类型名字的运算各自添加规则，只需以下三条。
 #eq($
