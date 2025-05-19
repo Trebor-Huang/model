@@ -325,7 +325,7 @@ $)
 
 == 集合论撷英 <sec:set-theory>
 
-// Doesn't work, try looking at wwli
+我们假设读者了解基数的基本定义。基数是度量集合元素个数的数学对象。例如每个自然数都是有限基数，而 $aleph_0$ 描述了全体自然数的数量，$frak(c)$ 表示全体实数的数量，等等。以下谈到的基数都指无限基数。
 
 依值类型论的模型不可避免涉及集合论与大基数的理论。例如直观上类型可以解释为集合，函数类型对应函数的集合，宇宙类型则是一定大小以内全体集合的集合。然而这是行不通的。例如在 ZFC 集合论中，就算限定集合只能包含一个元素，全体一元集也无法构成集合 #eq($ V_1 = {y mid(|) exists x bind y = {x}}. $) 假设不然，那么并集 $union.big V_1$ 按照公理也应该构成集合，但这恰好是全体集合的集合，在 ZFC 中是不能存在的。因此，我们需要发展一套理论，描述 “包含了足够多集合” 的集合。
 
@@ -333,7 +333,12 @@ $)
 
 在 ZFC 集合论中，给定基数 $kappa$，前面提到我们无法将全体元素个数少于 $kappa$ 的集合构成集合，这是因为尽管这些集合本身的大小有限制，但是它们的元素可以是任何别的集合，因此在数量上没有限制。假如我们要求不仅这些集合的元素个数少于 $kappa$，并且它们元素的元素个数也少于 $kappa$，元素的元素的元素等等都做如此要求，得到的东西称作#define(key: "hereditarily kappa-small set")[继承 $kappa$ 小集][hereditarily $kappa$-small set] $H_kappa$。例如，${varnothing, {varnothing}}$ 是继承有限集。可以证明 $H_kappa$ 构成集合。
 
+在集合模型中，为了让宇宙在 $Sigma$ 类型、$Pi$ 类型等等构造下封闭，我们需要 $H_kappa$ 对一系列集合上的操作封闭。这对 $kappa$ 的大小提出了要求。例如，$Sigma$ 类型直观上要求如果 $A in H_kappa$，并且 $B : A -> H_kappa$ 是一族集合，那么 $product.co_(x in A) B(x)$ 也属于 $H_kappa$。转换为基数的语言，这意味着如果有少于 $kappa$ 个小于 $kappa$ 的基数，它们的和也小于 $kappa$。这种基数在集合论中称作*正则基数*。类似地，对于 $Pi$ 类型，则是将 $product.co$ 替换为 $product$。这样得到的基数称作*强不可达基数*。请读者证明 $aleph_0$ 是强不可达基数。
 
-- Strongly inaccessible cardinals and Grothendieck universes
+假如存在强不可达基数 $kappa$，那么 $H_kappa$ 就能构成 ZFC 的模型，故而意味着 ZFC 是自洽的。由 Gödel 不完备性定理，这意味着 ZFC 不可能证明强不可达基数的存在性.#footnote[除非 ZFC 本身有矛盾，不过那样天就塌了。] 这是合理的。例如 Lean 定理证明助手中可以形式化 ZFC 的模型 @lean-con-ch，因此某种意义上说 Lean 的类型论比 ZFC 要强。然而，依值类型论的模型的研究重点并不是讨论各种理论的证明论强度，而在于可计算性、同伦论、程序语义等等。因此，我们不会取 ZFC 为元理论，而是添加足够强的大基数假设，使得我们能专注于对模型其他性质的研究。
 
-- Set theory for category theory
+在类型论中，往往需要一系列宇宙 $cal(U)_0, cal(U)_1, cal(U)_2, dots$，因此仅仅假设一个强不可达基数是不够的。为此，我们采用以下公理，为我们提供足够多的强不可达基数。
+#thmstyle("theorem", "公理")("Tarski–Grothendieck")[
+  对于任何基数 $lambda$，都存在强不可达基数 $kappa > lambda$。
+] <ax:tarski-grothendieck>
+这样，任何集合都包含在某个 $H_kappa$ 中。我们可以从 $aleph_0$ 出发，反复用@ax:tarski-grothendieck 取出更大的强不可达基数，构成一列 $kappa_0 < kappa_1 < dots.c$ 用来给类型论中的宇宙提供模型。

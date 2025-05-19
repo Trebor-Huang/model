@@ -40,3 +40,14 @@ stlc-sum-eta:
   note: ArXiv preprint
   serial-number:
     doi: 10.48550/arXiv.1610.01213
+
+lean-con-ch:
+  type: article
+  author:
+    - Han, Jesse Michael
+    - van Doorn, Floris
+  title: A formal proof of the independence of the continuum hypothesis
+  date: 2020
+  parent:
+    type: proceedings
+    title: Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs
