@@ -21,7 +21,6 @@
   }
 }
 
-有向图的结构非常简单。
 #definition[
   *有向图* $Gamma$ 包含如下资料：顶点集合 $V$ 与边的集合 $E$，配有两个函数 $s, t : E -> V$，分别给出一条边的两个顶点。如果 $x$ 是 $Gamma$ 的顶点，我们直接写作 $x in Gamma$。如果 $e$ 是 $Gamma$ 的边，满足 $s(e) = x$，$t(e) = y$，我们将其写作 $e : x -> y$。
 ]
@@ -33,7 +32,7 @@
 #definition[
   给定有向图 $Gamma$，*依值有向图*包含如下资料：对于每个顶点 $x in Gamma$，有一族集合 $V_x$ 表示依值顶点，对于每条边 $e : x -> y$，有一族集合 $E_e$ 表示依值边，配有两个函数 $s : E_e -> V_x$ 与 $t : E_e -> V_y$。其中的元素写作 $epsilon : alpha xarrow(e) beta$.
 ]
-不难看出，依值有向图就是依值集合 (即集合族) 的简单推广。给定有向图 $Gamma$ 与依值有向图 $A$，可以将 $A$ 中的所有顶点与边合在一起构成新的有向图 $integral A$，称作*全图*。其顶点形如 $(x, y)$，其中 $x$ 是 $Gamma$ 的顶点，而 $y$ 是关于 $x$ 的依值顶点。类似地，其边形如 $(e, epsilon)$。这条边的起点和终点分别是 $(s(e), s(epsilon))$ 与 $(t(e), t(epsilon))$。请读者构造图同态 $frak(p) : integral A -> Gamma$。
+不难看出，依值有向图就是依值集合 (即集合族) 的简单推广。给定有向图 $Gamma$ 与依值有向图 $A$，可以将 $A$ 中的所有顶点与边合在一起构成新的有向图 $integral A$，称作*全图*。其顶点形如 $(x, y)$，其中 $x$ 是 $Gamma$ 的顶点，而 $y$ 是关于 $x$ 的依值顶点。类似地，其边形如 $(e, epsilon)$。这条边的起点和终点分别是 $(s(e), s(epsilon))$ 与 $(t(e), t(epsilon))$。这构成语境扩展 $(Gamma, A)$ 的解释。请读者构造图同态 $frak(p) : integral A -> Gamma$。
 
 #numbered-figure(caption: [依值有向图], placement: auto)[
   #let bull = node.with(fill: black, radius: 0.2em, outset: 0.5em)
@@ -75,9 +74,15 @@
 
 #[@fig:dependent-graph] 中画出了一个依值有向图。 $Gamma$ 有三个顶点，而 $A$ 中对应的依值顶点分别有两个、三个、一个。 $Gamma$ 的每条边上方都有 (零个或多个) 对应的依值边。其中 $Gamma$ 左侧两个顶点之间有两条边，用不同的画法加以区分。如果将 $A$ 视作单独的有向图，忘记与 $Gamma$ 的对应关系，得到的就是 $integral A$。标红的部分则选出了 $A$ 的一个元素 $a$。
 
-以上结构组成类型论模型的基本框架，道理与集合模型类似。难点在于构造各种类型的结构。
+依值有向图的代换与集合族的代换也类似。假如有同态 $sigma : Delta -> Gamma$ 与 $Gamma$ 上的依值有向图 $A$，那么可以把 $A sigma$ 在顶点 $x in Delta$ 上的依值顶点定义为 $A$ 在 $sigma(x)$ 上的依值顶点，边 $e$ 上的依值边定义为 $A$ 在 $sigma(e)$ 上的依值边。请读者验证这的确构成 $Delta$ 上的依值有向图，并且满足代换的相关等式。
 
-- Sigma, simple
+以上结构组成类型论模型的基本框架，道理与集合模型类似。难点在于构造各种类型的结构。
+$Sigma$ 类型比较简单。给定有向图 $Gamma$，依值有向图 $A$ 与 $integral A$ 上的依值有向图 $B$，$Sigma A B$ 在 $x in Gamma$ 上的依值顶点形如 $(a, b)$，其中 $a$ 是 $A$ 在 $x$ 上的依值顶点，而 $b$ 是 $B$ 在 $(x, a)$ 上的依值顶点。依值边则同理。配对、投影运算都很容易构造。需要读者注意的是，代换等式 $(Sigma A B)sigma = Sigma (A sigma) (B sigma')$ 是严格成立的。换句话说，这两个依值有向图是_同一个_依值有向图，而不仅仅是同构的有向图。
+
+空类型不难看出应该解释成空的依值有向图。由于空集到任何其他集合都恰好有一个函数，不难定义出所需的消去子。与集合模型类似，#[@sec:empty-type]中提到的空类型 $eta$ 等式也成立。
+
+
+
 - Disjoint union and empty type
 - Extensional equality
 - Plain function type
