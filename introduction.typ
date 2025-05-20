@@ -243,8 +243,8 @@ $)
 Coquand 层级中， $Gamma tack A istype$ 被拆分成多个版本 $Gamma tack A istype_kappa$，其中 $kappa$ 取遍所有层级。对应地，具有 Coquand 层级的类型论的模型就应该将 $"Tp"(Gamma)$ 改为 $"Tp"_kappa (Gamma)$，$"Tm"(Gamma, A)$ 改为 $"Tm"_kappa (Gamma, A)$.#footnote[如果每个 $"Tp"_kappa (Gamma)$ 没有交集，那么元素集合不需要标注 $kappa$ 也可以，标注出来更加清晰。]//$kappa <= lambda$ 的层级累积性可以表述为函数 $iota : "Tp"_kappa (Gamma) -> "Tp"_lambda (Gamma)$，使得等式 $"Tm"_kappa (Gamma, A) = "Tm"_lambda (Gamma, iota(A))$ 与 $iota(A)sigma = iota(A sigma)$ 成立。注意前者是两个集合之间的等式。
 有了 Coquand 层级，Coquand 宇宙则非常简单，有
 #eq($
-  "El"_kappa : "Tm"_kappa (Gamma, cal(U)_kappa) -> "Tp"_kappa (Gamma) \
-  ceil(-)_kappa : "Tp"_kappa (Gamma) -> "Tm"_kappa (Gamma, cal(U)_kappa)
+  "El"_kappa &: "Tm"_kappa (Gamma, cal(U)_kappa) -> "Tp"_kappa (Gamma) \
+  ceil(-)_kappa &: "Tp"_kappa (Gamma) -> "Tm"_kappa (Gamma, cal(U)_kappa)
 $)
 并且两者互为逆映射，满足 $"El"_kappa (A)sigma = "El"_kappa (A sigma)$ 与 $ceil(A)_kappa sigma = ceil(A sigma)_kappa$。
 
@@ -256,7 +256,7 @@ $)
 
 证明这些性质的办法是构造模型。具体来说，假如类型 $A$ 有元素 $tack t : A$，那么任何模型中都会有其解释 $interpret(t) in "Tm"(1, interpret(A))$。那么，如果能构造某个模型，使得 $"Tm"(1, interpret(A))$ 是空集，就可以说明不存在这样的语法表达式 $t$。我们称之为 $A$ 的#define[反模型][counter-model]。读者可以类推写出相容性、独立性等等的证明办法，以此熟悉定义。
 
-在 #[@sec:set-model]中，我们已经定义了集合模型。不难在集合模型中给出空类型的语义 —— 就是空集。因此，这就证明了类型论的自洽性。具体是哪个类型论的自洽性，取决于我们为集合模型构造了哪些类型结构。请读者验证，以上提到的所有类型结构都可以定义在集合模型上，因此 Martin-Löf 类型论是自洽的。(... size issue and metatheory strength) @sec:set-theory
+在 #[@sec:set-model]中，我们已经定义了集合模型。不难在集合模型中给出空类型的语义 —— 就是空集。因此，这就证明了类型论的自洽性。具体是哪个类型论的自洽性，取决于我们为集合模型构造了哪些类型结构。对于 Martin-Löf 类型论中除宇宙外的类型，请读者验证集合模型中都具备它们对应的结构。对于宇宙来说，由 #[@sec:set-theory]中的讨论，我们可以取出强不可达基数 $kappa$。与单元素类型一样，宇宙不依赖于任何变量，所以对应常集合族 $cal(U)_x = H_kappa$。我们需要定义映射 $"El"_cal(U) : "Tm"(Gamma, cal(U)) -> "Tp"(Gamma)$。而常集合族的元素就是函数 $A : Gamma -> H_kappa$，因此可以直接定义 $"El"_cal(U) (A)_x = A_x$。对于更多宇宙的情况，利用 #link(<ax:tarski-grothendieck>)[Tarski–Grothendieck 公理]也可以构造对应的解释。由此，我们说明了 Martin-Löf 类型论是自洽的。
 
 集合模型还可以给出许多公理的相容性。例如#define[函数外延性][function extensionality] 是类型
 #eq($
