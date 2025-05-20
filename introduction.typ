@@ -224,14 +224,18 @@ $eta$ 等式虽然困难不及空类型的情形，但是仍可产生神奇的�
 $)
 这里，$y : A$ 严格来说应该写为 $y : A frak(p)$，因为此处有新变量 $x$。同样， $q : "Id"(A, x, y)$ 应当用 $A frak(p) frak(p)$。读者可以类似地写出其他需要改动的位置。$"J"$ 在代换下的表现与前文类似，不过其中 $P$ 用到的代换应该是 $sigma'''$，即最后三个变量不动，而其余变量按 $sigma$ 代换。
 
-相等类型同样一般只有 $beta$ 等式：$"J"_A ("refl"_A (t), P, r) = r[z\/t]$。$eta$ 等式的形式比较复杂，读者可以试着写一写。不过，它等价于另一条比较简单的规则，#define[等式反射][equality reflection]：
+相等类型同样一般只有 $beta$ 等式：$"J"_A ("refl"_A (t), P, r) = r[z\/t]$。$eta$ 等式的形式比较复杂，读者可以试着写一写。不过，我们可以考虑另两条条比较简单的规则：
 #eq($
   rule(
     Gamma tack s = t : A,
     Gamma tack p : "Id"(A, s, t)
+  ) quad
+  rule(
+    Gamma tack p = "refl"_A (t),
+    Gamma tack p : "Id"(A, t, t)
   )
 $)
-换句话说，如果相等类型有元素，那么就有判值相等。这条规则可以推出之前提到的所有一般不加入的 $eta$ 规则。Martin-Löf 类型论加上这条规则称作#define[外延类型论][extensional type theory]。
+其中前者称作#define[等式反映][equality reflection]。换句话说，如果相等类型有元素，那么就有判值相等。有 $"J"$ 消去子的情况下，$eta$ 等式等价于等式反映，并且它可以推出之前所有提到的一般不加入的 $eta$ 规则。另外，如果不加入 $"J"$ 消去子，那么这两条规则合起来可以推出 $"J"$。Martin-Löf 类型论加上这些规则称作#define[外延类型论][extensional type theory]。
 
 ==== 层级与宇宙
 在 #[@sec:universe-hierarchy]中提到的各种处理宇宙的方案，各自对应模型中不同的结构。对于最简单的单个 Tarski 宇宙而言，与单位类型一样，需要在每个语境中选出 $cal(U)_Gamma in "Tp"(Gamma)$，满足 $cal(U)_Delta sigma = cal(U)_Gamma$。将宇宙的元素转换为类型的 $"El"$ 算符对应 #eq($ "El"_(cal(U)) : "Tm"(Gamma, cal(U)) -> "Tp"(Gamma). $) 满足 $"El"_cal(U) (A) sigma = "El"_cal(U) (A sigma)$。读者应该不难看出 Tarski 宇宙对各种类型构造子封闭的规则应该如何表达。
