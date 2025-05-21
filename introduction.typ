@@ -34,6 +34,8 @@
   ) $)
 - 这些类型对应的元素，例如 $lambda$ 函数抽象、函数应用、有序对的配对与投影映射等等，读者可先行思考，稍后给出模型的定义后会再讨论。
 
+为了避免讨论全体集合的集合的困难，我们一般不认为语境可以取任意集合，而是如 #[@sec:set-theory]介绍的选定强不可达基数 $kappa$ 并将语境解释为 $H_kappa$ 中的元素。
+
 == 模型的定义
 
 我们从上文讨论的直观里抽取出模型的一套定义。为了区分某个语法概念与它对应的语义解释，我们将语境的解释称作*语义语境*，类型的解释称为*语义类型*，以此类推。例如在集合模型中，语义语境的意思就是集合。不过，我们仍然会采用同样的字母指代这些对象，例如语法语境与语义语境都用 $Gamma, Delta, Theta$ 等字母表示，否则排版容易叠床架屋。
@@ -69,7 +71,7 @@
 
 === 类型结构
 
-不同的类型论会在以上的基础上添加各自的类型，因此在模型中也会相应的按照这些类型的规则定义类型结构。我们以几个常见的类型为例，展示这些类型结构的一般定义办法。这些定义只消对类型论规则作机械地改写即可得到，读者观察出规律即可跳过。
+不同的类型论会在以上的基础上添加各自的类型，因此在模型中也会相应的按照这些类型的规则定义类型结构。我们以几个常见的类型为例，展示这些类型结构的一般定义办法。这些定义只消对类型论规则作机械地改写即可得到，读者观察出规律即可跳过。读者也可以试着用定理证明助手形式化集合模型的构造，有助于消化其中微妙之处。
 
 ==== 单元素类型
 对于每个语义语境 $Gamma$，选择语义类型 $"Unit" in "Tp"(Gamma)$。严格来说，应该写作 $"Unit"_Gamma$，因为每个语境的类型是不同的。单元素类型的规则如下：
@@ -96,7 +98,9 @@ $)
     Gamma tack sigma : Delta
   )
 $)
-因此模型的定义中需要添加等式要求 $"Unit"_Delta sigma = "Unit"_Gamma$ 以及 $star_Delta sigma = star_Gamma$。之后的规则中我们会省略下标，写作 $star sigma = star$，但是需要注意左右两侧的 $star$ 不属于同一个集合.#footnote[由于 $"Tm"(Gamma, "Unit")$ 都只有一个元素，因此等式 $star sigma = star$ 是自动满足的。别的类型则不然。]
+因此模型的定义中需要添加等式要求 $"Unit"_Delta sigma = "Unit"_Gamma$ 以及 $star_Delta sigma = star_Gamma$。之后的规则中我们会省略下标，写作 $star sigma = star$.#footnote[由于 $"Tm"(Gamma, "Unit")$ 都只有一个元素，因此等式 $star sigma = star$ 是自动满足的。别的类型则不然。]
+
+在集合模型中，我们已经构造了集合族 $"Unit"_Gamma$，它为元素 $x in Gamma$ 赋予的集合是 ${star}$。其中 $star$ 是集合论中任意一个对象。而 $star_Gamma$ 对应显然的平凡元素族。
 
 ==== $Sigma$ 类型
 给定语义语境 $Gamma$，类型 $A in "Tp"(Gamma)$ 与 $B in "Tp"((Gamma, A))$，$Sigma$ 类型结构需要选定类型 $Sigma A B in "Tp"(Gamma)$。$Sigma$ 类型的构造子如下：
@@ -122,6 +126,8 @@ $Sigma$ 类型的消去子是投影操作：
 $)
 注意我们不认为 $pi_1$ 是能单独出现的函数，而必须形如 $pi_1 (p)$ 才符合语法。要构造函数 $Sigma A B -> A$，需要写成 $lambda p bind pi_1 (p)$。否则，函数类型和 $Sigma$ 类型就相耦合，破坏了各个功能之间的独立性。投影在模型中的对应就是两个映射 $"proj"_1$ 与 $"proj"_2$，分别把语义元素 $p in "Tm"(Gamma, Sigma A B)$ 映射到 $"Tm"(Gamma, A)$ 与 $"Tm"(Gamma, B[id, "proj"_1 (p)])$。
 
+在集合模型中，给定集合族 $B : "Tp"((Gamma, A))$ 与元素族 $a in "Tm"(Gamma, A)$，$B'=B[id, a]$ 是 $Gamma$ 上的集合族，定义为 $B'_x = B_((x, a_x))$。请读者构造集合模型中的 $"pair"$ 与 $"proj"_i$ 函数。
+
 $Sigma$ 类型的 $beta$ 与 $eta$ 相等，分别对应等式
 #eq($
   "proj"_1 (a, b) &= a\
@@ -138,7 +144,6 @@ $)
   "proj"_1 (p) sigma &= "proj"_1 (p sigma) \
   "proj"_2 (p) sigma &= "proj"_2 (p sigma).
 $)
-
 
 ==== $Pi$ 类型
 与 $Sigma$ 类型大体相同，只不过将构造子和消去子分别替换为函数构造与函数应用。
@@ -170,7 +175,11 @@ $)
   )
 $)
 严格来说，应该允许 $A$ 依赖于一个空类型的变量，才是完整的依值消去子。不过由于空类型可以推出一切，这并没有太大区别。在语义中，我们需要为每个 $A$ 配备运算 #eq($ "abort"_A : "Tm"(Gamma, "Empty") -> "Tm"(Gamma, A), $) 满足 $"abort"_A (p) sigma = "abort"_(A sigma) (p sigma)$。
-由于没有构造子，空类型没有 $beta$ 等式。需要注意的是它一般也没有 $eta$ 等式。假如有的话，它应该形如这样：
+由于没有构造子，空类型没有 $beta$ 等式。
+
+在集合模型中，空类型的解释是空集合族。 如果 $Gamma$ 非空，那么 $"Tm"(Gamma, "Empty")$ 就是空集，否则它恰好有一个元素。这是因为定义域为空的函数集 $varnothing -> X$，或者零个集合的乘积 $product_(p in varnothing) X_p$，都恰好有一个元素。无论是哪种情况，都不难看出 $"abort"_A$ 只有唯一一种构造方式，因此也总是满足代换的等式。
+
+空类型一般也没有 $eta$ 等式。假如有的话，它应该形如这样：
 #eq($
   rule(
     Gamma tack "abort"_A (p) = t : A,
@@ -179,7 +188,7 @@ $)
     Gamma tack t : A
   ).
 $)
-换句话说，如果集合 $"Tm"(Gamma, "Empty")$ 有元素，那么所有集合 $"Tm"(Gamma, A)$ 都必须有唯一的元素。在集合模型中，这样的道理在于定义域为空的函数集 $varnothing -> X$，或者零个集合的乘积 $product_(p in varnothing) X_p$，都恰好有一个元素。但是在语法中，这意味着类型检查需要能判定任意语境是否能推出矛盾，这是不现实的。
+换句话说，如果集合 $"Tm"(Gamma, "Empty")$ 有元素，那么所有集合 $"Tm"(Gamma, A)$ 都必须有唯一的元素。在集合模型中这是成立的。但是在语法中，这意味着如果 $Gamma$ 可以推出矛盾，则 $Gamma$ 下任意类型的所有元素都相等，那么类型检查就需要能判定任意语境是否能推出矛盾，这是不现实的。
 
 ==== 不交并
 不交并是类型上的二元运算 $"Tp"(Gamma) times "Tp"(Gamma) -> "Tp"(Gamma)$，满足 $(A + B)sigma = A sigma + B sigma$。有两个函数
@@ -207,6 +216,8 @@ $)
   "case"_P ("inj"_2 (b), l, r) &= r[id, b].
 $)
 $eta$ 等式虽然困难不及空类型的情形，但是仍可产生神奇的推论。注意到 Boole 类型与 $"Unit" + "Unit"$ 基本相同，考虑 $f : "Bool" -> "Bool"$，则有判值相等 $f(f(f(x))) = f(x)$。读者可以观察 Gabriel Scherer~@stlc-sum-eta 的工作。
+
+在集合模型中，不交并的解释就是集合族的不交并，即 $(A + B)_x = A_x + B_x$，其中后者的 $+$ 是集合的不交并。$"case"$ 的定义略显繁琐，不过也是十分自然的。
 
 // ==== 自然数类型
 
@@ -237,8 +248,12 @@ $)
 $)
 其中前者称作#define[等式反映][equality reflection]。换句话说，如果相等类型有元素，那么就有判值相等。有 $"J"$ 消去子的情况下，$eta$ 等式等价于等式反映，并且它可以推出之前所有提到的一般不加入的 $eta$ 规则。另外，如果不加入 $"J"$ 消去子，那么这两条规则合起来可以推出 $"J"$。Martin-Löf 类型论加上这些规则称作#define[外延类型论][extensional type theory]。
 
+集合模型中，相等类型集合族的定义按照元素 $s_x, t_x$ 是否相等分类讨论。如果 $s_x = t_x$，那么 $"Id"(A,s,t)_x$ 就是单元素集合，反之则是空集。这样，等式反映的确是成立的，并且相等类型的所有元素都形如 $"refl"_A (t)$。这样的好处是我们不用验证复杂的 $"J"$ 消去子，不过读者可以自己尝试。
+
 ==== 层级与宇宙
 在 #[@sec:universe-hierarchy]中提到的各种处理宇宙的方案，各自对应模型中不同的结构。对于最简单的单个 Tarski 宇宙而言，与单位类型一样，需要在每个语境中选出 $cal(U)_Gamma in "Tp"(Gamma)$，满足 $cal(U)_Delta sigma = cal(U)_Gamma$。将宇宙的元素转换为类型的 $"El"$ 算符对应 #eq($ "El"_(cal(U)) : "Tm"(Gamma, cal(U)) -> "Tp"(Gamma). $) 满足 $"El"_cal(U) (A) sigma = "El"_cal(U) (A sigma)$。读者应该不难看出 Tarski 宇宙对各种类型构造子封闭的规则应该如何表达。
+
+集合模型中，根据 #[@sec:set-theory]中的讨论，我们需要取出强不可达基数 $kappa$ 与对应的集合 $H_kappa$ 作为宇宙。具体来说，定义 $Gamma$ 下的集合族 $cal(U)_x = H_kappa$，不依赖 $x$。运算 $"El"_cal(U)$ 的定义域是 $H_kappa$ 的元素族，也就是为每个 $x in  Gamma$ 选择 $A_x in H_kappa$。它的值域则是集合族。但是 $H_kappa$ 中的元素正是一定大小以内的集合，所以可以直接定义 $"El"_cal(U) (A) = A$。
 
 Coquand 层级中， $Gamma tack A istype$ 被拆分成多个版本 $Gamma tack A istype_kappa$，其中 $kappa$ 取遍所有层级。对应地，具有 Coquand 层级的类型论的模型就应该将 $"Tp"(Gamma)$ 改为 $"Tp"_kappa (Gamma)$，$"Tm"(Gamma, A)$ 改为 $"Tm"_kappa (Gamma, A)$.#footnote[如果每个 $"Tp"_kappa (Gamma)$ 没有交集，那么元素集合不需要标注 $kappa$ 也可以，标注出来更加清晰。]//$kappa <= lambda$ 的层级累积性可以表述为函数 $iota : "Tp"_kappa (Gamma) -> "Tp"_lambda (Gamma)$，使得等式 $"Tm"_kappa (Gamma, A) = "Tm"_lambda (Gamma, iota(A))$ 与 $iota(A)sigma = iota(A sigma)$ 成立。注意前者是两个集合之间的等式。
 有了 Coquand 层级，Coquand 宇宙则非常简单，有
@@ -248,6 +263,8 @@ Coquand 层级中， $Gamma tack A istype$ 被拆分成多个版本 $Gamma tack 
 $)
 并且两者互为逆映射，满足 $"El"_kappa (A)sigma = "El"_kappa (A sigma)$ 与 $ceil(A)_kappa sigma = ceil(A sigma)_kappa$。
 
+在集合模型中，可以取强不可达基数 $kappa$，并令 $"Tp"_kappa (Gamma)$ 为取值在 $H_kappa$ 中的集合族。这样， $"El"_kappa (A) = A$ 就是双射。
+
 == 相容性与独立性
 
 在数理逻辑中，模型的一大用途是说明某个命题无法在公理系统中证明或者证伪。如果类型论 $TT$ 中，某个类型 $A$ (视作命题) 没有元素，就说此命题#define[不可证][unprovable]。特别地，如果空类型没有元素，就说这个类型论是#define[自洽][consistent] 的。倘若类型论 $TT$ 添加了公理 $A$ 后仍然自洽，就说它们是#define[相容][consistent] 的。
@@ -256,7 +273,7 @@ $)
 
 证明这些性质的办法是构造模型。具体来说，假如类型 $A$ 有元素 $tack t : A$，那么任何模型中都会有其解释 $interpret(t) in "Tm"(1, interpret(A))$。那么，如果能构造某个模型，使得 $"Tm"(1, interpret(A))$ 是空集，就可以说明不存在这样的语法表达式 $t$。我们称之为 $A$ 的#define[反模型][counter-model]。读者可以类推写出相容性、独立性等等的证明办法，以此熟悉定义。
 
-在 #[@sec:set-model]中，我们已经定义了集合模型。不难在集合模型中给出空类型的语义 —— 就是空集。因此，这就证明了类型论的自洽性。具体是哪个类型论的自洽性，取决于我们为集合模型构造了哪些类型结构。对于 Martin-Löf 类型论中除宇宙外的类型，请读者验证集合模型中都具备它们对应的结构。对于宇宙来说，由 #[@sec:set-theory]中的讨论，我们可以取出强不可达基数 $kappa$。与单元素类型一样，宇宙不依赖于任何变量，所以对应常集合族 $cal(U)_x = H_kappa$。我们需要定义映射 $"El"_cal(U) : "Tm"(Gamma, cal(U)) -> "Tp"(Gamma)$。而常集合族的元素就是函数 $A : Gamma -> H_kappa$，因此可以直接定义 $"El"_cal(U) (A)_x = A_x$。对于更多宇宙的情况，利用 #link(<ax:tarski-grothendieck>)[Tarski–Grothendieck 公理]也可以构造对应的解释。由此，我们说明了 Martin-Löf 类型论是自洽的。
+在 #[@sec:set-model]中，我们已经定义了集合模型。不难在集合模型中给出空类型的语义 —— 就是空集。因此，这就证明了类型论的自洽性。具体是哪个类型论的自洽性，取决于我们为集合模型构造了哪些类型结构。例如，上文中已经讨论了 Martin-Löf 类型论中所有的类型结构，所以这就说明了 Martin-Löf 类型论是自洽的。更具体来说，由于我们使用了 ZFC 集合论加上 Tarski–Grothendieck @ax:tarski-grothendieck，所以以上的讨论证明了 Tarski–Grothendieck 集合论可以推出 Martin-Löf 类型论是自洽的。
 
 集合模型还可以给出许多公理的相容性。例如#define[函数外延性][function extensionality] 是类型
 #eq($
