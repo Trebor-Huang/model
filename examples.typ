@@ -7,6 +7,8 @@
 
 == 有向图
 
+=== 模型定义
+
 #let xarrow(arrow: sym.arrow, ..args, sup: none, sub: none) = {
   if args.pos().len() >= 1 {
     sup = args.pos().at(0)
@@ -77,11 +79,14 @@
 依值有向图的代换与集合族的代换也类似。假如有同态 $sigma : Delta -> Gamma$ 与 $Gamma$ 上的依值有向图 $A$，那么可以把 $A sigma$ 在顶点 $x in Delta$ 上的依值顶点定义为 $A$ 在 $sigma(x)$ 上的依值顶点，边 $e$ 上的依值边定义为 $A$ 在 $sigma(e)$ 上的依值边。请读者验证这的确构成 $Delta$ 上的依值有向图，并且满足代换的相关等式。
 
 以上结构组成类型论模型的基本框架，道理与集合模型类似。难点在于构造各种类型的结构。
+
+=== 类型结构
+
 $Sigma$ 类型比较简单。给定有向图 $Gamma$，依值有向图 $A$ 与 $integral A$ 上的依值有向图 $B$，$Sigma A B$ 在 $x in Gamma$ 上的依值顶点形如 $(a, b)$，其中 $a$ 是 $A$ 在 $x$ 上的依值顶点，而 $b$ 是 $B$ 在 $(x, a)$ 上的依值顶点。依值边则同理。配对、投影运算都很容易构造。需要读者注意的是，代换等式 $(Sigma A B)sigma = Sigma (A sigma) (B sigma')$ 是严格成立的。换句话说，这两个依值有向图是_同一个_依值有向图，而不仅仅是同构的有向图。
 
 空类型不难看出应该解释成空的依值有向图。这样，$"Tm"(Gamma, "Empty")$ 在 $Gamma$ 非空时是空集，而在 $Gamma$ 是空图时恰有一个元素。注意从空集出发的函数总是恰有一个，因此无论是哪种情况，都不难定义出所需的消去子 $"abort"_A : "Tm"(Gamma, "Empty") -> "Tm"(Gamma, A)$，满足所需的代换等式。与集合模型类似，#[@sec:empty-type]中提到的空类型 $eta$ 等式也成立。
 
-不交并则应该解释成依值有向图的不交并。具体来说，$A + B$ 在 $x in Gamma$ 上的依值顶点，要么是 $A$ 在 $x$ 上的依值顶点，要么是 $B$ 在 $x$ 上的依值顶点。对依值边也同理。我们同样需要验证 $(A + B)sigma = A sigma + B sigma$，即两侧是同一个依值有向图。
+不交并则应该解释成依值有向图的不交并。具体来说，$A + B$ 在 $x in Gamma$ 上的依值顶点，要么是 $A$ 在 $x$ 上的依值顶点，要么是 $B$ 在 $x$ 上的依值顶点。对依值边也同理。我们同样需要验证 $(A + B)sigma = A sigma + B sigma$，即两侧是同一个依值有向图。 (..constructor)
 
 不交并的消去子则开始有些难度，不过仅仅是略微繁琐一些。
 
@@ -132,11 +137,49 @@ $)
 
 对于含 $eta$ 规则的类型论而言，据我所知最简洁的函数外延性反模型正是异常模型。 这种模型的一个版本可以参考 Pédrot 与 Tabareau 的工作 @exception-model。András Kovács 形式化了另一个版本 @exception-agda，并且有简明扼要的解释。另一个反模型是 #[@sec:polynomial]介绍的多项式模型。
 
+=== 模型定义
+
+由于类型论中本身没有抛出异常的办法，我们限制代换和语义元素不能抛出任何新异常。这也保证了并非所有类型都有语义元素，不然就无法达成构造反模型的目的了。另一方面，常函数 $lambda x. c$ 在输入异常时输出也应当是 $c$，而非异常值。因此不必将异常值映射到异常值。
+
+#definition[
+  *带异常集合*由集合 $Gamma$ 与子集 $overline(Gamma) subset.eq Gamma$ 组成。子集中的元素称作*正常值*，子集外的元素称作*异常值*.#footnote[在证明助理中形式化此构造时，不必将其表达为子集，可以直接写作类型族 $"isNormal" : Gamma -> "Type"$。] *正常映射*是不抛出新异常的函数 $sigma : Gamma -> Delta$，即需要将 $overline(Gamma)$ 映射到 $overline(Delta)$ 中。
+]
+
+#definition[
+  给定带异常集合 $overline(Gamma) subset.eq Gamma$，*依值带异常集合*由集合族 $A_x$，子集族 $overline(A)_x subset.eq A_x$ 与元素族 $"error"(A)_x in A_x$ 组成，其中 $x in Gamma$。同时，只有 $x in overline(Gamma)$ 时 $overline(A)_x$ 才可以有元素。依值异常集合的*正常元素族*需要在每个 $A_x$ 中选出元素 $a_x$，使得 $x in overline(Gamma)$ 时 $a_x in overline(A)_x$.
+]
+这里， $"error"(A)_x$ 为每个类型赋予异常。直观上，应该要求它们的确是异常值，即 $"error"(A)_x in.not overline(A)_x$。不做此要求的理由在之后会解释。
+
+我们将语义语境定义为带异常集合，语义代换定义为带异常集合之间的正常映射。语义类型 $A in "Tp"(Gamma)$ 是依值带异常集合，而语义元素 $a in "Tm"(Gamma, A)$ 是它的_正常_元素族。这意味着 $"error"(A)$ 不一定属于 $"Tm"(Gamma, A)$。
+
+由于代换需要将正常值映射为正常值，可以将代换在语义类型与语义元素上的操作分别定义为 $(A sigma)_x = A_(sigma(x))$ 与 $(a sigma)_x = a_(sigma(x))$，这样得到的仍然是依值带异常集合与其正常元素族。
+将语境扩展 $(Gamma, A)$ 解释为不交并 $product.co_(x in Gamma) A_x$，其中正常值形如 $(x, y)$，满足 $x in overline(Gamma)$ 与 $y in overline(A)_x$。这样投影映射 $frak(p) : (Gamma, A) -> A$ 与语义元素 $frak(q) : "Tm"((Gamma, A), A frak(p))$ 都不难构造。
+
+=== 类型结构
+
+类型构造的思路是，对于不含 $eta$ 等式的类型 $A$，我们与集合模型的构造相比额外添加一个值作为 $"error"(A)$ 的定义。对于含有 $eta$ 等式的类型，比如 $A times B$，则不作添加，直接定义 $"error"(A times B)_x = ("error"(A)_x, "error"(B)_x)$。这是因为如果额外添加异常元素，那么这个新的元素就无法满足 $eta$ 等式。
+
+对于最简单的单元素类型，我们定义 $"Unit"_x = {star}$ 为单元素集合，$overline("Unit")_x = {star}$ 为全体元素。根据之前的讨论，单元素类型选定的异常元素按 $eta$ 等式必须是 $star$。这意味着 $"error"(A)_x$ 有可能在 $overline(A)_x$ 中，是正常值.#footnote[我们也不能将 $star$ 改为异常值，即将 $overline("Unit")_x$ 定义为空集。因为这样 $"Tm"(Gamma, "Unit")$ 也是空集，不合要求。]
+
+假如执意添加新的异常元素会如何呢? 定义 $P_x = {star, epsilon}$ 为二元素集合，$overline(P)_x = {star}$，而 $"error"(P)_x = epsilon$。由于 $"Tm"(Gamma, P)$ 只包含正常元素族，所以在空语境中 $P$ 只有一个语义元素 $star$。但是，假如 $Gamma = {g}$ 恰有一个元素，并且 $g$ 是异常值，那么 $"Tm"(Gamma, P)$ 就有两个不相等的元素，不满足 $eta$ 规则。
+
+这个类型 $P$ 可以看作利用归纳类型定义的单元素类型，因为归纳类型没有 $eta$ 规则。需要注意的是，有些证明助理为了方便，将恰有一个构造子的归纳类型视作带有 $eta$ 的#translate[记录类型][record type]。但这两者在理论上是满足不同规则的。
+
+Pi type
+
+identity type
+
+对于其他类型，特别是宇宙类型的处理，留给读者作为练习，亦可参阅 Kovács @exception-agda。
+
+=== 函数外延性的反模型
+
 (...)
 
 == 容器与多项式 <sec:polynomial>
 
 可以跳过
+
+- 更传统的 funext 反例
 
 例子：并非所有映射都是展映射
 

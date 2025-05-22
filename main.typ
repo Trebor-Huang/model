@@ -103,6 +103,7 @@ Trebor\ #v(1em)
 #show heading.where(level: 1): set heading(numbering: none)
 
 = 术语翻译表
+#align(center)[术语翻译多为暂定，欢迎推敲。]
 #columns(2)[
 #set par(justify: false)
 // #set text(size: 0.9em)
