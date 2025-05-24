@@ -58,7 +58,7 @@
   - 有空语境 $()$，或者写作 $1$，使得任何语义语境 $Gamma$ 到 $1$ 都只有一个代换。
   - 给定语义语境 $Gamma$ 与类型 $A in "Tp"(Gamma)$，有语境扩展运算 $(Gamma, A) in "Ctx"$，投影代换 $frak(p) : (Gamma, A) -> Gamma$ 与变量 $frak(q) in "Tm"((Gamma, A), A frak(p))$。
   - 给定语义代换 $sigma : Gamma -> Delta$、语义类型 $A in "Tp"(Delta)$ 与语义元素 $a in "Tm"(Gamma, A sigma)$，有代换延拓运算 $[sigma, a] : Gamma -> (Delta, A)$，并且它是唯一满足 $frak(p) compose [sigma, a] = sigma$ 与 $frak(q) [sigma, a] = a$ 的代换。
-]
+] <def:model>
 乍看之下模型的定义让人眼花缭乱，但读者浏览#[@ch:examples]中的例子后就会发现定义中大部分内容都会化作简单的概念，或者能显然给出，一般无需多虑。在#[@ch:category]中我们还会引入更多打包简化定义的办法。
 
 要理解代换满足的等式，集合模型有一定启发性。对于集合 $Gamma$ 上的集合族 $A_x$，如果有代换 $sigma : Delta -> Gamma$，即两个集合之间的函数，那么集合族可以作代换得到 $B_y = A_(sigma(y))$，是 $Delta$ 上的集合族。

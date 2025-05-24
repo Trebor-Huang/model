@@ -67,6 +67,7 @@
 #let interpret(x) = math.lr(math.class("opening",sym.bracket.double) + x + math.class("closing",sym.bracket.double.r))
 #let bind = math.class("punctuation", ".")
 #let ite(b,t,f) = $"if" #b "then" #t "else" #f$
+#let Set = math.sans("Set")
 
 #let xarrow(arrow: sym.arrow, ..args, sup: none, sub: none) = {
   if args.pos().len() >= 1 {
