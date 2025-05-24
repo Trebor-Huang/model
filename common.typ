@@ -67,3 +67,17 @@
 #let interpret(x) = math.lr(math.class("opening",sym.bracket.double) + x + math.class("closing",sym.bracket.double.r))
 #let bind = math.class("punctuation", ".")
 #let ite(b,t,f) = $"if" #b "then" #t "else" #f$
+
+#let xarrow(arrow: sym.arrow, ..args, sup: none, sub: none) = {
+  if args.pos().len() >= 1 {
+    sup = args.pos().at(0)
+  }
+  if args.pos().len() >= 2 {
+    sub = args.pos().at(1)
+  }
+  context {
+    let lsup = measure($script(sup)$)
+    let lsub = measure($script(sub)$)
+    math.attach(math.stretch(arrow, size: calc.max(lsup.width, lsub.width) + 0.75em), t: box($script(sup)$, inset: (bottom: -0.3em)), b: box($script(sub)$, inset: (top: -1.1em), baseline: 100%))
+  }
+}

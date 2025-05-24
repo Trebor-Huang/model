@@ -319,9 +319,37 @@ $)
   一个*范畴* $cal(C)$ 包含一些对象 $X, Y, Z, dots in "Obj"(cal(C))$，并且每个对象之间有集合 $hom(X, Y)$，其元素称作*态射*或者*箭头*，写作 $f : X -> Y$。态射之间有复合操作，将 $f : X -> Y$ 与 $g : Y -> Z$ 复合为 $g compose f : X -> Z$。这里复合的顺序与函数复合保持一致。复合满足结合律 $(h compose g) compose f = h compose (g compose f)$，并且每个对象都配有单位箭头 $id_X$，满足 $f compose id_X = f = id_Y compose f$。
 ]
 
-- Diagrammatic reasoning
+在数学中有许多只用态射之间的复合关系就能表达的概念。它们都可以直接表述为范畴论中的一般概念。
+
+#definition[
+  假如有箭头 $f : X -> Y$ 与 $g : Y -> X$ 满足 $f compose g = id_Y$ 与 $g compose f = id_X$，那么就说 $f$ 是*同构*，而 $g$ 是其*逆态射*。
+]
+
+范畴中论证的一大组成就是#translate[追图][diagram chasing]。这类似初等平面几何学中的#translate[倒角][angle chasing]，即在复杂的图形中利用一系列性质给出角度的连等式。例如，同构的逆态射总是唯一的，或者以下引理，都是利用追图证明的。
+#lemma[
+  给定三个映射
+  #eq($ X xarrow(f) Y xarrow(g) Z xarrow(h) W, $)
+  如果 $g compose f$ 与 $h compose g$ 都是同构，那么图中所有的映射都是同构。
+]
+证明留给读者。
+
+(...)
+
+universal property
+
+#definition[
+  给定范畴 $cal(C)$ 中的两个对象 $X$、$Y$，假设有对象 $Z$ 与态射 $pi_1 : Z -> X$、$pi_2 : Z -> Y$ 使得对于任何别的对象 $Z'$ 与态射 $f : Z' -> X$ 和 $g : Z' -> Y$，都有唯一的箭头 $(f, g) : Z' -> Z$ 使得 $pi_1 compose (f, g) = f$，$pi_2 compose (f, g) = g$。此时称 $(Z, pi_1, pi_2)$ 构成 $X$ 与 $Y$ 的*乘积*。
+]
+
+(...)
+
+functor
+
+natural isomorphism
 
 - Natural isomorphism chains
+
+universal property as natural isomorphisms (representability)
 
 == 集合论撷英 <sec:set-theory>
 

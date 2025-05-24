@@ -9,20 +9,6 @@
 
 === 模型定义
 
-#let xarrow(arrow: sym.arrow, ..args, sup: none, sub: none) = {
-  if args.pos().len() >= 1 {
-    sup = args.pos().at(0)
-  }
-  if args.pos().len() >= 2 {
-    sub = args.pos().at(1)
-  }
-  context {
-    let lsup = measure($script(sup)$)
-    let lsub = measure($script(sub)$)
-    math.attach(math.stretch(arrow, size: calc.max(lsup.width, lsub.width) + 0.75em), t: box($script(sup)$, inset: (bottom: -0.3em)), b: box($script(sub)$, inset: (top: -1.1em), baseline: 100%))
-  }
-}
-
 #definition[
   *有向图* $Gamma$ 包含如下资料：顶点集合 $V$ 与边的集合 $E$，配有两个函数 $s, t : E -> V$，分别给出一条边的两个顶点。如果 $x$ 是 $Gamma$ 的顶点，我们直接写作 $x in Gamma$。如果 $e$ 是 $Gamma$ 的边，满足 $s(e) = x$，$t(e) = y$，我们将其写作 $e : x -> y$。
 ]
