@@ -277,8 +277,8 @@ $)
 
 集合模型还可以给出许多公理的相容性。例如#define[函数外延性][function extensionality] 是类型
 #eq($
-  product_(f, g : A -> B) [product_(x : A) f(x) = g(x)] -> f = g.
+  (f, g : A -> B) -> [(x : A) -> f(x) = g(x)] -> f = g.
 $)
 在集合模型中这是显然成立的。因此函数外延性与 Martin-Löf 类型论相容。类似地，读者也可以验证 Martin-Löf 类型论与 *K 原理*#footnote[也称为#define[相等证明的唯一性][uniqueness of identity proofs]，缩写为 UIP。K 原理的名字来自 Thomas Streicher，顺承 J 原理的名字选择了下一个字母。]
-#eq($ product_(x,y : A) product_(p,q : x = y) p = q $)
+#eq($ (x,y : A) -> (p,q : x = y) -> p = q $)
 相容。之后我们会介绍这两条公理各自的反模型，也就能分别说明它们与 Martin-Löf 类型论独立。
