@@ -31,8 +31,8 @@
 #let definition = thmstyle("theorem", "定义")
 #let proof = thmproof(
   "proof", "证明",
-  separator: [. ],
-  titlefmt: text.with(font: ("Latin Modern Roman", "Kaiti SC")),
+  separator: h(0em),
+  titlefmt: box.with(stroke: 0.5pt, outset: (top: 0.25em, bottom: 0.25em, left: 0.1em, right: 0.1em)),
   inset: (left: 0em, right: 0em),
 )
 
