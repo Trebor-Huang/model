@@ -1,5 +1,7 @@
 # 依值类型论的模型
 
+在[此处](https://github.com/Trebor-Huang/model/actions)下载（需要登录 GitHub 账号）
+
 (...)
 
 ## 待办
