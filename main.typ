@@ -104,10 +104,8 @@ Trebor\ #v(1em)
 #show heading.where(level: 1): set heading(numbering: none)
 
 = 术语翻译表
-#align(center)[术语翻译多为暂定，欢迎推敲。]
 #columns(2)[
 #set par(justify: false)
-// #set text(size: 0.9em)
 #context {
   let final = translation-table.final().sorted(key : ((zh, en, key)) => key)
   for (zh, en, _) in final [
@@ -120,7 +118,6 @@ Trebor\ #v(1em)
 // Bibliography
 #[
 #set text(lang: "en")
-// #set par(justify: false)
-#show link: set text(font: ("CMU Typewriter Text"), size: 0.9em)
+#show link: set text(font: "DejaVu Sans Mono", size: 0.8em, fill: blue)
 #bibliography("references.yaml", title: "参考文献", style: "ieee-alt.csl") // TODO style
 ]
