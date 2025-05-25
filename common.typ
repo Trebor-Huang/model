@@ -1,6 +1,8 @@
 #import "@preview/cetz:0.3.4": canvas, draw
 #import "@preview/fletcher:0.5.7" as fletcher: diagram, node, edge
 
+#let hyperlink(dest, body) = link(dest, underline(text(fill: color.oklch(45%, 55%, 250deg), body), offset: 0.2em))
+
 // Translation (used for indexing)
 #let translation-table = state("translations", ())
 #let add-entry(zh, en, key) = translation-table.update(it => {

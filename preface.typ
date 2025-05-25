@@ -1,15 +1,13 @@
 #import "common.typ": *
 #heading(numbering: none)[前言]
 
-- Motivation for models
-  - Give meaning to syntax
-    - Operational meaning, assign programs, etc.
-    - Homotopical meaning
-  - Prove theorems about syntax
+为什么类型论的研究需要模型? 究其根本，模型就是给语法赋予含义的数学结构。类型论可以有多种含义。例如可以通过描述表达式如何化简求值给出含义，也可以描述类型论的表达式如何编译为程序 —— 可以是 x86 指令集，也可以是数学上的 Turing 机、Gödel 编码等。在数学中，有许多复杂的数学对象蕴含类似于类型论的结构。如果构造了合适的模型，类型论就有了新的含义，可以将这些复杂对象之间的关系表述成简单的式子。同伦类型论就是这种思路的成功范例。
 
-- Motivation for this book
-  - Give a coherent source in chinese
-  - Demonstrate how things are done in practice
-  - Provide some intuition
+类型论的语法与语义是互相作用的。为了描述某些语义对象，我们从这些对象的结构中提取出一套类型论的语法。而研究这套语法的性质时，又会提出别的模型为它提供语义。因此，若要理解当代前沿类型论的发展，对于模型与语义的理解就尤为重要。
 
-- Don't be afraid to skip ahead
+本书的首要目的是为中文读者提供尽可能准确而不过时的介绍。同时，我也希望其中的表述对计算机与数学专业的读者都足够易懂。为此，书中包含许多例子，藉以展示实操用到的种种技术。对范畴论的知识要求已尽可能延后，但是鉴于范畴语言的强有效性，自然是不可避免用到这些知识的。另外，文中所有术语均有中文翻译。若有通行翻译则采用大陆译名，外文人名保留原文不音译。仍有不少暂定译名，欢迎推敲。
+
+对于每位读者来说，本书都很可能会有部分内容是读者不感兴趣或非常不熟悉的。读者完全可以跳过这部分内容，或者只作略读。如果遇到难懂、错误或希望修改的部分，欢迎#hyperlink("https://github.com/Trebor-Huang/model/issues")[提出建议]。
+
+本文仅在 #hyperlink("https://github.com/Trebor-Huang/model")[GitHub] 上更新，按照 #hyperlink("https://creativecommons.org/licenses/by-nc-sa/4.0/")[CC BY-NC-SA 4.0] 协议发布。考虑到一些大陆读者访问有困难，欢迎能下载的读者以任意方式镜像。
+
