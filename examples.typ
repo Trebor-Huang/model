@@ -118,6 +118,36 @@
 
 === 函数类型
 
+$Pi$ 类型需要单开一节讨论。这是因为它的构造单拿出来看比较天马行空。不过，这个构造实际上是可以机械地推算出来，无需灵感的。我们也会考察不依值的普通函数类型的构造。
+
+假设有有向图 $Gamma$，其上的依值有向图 $A$ 与 $integral A$ 上的依值有向图 $B$，我们需要构造依值有向图 $Pi A B$，也就需要知道顶点集和边集分别是什么。为此，我们考虑 $Pi$ 类型的规则。
+#eq($
+  rule(
+    Gamma tack lambda x bind t : Pi A B,
+    Gamma\, x : A tack t : B
+  ) quad
+  rule(
+    Gamma tack f(t) : B[id, t],
+    Gamma tack f : Pi A B,
+    Gamma tack t : A
+  )
+$)
+我们需要给出映射 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$，而 $beta$ 与 $eta$ 规则说明这个映射是双射。
+
+考虑 $Gamma$ 的一个顶点 $x$。这等价于考虑一个图同态 $sigma : bullet -> Gamma$，其中 $bullet$ 是单点图。如果我们做代换 $(Pi A B) sigma$，就可以得到 $bullet$ 上的依值有向图。此时注意到 $(Pi A B) sigma$ 的元素集 $"Tm"(bullet, (Pi A B) sigma)$ 与 $(Pi A B) sigma$ 在唯一一个顶点上的依值顶点集有双射，而这又和 $Pi A B$ 在 $x in Gamma$ 上的依值顶点集相同。这意味着要构造后者，只需要计算前者。进一步，
+#eq($
+  & quad "Tm"(bullet, (Pi A B) sigma) \
+  &= "Tm"(bullet, Pi (A sigma) (B sigma')) \
+  &tilde.equiv "Tm"((bullet, A sigma), B sigma').
+$)
+其中 $sigma'$ 表示 $B$ 的最后一个变量不动，而其他变量按照 $sigma$ 代换。这样，我们就知道 $Pi A B$ 在 $x$ 上的依值顶点集必须与 $"Tm"((bullet, A sigma), B sigma')$ 有双射，因此我们不妨直接定义成这个集合。类似地，对于 $Gamma$ 的一条边 $e$，只需要考虑图同态 $sigma : II -> Gamma$，其中 $II = (bullet -> bullet)$ 恰好有一条边。同样的推理可以得到 $Pi A B$ 在 $e$ 上的依值边集必须是 $"Tm"((II, A sigma), B sigma')$。由此，我们仅靠计算就直接推断出了 $Pi$ 类型的构造。
+
+将计算结果再展开化简，就可以得到如下定义。
+#definition[
+  给定 $Gamma$、$A$、$B$， (...)
+]
+
+
 - Derive Pi type
 - Define exponential objects between graphs
 - Show that constant Pi type coincide with exponential objects
@@ -145,7 +175,7 @@ $)
 
 (...) $"El"(A) -> "Empty"$ 是空依值有向图。
 
-因此 $"El"(A) + ("El"(A) -> "Empty")$ 同构于 $"El"(A)$。但是，$"El"(A)$ 是没有元素的! 这是因为 $A$ 只有顶点而没有边，而空语境对应有向图 #terminal-graph，有一个自环。因此 $"El"(A)$ 的元素需要选出自环上的依值边，而这是不可能的。
+因此 $"El"(A) + ("El"(A) -> "Empty")$ 同构于 $"El"(A)$。但是，$"El"(A)$ 是没有元素的! 这是因为 $A$ 只有顶点而没有边，而空语境对应有向图 #terminal-graph，有一个自环。因此 $"El"(A)$ 的元素需要选出自环上的依值边，而这是不可能的。这样就说明了有向图模型中排中律不成立，进而说明 Martin-Löf 类型论中无法证明排中律。
 
 前面提到有向图模型是预层模型的特殊情况。一个经典的结论是，预层模型满足排中律当且仅当这个代数结构中所有操作都有逆。例如一个集合 $X$ 配上运算 $iota : X -> X$ 满足 $iota(iota(x)) = x$，这样 $iota$ 的逆运算是它自己。
 

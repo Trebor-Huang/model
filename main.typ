@@ -17,6 +17,7 @@
 #show "，": "," + h(0.35em, weak: true)
 #show "（": " ("
 #show "）": ") "
+#show "、": "、" + h(-0.2em)
 
 #let underdot = {
   let radius = 0.08em

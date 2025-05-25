@@ -164,6 +164,7 @@ $beta$ 与 $eta$ 等式分别是
   "app"("lam"(t), s) &= t[id, s] \
   "lam"("app"(t frak(p), frak(q))) &= t.
 $)
+这实际上给出了 $"lam"$ 的反函数 $"lam"^(-1) (t) = "app"(t frak(p), frak(q))$。换句话说是将语境 $Gamma$ 中的函数 $t$ 映射到语境 $(Gamma, x : A)$ 中的表达式 $t(x)$，其中 $x$ 是新变量。 $beta$ 与 $eta$ 等式保证了这两个映射互逆。
 
 ==== 空类型 <sec:empty-type>
 类似单元素类型，我们要求每个语境下选出类型 $"Empty"_Gamma in "Tp"(Gamma)$，并且在代换下 $"Empty"_Delta sigma = "Empty"_Gamma$。空类型没有构造子，只有消去子：
