@@ -16,7 +16,7 @@
 不过，上面的说法并不完整。在依值类型论中，_所有_的类型 $Gamma tack A istype$ 都是依值的，即依赖于 $Gamma$ 中的变量。这样看来，语境的解释才应该是集合，而类型解释为集合族。例如，空语境对应单元素类型，而语境扩展 $(Gamma, A)$ 可以解释为不交并 $product.co_(x in Gamma) A(x)$。另一方面，我们还需要区分语法与它们对应的解释。例如可以将 $Gamma$ 的解释记作 $interpret(Gamma)$。这样就能给出完整的集合模型：
 - 语境 $Gamma$ 解释为集合，记作 $interpret(Gamma)$。
 - 类型 $Gamma tack A istype$ 解释为集合族，记作 $interpret(A)_x$，其中 $x in interpret(Gamma)$。
-- 空语境解释为单元素集合，即 $interpret(()) = {star}$。
+- 空语境解释为单元素集合，即 $interpret(()) = {star}$。需要注意的是，空语境不是空集。因为空语境的 “空” 表示没有变量，因此变量的取值就只有一种情况。这与零个集合的乘积是单元素集，或者幂 $n^0 = 1$ 的道理是一样的。
 - 语境扩展解释为不交并 $interpret((Gamma, A)) = product.co_(x in interpret(Gamma)) interpret(A)_x$。
 - $Gamma tack t : A$ 解释为集合族 $interpret(A)$ 的元素族 $interpret(t)$。即对于每个 $x in interpret(Gamma)$ 都有 $interpret(t)_x in interpret(A)_x$。
 - 变量代换 $Gamma tack sigma : Delta$ 解释为集合之间的函数 $interpret(Gamma) -> interpret(Delta)$。
