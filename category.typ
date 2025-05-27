@@ -10,17 +10,17 @@
 
 == 模型的等价定义
 
-=== 具族范畴
+=== 具族范畴与自然模型
 
 比较范畴的定义 (@def:category) 与模型的定义 (@def:model) 中代换的部分，呼之欲出的是语义语境与语义代换构成范畴 $cal(C)$。语义类型 $"Tp"(Gamma)$ 则为每个语义语境赋予一个集合，这看上去与函子的定义 (...) 非常接近。不过需要注意的是，这里箭头的方向是相反的，即 $sigma : Delta -> Gamma$ 将 $Gamma$ 语境下的类型映射到 $Delta$ 下的类型。因此，$"Tp"$ 构成函子 $cal(C)^"op" -> Set$。 (...) presheaf
 
-- Tm also is presheaf, but can do with category of elements
+- Tm also is presheaf, but can do with category of elements, or Fam-valued functor
 
-=== 自然模型
+- Similarity of context extension with pullback, representability
+
+- Presheaf as discrete fibrations, formulation of representability
 
 == 展映射与概括范畴
-
-(... discrete fibrations, equivalent to natural models)
 
 #define[展映射][display map]
 #define[概括范畴][comprehension category]
@@ -30,6 +30,10 @@ LCCC and topos
 == 融贯问题
 
 #define[融贯问题][coherence problem]
+
+- Natural solution using coproducts of display maps
+- Hofmann's solution
+- Can be avoided using dedicated dependent structures
 
 (also mention universes in sheaf topos)
 
