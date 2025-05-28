@@ -247,14 +247,14 @@ $Pi$ 类型也具有 $eta$ 规则，因此不额外添加错误值。$Pi A B$ �
 
 == 容器与多项式 <sec:polynomial>
 
-可以跳过
-
-- 更传统的 funext 反例
+此节选读。#translate[容器][container] 模型，或称多项式模型，是函数外延性的另一个反模型。在编程中，容器是能装载一系列元素的数据结构。例如列表 $"List"(X)$ 可以装载零个或多个元素，有序对 $X times X$ 恰好可以装载两个，等等。
 
 例子：并非所有映射都是展映射
 
 == 群胚
 
+- A little bit of history
+- Intuition of paths and spaces
 - Start with directed graphs
 
 == 可计算性与模型
