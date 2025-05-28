@@ -351,7 +351,7 @@ $)
 
 #definition[
   给定范畴 $cal(C)$ 与 $cal(D)$，*函子* $F$ 包括对象之间的映射 $"Obj"(cal(C)) -> "Obj"(cal(D))$ 与箭头之间的映射 $hom(X, Y) -> hom(F(X), F(Y))$，满足 $F(id_X) = id_(F(X))$ 与 $F(f compose g) = F(f) compose F(g)$。
-]
+] <def:functor>
 
 粗略来说，利用某个数学对象构造新的数学对象，往往都构成合适范畴之间的函子。
 
@@ -360,6 +360,10 @@ natural isomorphism
 - Natural isomorphism chains
 
 universal property as natural isomorphisms (representability)
+
+- representability and presheaves
+
+- yoneda lemma
 
 == 集合论撷英 <sec:set-theory>
 

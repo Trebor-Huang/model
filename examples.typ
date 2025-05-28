@@ -251,7 +251,7 @@ $Pi$ 类型也具有 $eta$ 规则，因此不额外添加错误值。$Pi A B$ �
 
 例子：并非所有映射都是展映射
 
-== 群胚
+== 群胚 <sec:groupoid>
 
 - A little bit of history
 - Intuition of paths and spaces
