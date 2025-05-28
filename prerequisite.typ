@@ -319,31 +319,41 @@ $)
   一个*范畴* $cal(C)$ 包含一些对象 $X, Y, Z, dots in "Obj"(cal(C))$，并且每个对象之间有集合 $hom(X, Y)$，其元素称作*态射*或者*箭头*，写作 $f : X -> Y$。态射之间有复合操作，将 $f : X -> Y$ 与 $g : Y -> Z$ 复合为 $g compose f : X -> Z$。这里复合的顺序与函数复合保持一致。复合满足结合律 $(h compose g) compose f = h compose (g compose f)$，并且每个对象都配有单位箭头 $id_X$，满足 $f compose id_X = f = id_Y compose f$。
 ] <def:category>
 
-在数学中有许多只用态射之间的复合关系就能表达的概念。它们都可以直接表述为范畴论中的一般概念。
-
+例如，集合与集合之间的函数构成范畴 $Set$。各种数学对象都可以类似地构成范畴。
+在数学中有许多只用态射之间的复合关系就能表达的事物。它们都可以直接表述为范畴论中的一般概念。例如集合的双射、代数结构的同构、拓扑空间的同胚，都可以用范畴语言表达：
 #definition[
   假如有箭头 $f : X -> Y$ 与 $g : Y -> X$ 满足 $f compose g = id_Y$ 与 $g compose f = id_X$，那么就说 $f$ 是*同构*，而 $g$ 是其*逆态射*。
 ]
 
-范畴中论证的一大组成就是#translate[追图][diagram chasing]。这类似初等平面几何学中的#translate[倒角][angle chasing]，即在复杂的图形中利用一系列性质给出角度的连等式。例如，同构的逆态射总是唯一的，或者以下引理，都是利用追图证明的。
+范畴中论证的一大组成就是#translate[追图][diagram chasing]。这类似初等平面几何学中的#translate[倒角][angle chasing]，即在复杂的图形中利用一系列性质给出角度的连等式。例如，同构的逆态射总是唯一的，或者以下引理，都是利用追图证明的。证明留给读者。
 #lemma[
   给定三个映射
   #eq($ X xarrow(f) Y xarrow(g) Z xarrow(h) W, $)
   如果 $g compose f$ 与 $h compose g$ 都是同构，那么图中所有的映射都是同构。
 ]
-证明留给读者。
 
-(...)
-
-universal property
+范畴中大部分概念都以#translate[泛性质][universal property] 的形态出现。对于范畴论初学者来说，泛性质的格式是要求某个图表中存在唯一一个态射满足某些等式。以乘积为例。
 
 #definition[
   给定范畴 $cal(C)$ 中的两个对象 $X$、$Y$，假设有对象 $Z$ 与态射 $pi_1 : Z -> X$、$pi_2 : Z -> Y$ 使得对于任何别的对象 $Z'$ 与态射 $f : Z' -> X$ 和 $g : Z' -> Y$，都有唯一的箭头 $(f, g) : Z' -> Z$ 使得 $pi_1 compose (f, g) = f$，$pi_2 compose (f, g) = g$。此时称 $(Z, pi_1, pi_2)$ 构成 $X$ 与 $Y$ 的*乘积*。
 ]
+例如，集合之间的 Descartes 乘积 $X times Y = {(x, y) mid(|) x in X, y in Y}$ 构成范畴论意义的乘积。
+泛性质的重要特征是保证了定义的唯一性。
+#theorem[
+  给定两个对象 $X$ 与 $Y$ 之间的两个乘积 $(Z, pi_1, pi_2)$ 与 $(Z', pi'_1, pi'_2)$，存在唯一的同构 $f : Z -> Z'$ 满足 $pi'_i compose f = pi_i$。
+]
+#proof[
+  利用 $(Z, pi_1, pi_2)$ 的泛性质，可以得到箭头 $g : Z' -> Z$ 满足 $pi_i compose g = pi'_i$。同理利用 $(Z', pi'_1, pi'_2)$ 的泛性质也可以得到箭头 $f : Z -> Z'$ 满足 $pi'_i compose f = pi_i$。两者复合得到箭头 $f compose g$ 满足 #eq($ pi'_i compose f compose g = pi_i compose g = pi'_i. $) 另一方面，恒等映射 $id : Z' -> Z'$ 也满足 $pi'_i compose id = pi'_i$，但是泛性质保证了这样的映射的唯一性，所以 $f compose g = id$。同理 $g compose f = id$，所以 $f$ 构成同构。
+]
+初学者务必注意此唯一性定理的具体叙述。有了唯一性，我们可以记 $X$ 与 $Y$ 的乘积为 $X times Y$。它满足定理如 $(X times Y) times Z$ 同构于 $X times (Y times Z)$ 等等，都可以依靠泛性质追图证明。
 
-(...)
+范畴之间的映射关系是函子。
 
-functor
+#definition[
+  给定范畴 $cal(C)$ 与 $cal(D)$，*函子* $F$ 包括对象之间的映射 $"Obj"(cal(C)) -> "Obj"(cal(D))$ 与箭头之间的映射 $hom(X, Y) -> hom(F(X), F(Y))$，满足 $F(id_X) = id_(F(X))$ 与 $F(f compose g) = F(f) compose F(g)$。
+]
+
+粗略来说，利用某个数学对象构造新的数学对象，往往都构成合适范畴之间的函子。
 
 natural isomorphism
 
