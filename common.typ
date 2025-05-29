@@ -1,7 +1,9 @@
 #import "@preview/cetz:0.3.4": canvas, draw
 #import "@preview/fletcher:0.5.7" as fletcher: diagram, node, edge
+#let diagram = diagram.with(label-size: 0.85em, label-sep: 0.15em)
 #let edgeL = edge.with(label-side: left)
 #let edgeR = edge.with(label-side: right)
+#let edgeM = edge.with(label-side: center)
 
 #let hyperlink(dest, body) = link(dest, underline(text(fill: color.oklch(45%, 55%, 250deg), body), offset: 0.2em))
 
@@ -69,6 +71,7 @@
 #let isnf = math.op(text(fill: color.oklch(50%, 80%, 200deg), math.sans("nf")))
 #let isne = math.op(text(fill: color.oklch(50%, 80%, 80deg), math.sans("ne")))
 #let isvar = math.op(text(fill: color.oklch(50%, 0%, 0deg), math.sans("var")))
+#let typeof = math.op("typeof")
 #let interpret(x) = math.lr(math.class("opening",sym.bracket.double) + x + math.class("closing",sym.bracket.double.r))
 #let bind = math.class("punctuation", ".")
 #let ite(b,t,f) = $"if" #b "then" #t "else" #f$

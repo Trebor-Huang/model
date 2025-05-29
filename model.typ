@@ -12,7 +12,9 @@ model structure and spaces
 
 Sattler's model structure criteria?
 
-== Voevodsky 单纯集模型
+== 单纯集模型
+
+Воеводский (Voevodsky), paper by Chris Kapulkin and Peter LeFanu Lumsdaine
 
 Introduce fibrant types
 

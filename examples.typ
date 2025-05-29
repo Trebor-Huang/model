@@ -259,7 +259,7 @@ $Pi$ 类型也具有 $eta$ 规则，因此不额外添加错误值。$Pi A B$ �
 
 == 可计算性与模型
 
-构造主义往往与可计算的事物联系在一起。这是因为构造主义中的原理都可以找到程序对应。这就是 Brouwer–Heyting–Колмого́ров 解释。相反，排中律就难以找到类似的程序.#footnote[如果拓展我们对程序的定义，那么仍然可以找到#translate[计算续体][continuation] 等解释。但是 “一个程序要么停机要么不停机” 无论如何也不可能解释出可以判定停机性的程序，因此这样的拓展是有限度的。] 不过，BHK 解释并不是声称_所有_能找到程序对应的逻辑原理_都属于_构造主义。事实上，有一些逻辑原理虽然有程序对应，但我们一般不认为是纯粹构造的。
+构造主义往往与可计算的事物联系在一起。这是因为构造主义中的原理都可以找到程序对应。这就是 Brouwer–Heyting–Колмогоров 解释。相反，排中律就难以找到类似的程序.#footnote[如果拓展我们对程序的定义，那么仍然可以找到#translate[计算续体][continuation] 等解释。但是 “一个程序要么停机要么不停机” 无论如何也不可能解释出可以判定停机性的程序，因此这样的拓展是有限度的。] 不过，BHK 解释并不是声称_所有_能找到程序对应的逻辑原理_都属于_构造主义。事实上，有一些逻辑原理虽然有程序对应，但我们一般不认为是纯粹构造的。
 
 为了消除歧义，往往将完全构造性的原理称作#translate[中性数学][neutral mathematics]。例如可以认为 Martin-Löf 类型论属于中性数学。构造主义逻辑则可以视流派添加额外的公理。例如#translate[直觉主义][intuitionism] 是一种流派，承认可数选择公理等等。俄罗斯流派则致力研究所有能实现为程序的逻辑原理。
 
@@ -350,7 +350,7 @@ $Pi$ 类型也具有 $eta$ 规则，因此不额外添加错误值。$Pi A B$ �
 
 ==== 可数选择
 
-#let markov = "Ма́рков"
+#let markov = "Марков"
 ==== #markov 原理
 
 ==== Church 原理
@@ -364,5 +364,10 @@ $Pi$ 类型也具有 $eta$ 规则，因此不额外添加错误值。$Pi A B$ �
 syntactic version of the exception model
 
 == 语法性质的证明
+
+- Canonicity
+- Normalization
+  - Injectivity of type constructors
+- Parametricity? We can compare semantic and syntactic versions
 
 (promote to own chapter?)
