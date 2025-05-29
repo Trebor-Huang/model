@@ -51,3 +51,12 @@ lean-con-ch:
   parent:
     type: proceedings
     title: Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs
+
+natural-model:
+  type: misc
+  author: Awodey, Steve
+  title: Natural models of homotopy type theory
+  date: 2017
+  note: ArXiv preprint
+  serial-number:
+    doi: 10.48550/arXiv.1406.3219

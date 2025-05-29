@@ -56,6 +56,11 @@
 - 我们还需要保证 $frak(p)$ 是个代换，但是米田引理保证两个可表预层之间的自然变换 $yo(Gamma, A) -> yo(Gamma)$ 与原范畴中的箭头 $(Gamma, A) -> Gamma$ 一一对应，因此不成问题。
 - 严格来说，我们不应该要求拉回可表，而是要具体选出表示对象 $(Gamma, A)$ 与自然同构。以后的讨论有时为了方便会混淆这两者。
 
+我们总结以上的讨论，可以将模型的概念用范畴语言重新表述。模型的这种形式称作#translate[自然模型][natural model]。这个定义由 Steve Awodey~@natural-model 提出，不过 Marcelo Fiore 也独立观察到此事。
+#definition[
+  依值类型论的*自然模型*包含一个范畴 $cal(C)$，其上两个预层 $"Tm"$ 与 $"Tp"$，还有二者之间的可表映射 $typeof : "Tm" -> "Tp"$。
+]
+
 
 Presheaf as discrete fibrations, formulation of representability
 
