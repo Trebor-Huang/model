@@ -313,7 +313,7 @@ $)
 
 == 范畴论筑基
 
-本文采用的思路是尽可能晚引入范畴语言。不熟悉范畴的读者也可以跳过此节继续阅读。这一节对范畴论基础蜻蜓点水，同时也确定一些有歧义的记号的写法。
+本书采用的思路是尽可能晚引入范畴语言，因此推荐不熟悉范畴的读者跳过此节继续阅读。这一节对范畴论基础蜻蜓点水，同时也确定一些有歧义的记号的写法。
 
 #definition[
   一个*范畴* $cal(C)$ 包含一些对象 $X, Y, Z, dots in "Obj"(cal(C))$，并且每个对象之间有集合 $hom(X, Y)$，其元素称作*态射*或者*箭头*，写作 $f : X -> Y$。态射之间有复合操作，将 $f : X -> Y$ 与 $g : Y -> Z$ 复合为 $g compose f : X -> Z$。这里复合的顺序与函数复合保持一致。复合满足结合律 $(h compose g) compose f = h compose (g compose f)$，并且每个对象都配有单位箭头 $id_X$，满足 $f compose id_X = f = id_Y compose f$。
@@ -325,8 +325,8 @@ $)
   假如有箭头 $f : X -> Y$ 与 $g : Y -> X$ 满足 $f compose g = id_Y$ 与 $g compose f = id_X$，那么就说 $f$ 是*同构*，而 $g$ 是其*逆态射*。
 ]
 
-范畴中论证的一大组成就是#translate[追图][diagram chasing]。这类似初等平面几何学中的#translate[倒角][angle chasing]，即在复杂的图形中利用一系列性质给出角度的连等式。例如，同构的逆态射总是唯一的，或者以下引理，都是利用追图证明的。证明留给读者。
-#lemma[
+范畴中论证的一大组成就是#translate[追图][diagram chasing]。这类似初等平面几何学中的#translate[倒角][angle chasing]，即在复杂的图形中利用一系列性质给出角度的连等式。例如，同构的逆态射总是唯一的，或者以下定理，都是利用追图证明的。证明留给读者。
+#theorem[
   给定三个映射
   #eq($ X xarrow(f) Y xarrow(g) Z xarrow(h) W, $)
   如果 $g compose f$ 与 $h compose g$ 都是同构，那么图中所有的映射都是同构。
@@ -353,17 +353,38 @@ $)
   给定范畴 $cal(C)$ 与 $cal(D)$，*函子* $F$ 包括对象之间的映射 $"Obj"(cal(C)) -> "Obj"(cal(D))$ 与箭头之间的映射 $hom(X, Y) -> hom(F(X), F(Y))$，满足 $F(id_X) = id_(F(X))$ 与 $F(f compose g) = F(f) compose F(g)$。
 ] <def:functor>
 
-粗略来说，利用某个数学对象构造新的数学对象，往往都构成合适范畴之间的函子。
+粗略来说，利用某个数学对象构造新的数学对象，往往都构成合适范畴之间的函子。有时候，我们希望构造箭头方向相反的函子，即将 $X -> Y$ 的箭头映射到 $F(Y) -> F(X)$ 的箭头。这称作#define[反变][contravariant] 函子。不过，我们可以避免额外做此定义。只需要考虑范畴 $cal(C)^"op"$，即将 $cal(C)$ 中的箭头方向反转得到的心范畴，即可将反变函子定义为 $cal(C)^"op" -> cal(D)$ 的普通函子。
 
-natural isomorphism
+函子之间还有更高一级的映射关系。
 
-- Natural isomorphism chains
+#definition[
+  给定函子 $F, G : cal(C) -> cal(D)$，*自然变换* $alpha$ 为每个对象 $X in "Obj"(cal(C))$ 赋予箭头 $alpha_X : F(X) -> G(X)$，使任何 $cal(C)$ 中的箭头 $f : X -> Y$ 都有等式 $G(f) compose alpha_X = alpha_Y compose F(f)$。换言之，以下方形交换。
+  #eq(diagram($
+    F(X) edge(->, F(f)) edge(->, "d", alpha_X) & F(Y) edgeL(->, "d", alpha_Y) \
+    G(X) edgeR(->, G(f)) & G(Y)
+  $))
+] <def:natural-transform>
 
-universal property as natural isomorphisms (representability)
+不难看出有恒等自然变换 $id : F -> F$，并且两个自然变换 $F -> G$ 与 $G -> H$ 可以复合。这意味着固定两个范畴 $cal(C)$ 与 $cal(D)$，它们之间的函子构成另一个范畴，写作 $[cal(C), cal(D)]$。如果自然变换的每个箭头都是同构，那么每个箭头分别取逆可以得到另一个自然变换。此时称其为*自然同构*。换句话说，这是函子范畴中的同构。
 
-- representability and presheaves
+本书不是范畴论教材，因此不详细讨论这些概念的直观。但是值得一提的是，自然同构可以给出泛性质的另一种理解方式，在实践中非常方便。
+#theorem[
+  两个对象的乘积与以下定义等价：$X$ 与 $Y$ 的乘积是一个对象 $Z$ 配备自然同构 $hom(-, Z) tilde.equiv hom(-, X) times hom(-, Y)$。
+]
+这里，$hom(-, X)$ 表示函子 $F(W) = hom(W, X)$，是从 $cal(C)^"op"$ 到 $Set$ 的函子。本质上说，泛性质描述的是某些箭头之间有双射关系，因为泛性质定义中的 “唯一” 与 “存在” 分别对应单射与满射。自然性则保证了这样的双射与箭头之间的复合操作兼容。我们趁机定义指数对象的概念。指数对象是对函数集合的范畴论抽象。它也可以用图表风格的语言定义，但是比较繁琐。
+#definition[
+  给定对象 $X$ 与 $Y$，*指数对象* $X^Y$ 是配备了自然同构 $hom(-, X^Y) tilde.equiv hom(- times Y, X)$ 的对象.
+]
 
-- yoneda lemma
+一般而言，泛性质有一半可以写成某个对象 $X$ 配备自然同构 $hom(-, X) tilde.equiv F(-)$，其中 $F$ 是从 $cal(C)^"op"$ 到 $Set$ 的函子。另一半则是对偶地描述 $hom(X, -) tilde.equiv F(-)$，这里 $F : cal(C) -> Set$。换言之，我们描述指向 $X$ 的箭头或者从 $X$ 出发的箭头，从而定义对象 $X$。这种定义的合理性是由以下引理保证的。
+
+#lemma[米田#footnote[罗马字为 Yoneda。]][
+  给定对象 $X in "Obj"(cal(C))$ 与函子 $F : cal(C)^"op" -> Set$，定义 $yo(X)$ 为函子 $hom(-, X)$，则集合 $F(X)$ 与自然变换 $yo(X) -> F$ 的集合构成双射。特别地，$yo(X) -> yo(Y)$ 的自然变换与箭头 $X -> Y$ 的集合构成双射。
+]
+
+米田引理保证了，只要描述指向 $X$ 的箭头，就能完全确定 $X$ 本身。具体来说，一套这样的描述就是一个函子 $F : cal(C)^"op" -> Set$。因此我们可以认为这样的函子是某种虚构的 “广义对象”。它描述了某个对象如果存在的话会有哪些箭头指向它。我们将这种函子称作 $cal(C)$ 上的*预层*，其构成的函子范畴称作预层范畴 $Psh(cal(C))$。$yo$ 则构成了 $cal(C) -> Psh(cal(C))$ 的含入函子，将原范畴嵌入到广义对象的范畴中。如果预层 $F$ 自然同构于某个 $yo(X)$，就说 $F$ 是#define[可表][representable] 预层。
+
+这样的视角可以将许多追图证明变为颇具代数风格的连等式计算。要证明两个对象 $X$ 与 $Y$ 同构，只需要说明 $yo(X)$ 与 $yo(Y)$ 自然同构，而它们的泛性质又可以允许我们将它们展开成别的预层进行计算。
 
 == 集合论撷英 <sec:set-theory>
 

@@ -1,5 +1,7 @@
 #import "@preview/cetz:0.3.4": canvas, draw
 #import "@preview/fletcher:0.5.7" as fletcher: diagram, node, edge
+#let edgeL = edge.with(label-side: left)
+#let edgeR = edge.with(label-side: right)
 
 #let hyperlink(dest, body) = link(dest, underline(text(fill: color.oklch(45%, 55%, 250deg), body), offset: 0.2em))
 
@@ -21,6 +23,7 @@
 #let thmstyle = thmplain.with(
   separator: [. ],
   titlefmt: strong,
+  namefmt: x => [(#x)],
   bodyfmt: content => content + parbreak(),
   inset: (left: 0em, right: 0em),
   base_level: 2
@@ -70,6 +73,8 @@
 #let bind = math.class("punctuation", ".")
 #let ite(b,t,f) = $"if" #b "then" #t "else" #f$
 #let Set = math.sans("Set")
+#let Psh = math.sans("Psh")
+#let yo = math.class("unary", "よ")
 
 #let xarrow(arrow: sym.arrow, ..args, sup: none, sub: none) = {
   if args.pos().len() >= 1 {
