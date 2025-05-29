@@ -12,9 +12,9 @@
 #show: thmrules.with(qed-symbol: [#sym.square#parbreak()])
 
 // CJK punctuation
-#show "。": "." + h(0.5em, weak: true)
-#show "：": ":" + h(0.4em, weak: true)
-#show "，": "," + h(0.35em, weak: true)
+#show "。": ". " + h(0.15em, weak: true) // + h(0.5em, weak: true)
+#show "：": ": " + h(0.1em, weak: true) // + h(0.4em, weak: true)
+#show "，": ", " // + h(0.35em, weak: true)
 #show "（": " ("
 #show "）": ") "
 #show "、": "、" + h(-0.2em)
