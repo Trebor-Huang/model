@@ -23,7 +23,7 @@
 - 从 $(Gamma, A)$ 到 $Gamma$ 的投影代换 $frak(p)$ 定义为 $(x, y) |-> x$，而变量 $Gamma, a:A tack a : A$ 解释为元素族 $interpret(a)_((x, y)) = y$。
 
 我们可以按照直观写出各种类型在集合模型中的解释。读者只需熟记任何类型都是依值于语境的，即可轻松得到正确的写法。这样，对于任何表达式，例如 $lambda (x : NN) bind x + 1$，都能在集合里找到对应的元素解释。
-- 单元素类型的解释为 $interpret(1)_x = {star}$，Boole类型的解释为 $interpret("Bool")_x = {"true", "false"}$。这两者都不依赖参数 $x in interpret(Gamma)$。
+- 单元素类型的解释为 $interpret(Unit)_x = {star}$，Boole 类型的解释为 $interpret(Bool)_x = {"true", "false"}$。这两者都不依赖参数 $x in interpret(Gamma)$。
 - 给定 $Gamma tack A istype$ 与 $Gamma, A tack B istype$，$Sigma$ 类型的解释为
   #eq($ interpret(Sigma A B)_x = product.co_(a in interpret(A)_x) interpret(B)_((x, a)) $)
   而 $Pi$ 类型则是将 $product.co$ 换为 $product$。
@@ -74,33 +74,33 @@
 不同的类型论会在以上的基础上添加各自的类型，因此在模型中也会相应的按照这些类型的规则定义类型结构。我们以几个常见的类型为例，展示这些类型结构的一般定义办法。这些定义只消对类型论规则作机械地改写即可得到，读者观察出规律即可跳过。读者也可以试着用定理证明助手形式化集合模型的构造，有助于消化其中微妙之处。
 
 ==== 单元素类型
-对于每个语义语境 $Gamma$，选择语义类型 $"Unit" in "Tp"(Gamma)$。严格来说，应该写作 $"Unit"_Gamma$，因为每个语境的类型是不同的。单元素类型的规则如下：
+对于每个语义语境 $Gamma$，选择语义类型 $Unit in "Tp"(Gamma)$。严格来说，应该写作 $Unit_Gamma$，因为每个语境的类型是不同的。单元素类型的规则如下：
 #let star = math.class("normal", sym.star)
 #eq($
   rule(
-    Gamma tack star : "Unit"
+    Gamma tack star : Unit
   ) quad
   rule(
-    Gamma tack t = star : "Unit",
-    Gamma tack t : "Unit"
+    Gamma tack t = star : Unit,
+    Gamma tack t : Unit
   )
 $)
-这可以直接翻译到模型的语言中，即为每个 $"Unit"_Gamma$ 选择元素 $star_Gamma : "Tm"(Gamma, "Unit"_Gamma)$，使得 $"Tm"(Gamma, "Unit"_Gamma)$ 中的所有元素都与之相等。
+这可以直接翻译到模型的语言中，即为每个 $Unit_Gamma$ 选择元素 $star_Gamma : "Tm"(Gamma, Unit_Gamma)$，使得 $"Tm"(Gamma, Unit_Gamma)$ 中的所有元素都与之相等。
 
 不过，#[@sec:explicit-substitution]的讨论中，我们提到需要将代换在表达式上的行为作为判值相等加入规则中。这里，因为没有变量，代换的行为非常简单。
 #eq($
   rule(
-    Gamma tack "Unit" sigma = "Unit" istype,
+    Gamma tack Unit sigma = Unit istype,
     Gamma tack sigma : Delta
   ) quad
   rule(
-    Gamma tack star sigma = star : "Unit",
+    Gamma tack star sigma = star : Unit,
     Gamma tack sigma : Delta
   )
 $)
-因此模型的定义中需要添加等式要求 $"Unit"_Delta sigma = "Unit"_Gamma$ 以及 $star_Delta sigma = star_Gamma$。之后的规则中我们会省略下标，写作 $star sigma = star$.#footnote[由于 $"Tm"(Gamma, "Unit")$ 都只有一个元素，因此等式 $star sigma = star$ 是自动满足的。别的类型则不然。]
+因此模型的定义中需要添加等式要求 $Unit_Delta sigma = Unit_Gamma$ 以及 $star_Delta sigma = star_Gamma$。之后的规则中我们会省略下标，写作 $star sigma = star$.#footnote[由于 $"Tm"(Gamma, Unit)$ 都只有一个元素，因此等式 $star sigma = star$ 是自动满足的。别的类型则不然。]
 
-在集合模型中，我们已经构造了集合族 $"Unit"_Gamma$，它为元素 $x in Gamma$ 赋予的集合是 ${star}$。其中 $star$ 是集合论中任意一个对象。而 $star_Gamma$ 对应显然的平凡元素族。
+在集合模型中，我们已经构造了集合族 $Unit_Gamma$，它为元素 $x in Gamma$ 赋予的集合是 ${star}$。其中 $star$ 是集合论中任意一个对象。而 $star_Gamma$ 对应显然的平凡元素族。
 
 ==== $Sigma$ 类型
 给定语义语境 $Gamma$，类型 $A in "Tp"(Gamma)$ 与 $B in "Tp"((Gamma, A))$，$Sigma$ 类型结构需要选定类型 $Sigma A B in "Tp"(Gamma)$。$Sigma$ 类型的构造子如下：
@@ -216,7 +216,7 @@ $)
   "case"_P ("inj"_1 (a), l, r) &= l[id, a], \
   "case"_P ("inj"_2 (b), l, r) &= r[id, b].
 $)
-$eta$ 等式虽然困难不及空类型的情形，但是仍可产生神奇的推论。注意到 Boole 类型与 $"Unit" + "Unit"$ 基本相同，考虑 $f : "Bool" -> "Bool"$，则有判值相等 $f(f(f(x))) = f(x)$。读者可以观察 Gabriel Scherer~@stlc-sum-eta 的工作。
+$eta$ 等式虽然困难不及空类型的情形，但是仍可产生神奇的推论。注意到 Boole 类型与 $Unit + Unit$ 基本相同，考虑 $f : Bool -> Bool$，则有判值相等 $f(f(f(x))) = f(x)$。读者可以观察 Gabriel Scherer~@stlc-sum-eta 的工作。
 
 在集合模型中，不交并的解释就是集合族的不交并，即 $(A + B)_x = A_x + B_x$，其中后者的 $+$ 是集合的不交并。$"case"$ 的定义略显繁琐，不过也是十分自然的。
 

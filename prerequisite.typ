@@ -5,7 +5,7 @@
 
 阅读本文，读者自然需要对依值类型论有基础的了解。例如 $Sigma$ 与 $Pi$ 类型的规则，读者应当胸有成竹。同样，如果读者希望阅读同伦类型论相关的章节，就需要对同伦类型论有了解，反之则跳过也不影响阅读。
 
-本文不会花费过多笔墨讨论变量的处理。我们在公式中一般直接使用具名变量，但是 $lambda x. x$ 与 $lambda y. y$ 直接视作等同，不加额外说明。对于#translate[语境][context] 而言，如果希望强调其不依赖变量名的属性，可能将 $(Gamma, x:A)$ 写作 $(Gamma, A)$。为了方便书写，我们也将 $Sigma$ 类型写成 $(x : A) times B(x)$，与非依值的 $A times B$ 对应。$Pi$ 类型写成 $(x : A) -> B(x)$。不依赖变量名时，则直接写作 $Sigma A B$ 与 $Pi A B$。
+本文不会花费过多笔墨讨论变量的处理。我们在公式中一般直接使用具名变量，但是 $lambda x. x$ 与 $lambda y. y$ 直接视作等同，不加额外说明。对于#translate[语境][context] 而言，如果希望强调其不依赖变量名的属性，可能将 $(Gamma, x:A)$ 写作 $(Gamma, A)$。为了方便书写，我们也将 $Sigma$ 类型写成 $(x : A) times B(x)$，与非依值的 $A times B$ 对应。同理 $Pi$ 类型写成 $(x : A) -> B(x)$。在无变量名的写法中则作 $Sigma A B$ 与 $Pi A B$。
 
 依值类型论的定义中，往往先定义不考虑类型的表达式集合，称作#translate[原始表达式][raw term]，再定义类型规则剔除类型不合的表达式，并给出#translate[判值相等][judgmental equality] 关系。这样可以得到一系列集合
 #eq($"Ctx" quad "Tp"(Gamma) quad "Tm"(Gamma, A)$)
@@ -220,25 +220,25 @@ $)
     )$,
     // Boolean
     $rule(
-      Gamma tack "Bool" isnf istype
+      Gamma tack Bool isnf istype
     )$,
     $rule(
-      Gamma tack "true" : "Bool" isnf
+      Gamma tack "true" : Bool isnf
     )$,
     $rule(
-      Gamma tack "false" : "Bool" isnf
+      Gamma tack "false" : Bool isnf
     )$,
     $rule(
       Gamma tack ite(b, s, t) : A[x\/b] isne,
-      Gamma\, x : "Bool" tack A istype,
-      Gamma tack b : "Bool" isne,
+      Gamma\, x : Bool tack A istype,
+      Gamma tack b : Bool isne,
       Gamma tack s : A[x\/"true"] isnf,
       Gamma tack t : A[x\/"false"] isnf,
     )$,
     // Variable
     $rule(
-      Gamma tack t : "Bool" isnf,
-      Gamma tack t : "Bool" isne
+      Gamma tack t : Bool isnf,
+      Gamma tack t : Bool isne
     )$,
     $rule(
       Gamma tack x : A isne,
@@ -248,7 +248,7 @@ $)
   )
 )<fig:normal-form>
 
-注意@fig:normal-form 中，一条规则是 Boole 类型的中性形式都是正规形式。严格来说，这在正规形式的递归定义中应该写成构造子 $iota : "Ne"(Gamma, "Bool") -> "Nf"(Gamma, "Bool")$，但是我们写作隐式转换。另外，因为没有写出宇宙的规则，所以无法构造类型变量，故暂时不存在任何中性类型。宇宙满足大体规则格式如下，其中宇宙 $cal(U)$ 只包含乘积类型为例。
+注意@fig:normal-form 中，一条规则是 Boole 类型的中性形式都是正规形式。严格来说，这在正规形式的递归定义中应该写成构造子 $iota : "Ne"(Gamma, Bool) -> "Nf"(Gamma, Bool)$，但是我们写作隐式转换。另外，因为没有写出宇宙的规则，所以无法构造类型变量，故暂时不存在任何中性类型。宇宙满足大体规则格式如下，其中宇宙 $cal(U)$ 只包含乘积类型为例。
 #eq($
   rule(
     Gamma tack cal(U) istype
@@ -309,7 +309,7 @@ $)
 $)
 也可以同理定义 $Gamma tack sigma : Delta isne$。这些规则中还用到了 $Gamma tack x : A isvar$ 的写法，其意义自明。而若有代换 $Gamma tack sigma : Delta isvar$，即每一项都是变量，我们就称 $sigma$ 是#define[更名][renaming] 代换。
 
-程序员一般不太关心正规形式，因为程序的运行求值不会在有变量的环境下进行。例如 $lambda x bind x + (1 + 1)$ 在运行时不会计算为 $lambda x bind x + 2$，而是等到有参数输入后再进行计算。更狭义而言，只有一小部分 “基础” 类型能在运行时提供信息，例如 $"Bool"$ 类型或者自然数类型 $NN$。在无变量的情况下，这些类型的正规形式非常简单。例如 $"Bool"$ 类型只有 $"true"$ 与 $"false"$ 两个元素。这类表达式称作#define[典范形式][canonical form]。
+程序员一般不太关心正规形式，因为程序的运行求值不会在有变量的环境下进行。例如 $lambda x bind x + (1 + 1)$ 在运行时不会计算为 $lambda x bind x + 2$，而是等到有参数输入后再进行计算。更狭义而言，只有一小部分 “基础” 类型能在运行时提供信息，例如 $Bool$ 类型或者自然数类型 $NN$。在无变量的情况下，这些类型的正规形式非常简单。例如 $Bool$ 类型只有 $"true"$ 与 $"false"$ 两个元素。这类表达式称作#define[典范形式][canonical form]。
 
 == 范畴论筑基
 
