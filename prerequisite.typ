@@ -161,7 +161,7 @@ $)
 #let convert = math.class("unary", sym.arrow.t)
 依值类型论中往往有多重宇宙，它们主要的功能之一是控制类型的大小。这里需要区分的是宇宙之间的#define[累积][cumulation] 关系与元素关系。在 Tarski 宇宙下，累积性是指有算符 $convert$ 将低层宇宙的元素变为高层宇宙的元素，使得#footnote[不同的宇宙理论上应当使用不同的 $"El"$ 算符，例如写作 $"El"_(cal(U)_1)$ 与 $"El"_(cal(U)_2)$。这里略去。]
 #eq($ "El"(convert A) = "El"(A) istype $)
-成立，即这两个名字指代的是同一个类型。Russell宇宙下可以将 $"El"$ 与 $convert$ 都作为隐式转换处理。元素关系则是说存在大宇宙的一个元素 $U_1 : cal(U)_2$，使得 $"El"(U_1) = cal(U)_1$ 是小宇宙。 Russell 宇宙下可以写作 $cal(U)_1 : cal(U)_2$. 这两个性质是互相独立的，即两两组合一共有四种可能性。
+成立，即这两个名字指代的是同一个类型。这需要满足等式如 $convert(Pi A B) = Pi(convert A)(convert B)$ 等。Russell宇宙下可以将 $"El"$ 与 $convert$ 都作为隐式转换处理。元素关系则是说存在大宇宙的一个元素 $U_1 : cal(U)_2$，使得 $"El"(U_1) = cal(U)_1$ 是小宇宙。 Russell 宇宙下可以写作 $cal(U)_1 : cal(U)_2$. 这两个性质是互相独立的，即两两组合一共有四种可能性。
 
 控制大小也可以无需宇宙。可以依靠多个类型判断 $Gamma tack A istype_kappa$ 表示类型的不同大小，其中 $kappa$ 是控制大小的层级参数。换句话说，我们选择多个集合 $"Tp"_kappa (Gamma)$ 与对应的元素 $"Tm"_kappa (Gamma, A)$。类型论的各种规则都可以添加层级标记，例如
 #eq($
@@ -169,6 +169,8 @@ $)
   rule(Gamma tack cal(U)_kappa istype_(kappa^+)).
 $)
 这样，控制大小的功能就与宇宙为类型提供名字的功能独立了。这种办法称作 *Coquand 层级*。另外一个好处是，在这种情况下可以引入 $"El"$ 的逆运算，给定 $A istype_kappa$，给出它的一个名字 $ceil(A) : cal(U)_kappa$。Tarski 宇宙因为同时承担了控制大小与提供名字的功能，因此不能引入这种算符：$A istype$ 无法确定应该让 $ceil(A)$ 处在哪个宇宙中。这样还可以避免 Tarski 宇宙中分别引入类型构造子与 $cal(U)$ 元素的构造子的重复劳作。例如只需将 $A, B : cal(U)$ 的乘积定义为 $A dot(times) B = ceil("El"(A) times "El"(B))$ 即可。
+
+宇宙的另一大问题是非直谓宇宙，见 #[@sec:impredicative-universe]的讨论。
 
 === 正规形式与典范形式
 

@@ -367,16 +367,33 @@ You can improve to $Sigma$ type by searching the minimal one
 
 ==== Church 原理
 
-=== 非直谓宇宙
+=== 非直谓宇宙 <sec:impredicative-universe>
 
-- Discuss why large elimination is not possible
-- Impredicative universe valued choice?
+(Move to introduction??)
+
+- General theory of impredicative universes
+  - Proposition as elements of `Prop`, compare with HoTT
+  - Choice and Diaconescu's theorem (Appendix?)
+- The universe structure of CoC, CIC and pCIC
+- Girard's paradox
+- Inductive types, large elimination
+  - Berardi's paradox
+
+Figure out where to put these:
+- Proof irrelevant model of Prop
+  - Tricky a priori, if $"Prop" : "Set"$ ($V_1$ is not small)
+  - Easy in Coquand hierarchies, mark variables by sort, but cumulativity won't hold, i.e. $(Pi_"Prop" A B)' != Pi_"Set" A' B'$
+  - Easy if Prop is not a universe, Pi and Forall separated
+- Proof relevant model of Prop, allowing large elimination
+  - Mention $Lambda$-sets here or below?
+
 
 == 操作语义与模型
 
 == 语法翻译
 
-syntactic version of the exception model
+- syntactic version of the exception model/labelled function model
+- injectivity of type constructors via labels
 
 == 语法性质的证明
 
