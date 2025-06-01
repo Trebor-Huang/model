@@ -23,7 +23,7 @@
 // Defintions
 #import "@preview/ctheorems:1.1.3": *
 #let thmstyle = thmplain.with(
-  separator: [. ],
+  separator: [*.* ],
   titlefmt: strong,
   namefmt: x => [(#x)],
   bodyfmt: content => content + parbreak(),

@@ -369,6 +369,8 @@ You can improve to $Sigma$ type by searching the minimal one
 
 === 非直谓宇宙 <sec:impredicative-universe>
 
+@appendix:impredicative 中
+
 (Move to introduction??)
 
 - General theory of impredicative universes

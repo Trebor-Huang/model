@@ -170,7 +170,7 @@ $)
 $)
 这样，控制大小的功能就与宇宙为类型提供名字的功能独立了。这种办法称作 *Coquand 层级*。另外一个好处是，在这种情况下可以引入 $"El"$ 的逆运算，给定 $A istype_kappa$，给出它的一个名字 $ceil(A) : cal(U)_kappa$。Tarski 宇宙因为同时承担了控制大小与提供名字的功能，因此不能引入这种算符：$A istype$ 无法确定应该让 $ceil(A)$ 处在哪个宇宙中。这样还可以避免 Tarski 宇宙中分别引入类型构造子与 $cal(U)$ 元素的构造子的重复劳作。例如只需将 $A, B : cal(U)$ 的乘积定义为 $A dot(times) B = ceil("El"(A) times "El"(B))$ 即可。
 
-宇宙的另一大问题是非直谓宇宙，见 #[@sec:impredicative-universe]的讨论。
+宇宙的另一大问题是非直谓宇宙，见#[@appendix:impredicative]的讨论。
 
 === 正规形式与典范形式
 

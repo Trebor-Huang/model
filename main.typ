@@ -58,14 +58,39 @@ Trebor\ #v(1em)
   #counter(footnote).update(0)
   #set align(center)
   #set text(size: 20pt)
-  #it
+  #if it.numbering == none {
+    it
+  } else {
+    block[
+      #counter(heading).display()#h(1em)#it.body
+    ]
+  }
 ]
-#show heading.where(level: 2): set text(size: 16pt)
+#let section-fill = color.oklch(90%, 50%, -80deg)
+#show heading.where(level: 2): it => [
+  #set text(size: 16pt)
+  #block(sticky: true)[
+    #box(place(
+      bottom+right,
+      dx: -0.5em,
+      align(right, box(
+        counter(heading).display(),
+        inset: (right: 0.45em),
+        outset: 0.3em,
+        width: 2.5cm,
+        // fill: section-fill,
+        stroke: 0.5pt,
+        radius: 0.2em,
+      ))
+    ))#it.body
+  ]
+]
 #show heading.where(level: 3): set text(size: 14pt)
 #show heading.where(level: 4): set text(size: 12pt)
 #show heading.where(level: 4): box.with(inset: (right: 0.75em))
 
-#outline(depth: 2, indent: 1.5em)
+#set outline.entry(fill: repeat(gap: 0.2em)[·])
+#outline(depth: 3, indent: 1.5em)
 
 // Redact the chapter number
 #set heading(numbering: (a, ..b) => numbering("1.", ..b))
@@ -76,8 +101,9 @@ Trebor\ #v(1em)
   if el != none and el.func() == heading {
     context {
       if el.level == 1 {
-        link(it.target)[第#numbering("一", ..counter(heading).at(it.target))章]
+        link(it.target)[#numbering(el.numbering, ..counter(heading).at(it.target))]
       } else {
+        // Re-display the chapter number
         link(it.target)[#numbering("1.1", ..counter(heading).at(it.target)) 节]
       }
     }
@@ -100,6 +126,10 @@ Trebor\ #v(1em)
 #include "category.typ"
 
 #include "model.typ"
+
+#counter(heading).update(0)
+#show heading.where(level: 1): set heading(numbering: (k) => [附录 #numbering("A", k)])
+#include "impredicative.typ"
 
 #show heading.where(level: 1): set heading(numbering: none)
 
