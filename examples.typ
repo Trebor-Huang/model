@@ -371,23 +371,12 @@ You can improve to $Sigma$ type by searching the minimal one
 
 @appendix:impredicative 中
 
-(Move to introduction??)
+- Mention proof irrelevant model of Prop (but the main treatment is in the appendix), it's tricky.
+  - Realizability model has that too
 
-- General theory of impredicative universes
-  - Proposition as elements of `Prop`, compare with HoTT
-  - Choice and Diaconescu's theorem (Appendix?)
-- The universe structure of CoC, CIC and pCIC
-- Girard's paradox
-- Inductive types, large elimination
-  - Berardi's paradox
-
-Figure out where to put these:
-- Proof irrelevant model of Prop
-  - Tricky a priori, if $"Prop" : "Set"$ ($V_1$ is not small)
-  - Easy in Coquand hierarchies, mark variables by sort, but cumulativity won't hold, i.e. $(Pi_"Prop" A B)' != Pi_"Set" A' B'$
-  - Easy if Prop is not a universe, Pi and Forall separated
 - Proof relevant model of Prop, allowing large elimination
   - Mention $Lambda$-sets here or below?
+  - Note that squash-type inductives still can't have large induction, otherwise there's Russell's paradox (mention in appendix? probably no need)
 
 
 == 操作语义与模型
