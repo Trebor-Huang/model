@@ -25,7 +25,16 @@ Figure out where to put these:
 
 === Russell 悖论
 
+- Version in type theory (need Sigma type, or impredicative encoding of it?? which means $* : *$)
+
 === Girard 悖论
+#let Uminus = $"U"^-$
+
+Russell 悖论不能直接套，因为 U 系统中所有类型都可正规化。同时 U 系统的类型检查可判定，并且等式理论自洽
+
+- Girard (1972), simplification of the Burali–Forti paradox, order without torsion
+- Coquand's formulation (1986), well-founded relation
+- Hurkens paradox, double powerset
 
 === Berardi 悖论
 

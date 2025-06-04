@@ -167,29 +167,29 @@ $)
 这实际上给出了 $"lam"$ 的反函数 $"lam"^(-1) (t) = "app"(t frak(p), frak(q))$。换句话说是将语境 $Gamma$ 中的函数 $t$ 映射到语境 $(Gamma, x : A)$ 中的表达式 $t(x)$，其中 $x$ 是新变量。 $beta$ 与 $eta$ 等式保证了这两个映射互逆。
 
 ==== 空类型 <sec:empty-type>
-类似单元素类型，我们要求每个语境下选出类型 $"Empty"_Gamma in "Tp"(Gamma)$，并且在代换下 $"Empty"_Delta sigma = "Empty"_Gamma$。空类型没有构造子，只有消去子：
+类似单元素类型，我们要求每个语境下选出类型 $Empty_Gamma in "Tp"(Gamma)$，并且在代换下 $Empty_Delta sigma = Empty_Gamma$。空类型没有构造子，只有消去子：
 #eq($
   rule(
     Gamma tack "abort"_A (p) : A,
-    Gamma tack p : "Empty",
+    Gamma tack p : Empty,
     Gamma tack A istype
   )
 $)
-严格来说，应该允许 $A$ 依赖于一个空类型的变量，才是完整的依值消去子。不过由于空类型可以推出一切，这并没有太大区别。在语义中，我们需要为每个 $A$ 配备运算 #eq($ "abort"_A : "Tm"(Gamma, "Empty") -> "Tm"(Gamma, A), $) 满足 $"abort"_A (p) sigma = "abort"_(A sigma) (p sigma)$。
+严格来说，应该允许 $A$ 依赖于一个空类型的变量，才是完整的依值消去子。不过由于空类型可以推出一切，这并没有太大区别。在语义中，我们需要为每个 $A$ 配备运算 #eq($ "abort"_A : "Tm"(Gamma, Empty) -> "Tm"(Gamma, A), $) 满足 $"abort"_A (p) sigma = "abort"_(A sigma) (p sigma)$。
 由于没有构造子，空类型没有 $beta$ 等式。
 
-在集合模型中，空类型的解释是空集合族。 如果 $Gamma$ 非空，那么 $"Tm"(Gamma, "Empty")$ 就是空集，否则它恰好有一个元素。这是因为定义域为空的函数集 $varnothing -> X$，或者零个集合的乘积 $product_(p in varnothing) X_p$，都恰好有一个元素。无论是哪种情况，都不难看出 $"abort"_A$ 只有唯一一种构造方式，因此也总是满足代换的等式。
+在集合模型中，空类型的解释是空集合族。 如果 $Gamma$ 非空，那么 $"Tm"(Gamma, Empty)$ 就是空集，否则它恰好有一个元素。这是因为定义域为空的函数集 $varnothing -> X$，或者零个集合的乘积 $product_(p in varnothing) X_p$，都恰好有一个元素。无论是哪种情况，都不难看出 $"abort"_A$ 只有唯一一种构造方式，因此也总是满足代换的等式。
 
 空类型一般也没有 $eta$ 等式。假如有的话，它应该形如这样：
 #eq($
   rule(
     Gamma tack "abort"_A (p) = t : A,
-    Gamma tack p : "Empty",
+    Gamma tack p : Empty,
     Gamma tack A istype,
     Gamma tack t : A
   ).
 $)
-换句话说，如果集合 $"Tm"(Gamma, "Empty")$ 有元素，那么所有集合 $"Tm"(Gamma, A)$ 都必须有唯一的元素。在集合模型中这是成立的。但是在语法中，这意味着如果 $Gamma$ 可以推出矛盾，则 $Gamma$ 下任意类型的所有元素都相等，那么类型检查就需要能判定任意语境是否能推出矛盾，这是不现实的。
+换句话说，如果集合 $"Tm"(Gamma, Empty)$ 有元素，那么所有集合 $"Tm"(Gamma, A)$ 都必须有唯一的元素。在集合模型中这是成立的。但是在语法中，这意味着如果 $Gamma$ 可以推出矛盾，则 $Gamma$ 下任意类型的所有元素都相等，那么类型检查就需要能判定任意语境是否能推出矛盾，这是不现实的。
 
 ==== 不交并
 不交并是类型上的二元运算 $"Tp"(Gamma) times "Tp"(Gamma) -> "Tp"(Gamma)$，满足 $(A + B)sigma = A sigma + B sigma$。有两个函数

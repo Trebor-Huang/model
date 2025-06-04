@@ -74,6 +74,7 @@
 #let typeof = math.op("typeof")
 #let interpret(x) = math.lr(math.class("opening",sym.bracket.double) + x + math.class("closing",sym.bracket.double.r))
 #let bind = math.class("punctuation", ".")
+#let Empty = math.bb("0")
 #let Unit = math.bb("1")
 #let Bool = math.bb("2")
 #let ite(b,t,f) = $"if" #b "then" #t "else" #f$
