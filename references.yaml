@@ -60,3 +60,23 @@ natural-model:
   note: ArXiv preprint
   serial-number:
     doi: 10.48550/arXiv.1406.3219
+
+girard-paradox:
+  type: thesis
+  genre: Doctoral dissertation
+  author: Girard, Jean-Yves
+  title: Interprétation fonctionnelle et élimination des coupures de l'arithmétique d'ordre supérieur
+  date: 1972
+  url: https://girard.perso.math.cnrs.fr/These.pdf
+
+on-cubism:
+  type: article
+  author: Jacobs, Bart
+  title: On Cubism
+  date: 1996
+  page-range: 379-392
+  parent:
+    title: Journal of Functional Programming
+    volume: 6
+    issue: 3
+    publisher: Cambridge University Press
