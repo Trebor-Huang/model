@@ -373,7 +373,7 @@ You can improve to $Sigma$ type by searching the minimal one
 
 === 非直谓宇宙 <sec:impredicative-universe>
 
-@appendix:impredicative 中
+阅读本节需要对非直谓宇宙的定义有所了解。由于通行的术语稍显混乱，建议读者先通读#[@appendix:impredicative] 中对非直谓宇宙的介绍。
 
 - Mention proof irrelevant model of Prop (but the main treatment is in the appendix), it's tricky.
   - Realizability model has that too
@@ -381,6 +381,8 @@ You can improve to $Sigma$ type by searching the minimal one
 - Proof relevant model of Prop, allowing large elimination
   - Mention $Lambda$-sets here or below?
   - Note that squash-type inductives still can't have large induction, otherwise there's Russell's paradox (mention in appendix? probably no need)
+
+- Alternative model proves independence of strong Sigma types within Prop
 
 
 == 操作语义与模型

@@ -91,11 +91,50 @@ $)
 
 === 构造演算用例 <sec:coc-usage-examples>
 
-Some examples of its abilities and limitations
+构造演算的重要性质是可以用非直谓性编码各种数据类型与逻辑谓词。例如与 F 系统中一样可以定义自然数
+#eq($
+  NN = (X : *) -> (X -> X) -> (X -> X).
+$)
+这样，自然数 $n$ 可以编码成 $lambda X f x bind f(f( dots f (x)))$，其中 $f$ 应用 $n$ 次。自然数的加法就是 $n + m = lambda X f x bind n X f (m X f x)$，先应用 $n$ 次，再应用 $m$ 次。这样可以写出许多自然数上的程序。
 
-encoding inductive types (system F)
+至于逻辑，可以定义真命题为 $top = (X : *) -> X -> X$，它有唯一的元素 $lambda X x bind x$，假命题则是 $bot = (X : *) -> X$，没有元素。命题的合取与析取分别是
+#eq($
+  p and q &= (X : *) -> (p -> q -> X) -> X \
+  p or q &= (X : *) -> (p -> X) -> (q -> X) -> X.
+$)
+还能利用 Leibniz 原理定义元素的相等命题。给定 $x, y : A$，有
+#eq($
+  "Id"(A, x, y) = (P : A -> *) -> P(x) -> P(y).
+$)
+这说的是任何对 $x$ 成立的命题，对 $y$ 也成立。尽管看似不对称，但它的确构成等价关系。
 
-Sigma types, strong and weak
+依值类型论中除了 $Pi$ 类型外，另一个重要类型就是 $Sigma$ 类型。不过，非直谓编码无法构造出完整的 $Sigma$ 类型，区别在于消去子。为此我们先作术语辨析。弱消去子为
+#eq($
+  rule(
+    Gamma tack "elim"(p, Q) : C,
+    Gamma tack p : (a : A) times B(a),
+    Gamma tack C istype,
+    Gamma \, a : A \, b : B tack Q : C
+  ).
+$)
+注意 $C$ 不能依赖于 $p$。这意味着无法靠弱消去子取出 $Sigma$ 类型的第二分量，因为其类型不能匹配。强消去子则允许 $C$ 依赖于 $p$，即
+#eq($
+  rule(
+    Gamma tack "elim"(p, Q) : C(p),
+    Gamma tack p : Sigma A B,
+    Gamma\, p : Sigma A B tack C(p) istype,
+    Gamma \, a : A \, b : B tack Q : C(a, b)
+  ).
+$)
+极强消去子则由两个投影函数 $pi_1$ 与 $pi_2$ 构成，也就是通常所说的 $Sigma$ 类型。我们往往还会限制弱消去子与强消去子中类型 $C$ 所处的宇宙层级。如果 $C$ 可以处于任何层级，那么极强消去子与强消去子可以互相推导。另一方面，如果同时存在两个 $Sigma$ 类型，一强一弱，那么二者同构。但是只有弱 $Sigma$ 类型时无法构造出强 $Sigma$ 类型。
+
+利用非直谓宇宙，可以编码弱 $Sigma$ 类型，即
+#eq($
+  (x : A) times P(x) = (C : *) -> ((x : A) -> P(x) -> C) -> C.
+$)
+注意这里限制了 $C$ 只能处于非直谓宇宙 $*$ 中，并且 $Sigma$ 类型也在 $*$ 里。如果 $A = *$，那么与 F 系统中的 $forall$ 类推，也将这种弱 $Sigma$ 类型称作 $exists$ 类型。事实上，如果加入非直谓强 $exists$ 类型 $(exists X bind P(X)) : *$，并且具备投影函数 $(exists X bind P(X)) -> *$，那么系统就有矛盾 @impredicative-sigma。这说明非直谓宇宙是无法编码这种类型的。但是，这并不排除可以编码 $(x : A) times B(x)$，其中 $A$ 与 $B$ 都在 $*$ 宇宙中。 (... will give a countermodel)
+
+与 $Sigma$ 类型类似，归纳类型的非直谓编码也只能构造弱版本。这对一般编程而言足矣，但要作为逻辑系统，就必须要有完整的归纳法。假设读者已熟悉归纳类型的大致原理，下文只将探讨这些类型与非直谓宇宙的交互。
 
 === 宇宙层级
 
@@ -137,7 +176,7 @@ $)
 其中，对集合 $R$ 的定义必须要用到 $Sigma$ 类型，即先定义 $Delta = sum_(x : VV) x in.not x$，再定义 $R = {pi_1 (r) mid(|) r : Delta}$。
 读者可以在证明助理中开启 $cal(U) : cal(U)$ 的功能 (例如在 Agda 中是 `--type-in-type`)，形式化该证明。
 
-Martin-Löf 在 1971 年提出了最早的 Martin-Löf 类型论，但是其中没有 $Sigma$ 类型。论文中写作 $Sigma$ 的类型是用 $Pi$ 作非直谓编码的 (...) refer to previous section。因此 Russell 悖论并不能直接套用。1972 年，Girard 发现这个系统不自洽，见 @sec:girard-paradox.//事实上，Martin-Löf在论文中证明了它是自洽的，但是由于证明的元理论本身满足 $VV in VV$，所以实际上元理论也有矛盾。
+Martin-Löf 在 1971 年提出了最早的 Martin-Löf 类型论，其中有 $cal(U) : cal(U)$ 的规则，看上去可以照搬 Russell 悖论导出矛盾。但是这个类型论不含 $Sigma$ 类型。论文中写作 $Sigma$ 的类型是用 $Pi$ 作非直谓编码的弱 $Sigma$ 类型。因此 Russell 悖论并不能直接套用。1972 年，Girard 才发现这个系统不自洽，见 @sec:girard-paradox.//事实上，Martin-Löf在论文中证明了它是自洽的，但是由于证明的元理论本身满足 $VV in VV$，所以实际上元理论也有矛盾。
 
 在 Russell 悖论之前，在朴素集合论中就发现了一系列类似的矛盾，Russell 悖论只是其中最简洁的一个。例如 Cantor 最著名的定理说的是任何集合 $X$ 的元素个数都要严格比幂集 $cal(P)(X)$ 少。但是，如果有全体集合的集合 $VV$，它理应是元素数量最大的集合，因此 $abs(VV) < abs(cal(P)(VV))$ 不应该成立。这是 *Cantor 悖论*。事实上，将 Cantor 定理的证明展开化简之后，这条悖论就会化作 Russell 悖论。
 
@@ -147,37 +186,31 @@ Martin-Löf 在 1971 年提出了最早的 Martin-Löf 类型论，但是其中�
 #definition[
   如果全序集 $A$ 满足任何子集 ${x in A mid(|) x < a_0}$ 与 $A$ 本身没有保序同构，就说 $A$ 是*无挠*的。这种子集称作 $A$ 的#define[前段][initial segment]。
 ]
-全体无挠序的集合构成全序集 $"TF"$，任何无挠序都同构于它的某个前段。但 $"TF"$ 本身又是无挠的，因此它同构于自己的某个前段，故不是无挠的，矛盾。
+全体无挠序的集合构成全序集 $"TF"$，任何无挠序都同构于 $"TF"$ 的某个前段。但 $"TF"$ 本身又是无挠的，因此它同构于自己的某个前段，故不是无挠的，矛盾。
 
 === Girard 悖论 <sec:girard-paradox>
 #let Uminus = $"U"^-$
 
-// TODO reread and streamline
+1972年，逻辑学家 Jean-Yves Girard (注意不是哲学家 René Girard) 在博士论文~@girard-paradox 中研究了一类用于表达高阶逻辑的类型论，其中只包含 $Pi$ 类型与不同的宇宙层级。在附录中，他提出了这些类型论的一种自然推广，起名为 U 系统，并且证明了这个系统是不自洽的。
 
-由于相关术语的使用比较混乱，这里稍作正名。
+如果将这个系统中的所有宇宙层级视作相同，那么 U 系统就化作前文提到 Martin-Löf 的 $cal(U) : cal(U)$ 系统，因此前者的所有证明都可以直接照搬到后者。这就说明了该类型论不自洽。有些材料将类型论中的 Russell 悖论也混同于 Girard 悖论，但二者实则不尽相同。前者因为能够使用 $Sigma$ 类型，逻辑更加简单。
 
-1972年，逻辑学家 Jean-Yves Girard (注意不是哲学家 René Girard) 在博士论文~@girard-paradox 中研究了一类用于表达高阶逻辑的类型论，其中只包含 $Pi$ 类型与不同的宇宙层级。在附录中，他提出了这些类型论的一种自然推广，起名为 U 系统，并且证明了这个系统是不自洽的。如果将这个系统中的所有宇宙层级视作相同，那么 U 系统就化作前文提到的 $cal(U) : cal(U)$ 系统，因此前者的所有证明都可以直接照搬到后者。这就说明了 Martin-Löf 的 (...) 不自洽。
+粗略而言， U 系统就是对 $Pi$ 类型封闭，并且有两个非直谓宇宙的类型论，使得两个宇宙 $*$ 与 $square$ 有元素关系。也可以认为有三个层级 $istype_*$、$istype_square$ 与 $istype$。由于 Girard 悖论中并不会用到所有宇宙层级之间的 $Pi$ 类型，所以实际的 U 系统还删去了一部分不需要的 $Pi$ 类型规则。
 
-U 系统可以视作有两个宇宙 $cal(U)_*$ 与 $cal(U)_square$，其中前者是后者的元素 (或者严格来说，存在 $dot(cal(U))_* : cal(U)_square$ 满足 $"El"\(dot(cal(U))_*\) = cal(U)_*$)，可以构成以下的 $Pi$ 类型：
-#eq($
-  rule(
-    Gamma tack dot(Pi)(A, B) : cal(U)_j,
-    Gamma tack A : cal(U)_i,
-    Gamma\, "El"(A) tack B : cal(U)_j
-  ) quad (i, j) = {(*, *), (square, *), (square, square)},
-$) (...)
+Girard 在 U 系统中将 Burali-Forti 悖论的简化版本 (即利用无挠序的版本) 形式化，证明了 U 系统中类型 $bot = (X : *) -> X$ 有元素。它自然不可能有正规形式，因为 $bot$ 没有正规元素。因此这也说明 U 系统不满足正规化。Coquand 在 1986 年另给出一版本，利用了良基关系的悖论。这一悖论用到的 $Pi$ 类型种类更少，因此删去不需要的规则之后得到 #Uminus 系统也是不自洽的。
 
-当然，读者不必详细记忆哪些宇宙之间有 $Pi$ 类型，只需要粗略记得有两个非直谓宇宙有元素关系即可。
+1995 年，Hurkens 再进一步给出了简化。由于这一版本已经非常不同，而且极其简短，有时改称其为 *Hurkens 悖论*。这利用了非直谓性编码一个集合 $X$，满足 $X$ 与其双重幂集 $(X -> *) -> *$ 有双射。Hurkens 的论文~@hurkens-paradox 中讨论了这一系列悖论的演化。
 
-
-Russell 悖论不能直接套，因为 U 系统中所有类型都可正规化。同时 U 系统的类型检查可判定，并且等式理论自洽
-
-- Girard (1972), simplification of the Burali-Forti paradox, order without torsion
-- Coquand's formulation (1986), well-founded relation
-- Hurkens paradox, double powerset
+尽管 U 系统不自洽，无法作为逻辑系统使用，但它的所有类型都可正规化，因此类型检查仍然是可判定的。与之相反，$cal(U) : cal(U)$ 的系统中类型检查不可判定。另外，所有这些系统都仍是#define[等式自洽][equationally consistent] 的，即并非所有表达式都判值相等。
 
 === Berardi 悖论
 
+如果将 $"Prop"$ 中的类型视作命题，那么形式化经典逻辑时不免需要假定排中律与选择公理。 (...)
+
 Inductive types and large elimination (where to put it?)
+
+#theorem[Barbanera–Berardi][
+  在构造演算中假定排中律与选择公理，则任何 $p : "Prop"$ 的所有元素都相等。
+]
 
 (mention Diaconescu's theorem)

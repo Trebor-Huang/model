@@ -80,3 +80,28 @@ on-cubism:
     volume: 6
     issue: 3
     publisher: Cambridge University Press
+
+hurkens-paradox:
+  type: article
+  title: A simplification of Girard's paradox
+  author: Hurkens, Antonius J. C.
+  date: 1995
+  page-range: 266-278
+  serial-number:
+    doi: 10.1007/BFb0014058
+  parent:
+    - type: conference
+      title: Lecture Notes in Computer Science
+      volume: 902
+    # - type: proceedings
+    #   title: Typed Lambda Calculi and Applications
+
+impredicative-sigma:
+  type: report
+  title: Impredicative Strong Existential Equivalent to $"Type":"Type"$
+  author:
+    - Hook, James G.
+    - Howe, Douglas J.
+  date: 1986
+  serial-number:
+    doi: 10.5555/866154

@@ -166,7 +166,7 @@ $)
 
 #let convert = math.class("unary", sym.arrow.t)
 依值类型论中往往有多重宇宙，它们主要的功能之一是控制类型的大小。这里需要区分的是宇宙之间的#translate[累积][cumulation] 关系与元素关系。*元素关系*是说存在大宇宙的一个元素 $U_1 : cal(U)_2$，使得 $"El"(U_1) = cal(U)_1$ 是小宇宙。 Russell 宇宙下可以写作 $cal(U)_1 : cal(U)_2$。*累积关系*在 Russell 宇宙下是说低层级的类型可以直接当作高层级的类型使用。这看似只是一种语法糖，但是它实际上蕴涵了非平凡的判值相等关系。在 Tarski 宇宙下，累积性是指有算符 $convert$ 将低层宇宙的元素变为高层宇宙的元素，使得#footnote[不同的宇宙理论上应当使用不同的 $"El"$ 算符，例如写作 $"El"_(cal(U)_1)$ 与 $"El"_(cal(U)_2)$。这里略去。] $"El"(convert A) = "El"(A) istype$
-成立，即这两个名字指代的是同一个类型。它还需要满足 #eq($ Gamma tack convert(A dot(times) B) = (convert A)dot(times) (convert B) : cal(U)_2 $) 等等式。换句话说，不同宇宙之间的类型构造器选取需要互相兼容。
+成立，即这两个名字指代的是同一个类型。它还需要满足 #eq($ Gamma tack convert(A dot(times) B) = (convert A)dot(times) (convert B) : cal(U)_2 $) 等等式。换句话说，不同宇宙之间的类型构造子选取需要互相兼容。
 
 元素关系与累积关系是互相独立的，即两两组合一共有四种可能性。
 
