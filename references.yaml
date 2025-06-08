@@ -105,3 +105,35 @@ impredicative-sigma:
   date: 1986
   serial-number:
     doi: 10.5555/866154
+
+elim-pattern-matching:
+  type: article
+  title: Eliminating Dependent Pattern Matching
+  author:
+    - Goguen, Healfdene
+    - McBride, Conor
+    - McKinna, James
+  date: 2006
+  page-range: 521-540
+  serial-number:
+    doi: 10.1007/11780274_27
+  parent:
+    - type: book
+      title: Algebra, Meaning, and Computation
+      publisher: Springer, Berlin, Heidelberg
+
+elim-pattern-matching-without-K:
+  type: article
+  title: Eliminating dependent pattern matching without K
+  author:
+    - Cockx, Jesper
+    - Devriese, Dominique
+    - Piessens, Frank
+  date: 2016
+  page-range: e16
+  parent:
+    title: Journal of Functional Programming
+    volume: 26
+    publisher: Cambridge University Press
+  serial-number:
+    doi: 10.1017/S0956796816000174

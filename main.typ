@@ -18,6 +18,7 @@
 #show "（": " ("
 #show "）": ") "
 #show "、": "、" + h(-0.2em)
+#show "……": set text(font: "Source Han Serif SC")
 
 #let underdot = {
   let radius = 0.08em

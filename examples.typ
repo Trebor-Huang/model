@@ -253,9 +253,49 @@ $Pi$ 类型也具有 $eta$ 规则，因此不额外添加错误值。$Pi A B$ �
 
 == 群胚 <sec:groupoid>
 
-- A little bit of history
+相等类型的消去子大致说的是 “相等类型元素的唯一构造办法是 $"refl"$”。但这种直觉下，除了写出 J 原理之外，还可以写出 K 原理。
+#eq($
+  rule(
+    Gamma tack "J"_A (p, P, r) : P(s, t, p);
+    Gamma tack p : "Id"(A, s, t),
+    Gamma\, x : A\, y : A\, q : "Id"(A, x, y) tack P(x,y,q) istype;
+    Gamma\, z : A tack r : P(z, z, "refl"_A (z))
+  )\ #v(0.35em) \
+  rule(
+    Gamma tack "K"_A (p, P, r) : P(s, p);
+    Gamma tack p : "Id"(A, s, s),
+    Gamma\, x : A\, q : "Id"(A, x, x) tack P(x,q) istype;
+    Gamma\, z : A tack r : P(z, "refl"_A (z))
+  )
+$)
+乍看之下，K 原理似乎是 J 原理的特例，适用于 $s$ 与 $t$ 是语法上完全相同的表达式的情况。然而稍微摆弄一番即可发现，找不到简单的办法用 J 原理表达出 K 原理。
+
+如果证明助理有#translate[模式匹配][pattern matching] 的功能，那么也有类似的情况。例如证明 $"Id"(A, x, y) -> P(x) -> P(y)$ 时，我们对变量 $p : "Id"(A, x, y)$ 匹配得到 $p = "refl"(x)$。这样，证明助理应当将语境中的变量 $y$ 替换为变量 $x$，得到目标类型 $P(x) -> P(x)$，此时填入恒等函数即可。那么，如果 $y$ 与 $x$ 是同一个变量，就应该是上述规则的特例。然而，在将模式匹配翻译为消去子的过程中，这一步必须用到 K 原理~@elim-pattern-matching。如果希望模式匹配与仅使用消去子等价，需要作出一些语法限制~@elim-pattern-matching-without-K。
+
+在有 J 原理的前提下，K 原理等价于一个更简单的叙述，即相等证明的唯一性
+#eq($
+  rule(
+    Gamma tack "UIP"(p, q) : p = q,
+    Gamma tack s\, t : A,
+    Gamma tack p\, q : s = t
+  ).
+$)
+我们在 #[@sec:set-model]的集合模型中已经说明了这与 Martin-Löf 类型论是相容的，因此不可能证伪该原理。它究竟可证还是独立，很长一段时间里都是未解之谜。
+
+1996 年，Hofmann 与 Streicher [?] 提出了群胚模型，作为 K 原理的反模型。这不仅回答了这个问题，还为其独立性提供了清晰的解释。Martin-Löf 类型论中的类型不仅可以理解为集合，还可以视作_空间_。相等类型的元素则可以视作空间中两个点之间的全体道路构成的空间。这样，人们首次建立了类型论与同伦论之间的联系。为此，在与同伦相关的语境下，我们也将相等类型称作*道路类型*。
+
+=== 群胚与道路
+
+同伦意义下的空间结构十分丰富，因此要直接以空间构造出类型论的模型有些难度。我们将其推迟到#[@ch:homotopy-theory]。Hofmann 与 Streicher 则采用了只能记录一部分同伦信息的数学结构，对空间做粗略的近似。这个数学结构就是#translate[群胚][groupoid]。
+
 - Intuition of paths and spaces
 - Start with directed graphs
+
+...... 1991 年，Воеводский (Voevodsky) 与合作者 Михаил Капранов (Mikhail Kapranov) 给出了一种无穷群胚的定义，并证明了这种无穷群胚能在同伦意义下表示所有的空间 [?]。但是 1998 年，由 Carlos Simpson~[?] 给出了反例，因此证明有误。事实上球面 $SS^2$ 就不在其表达能力范围内。然而，很长一段时间内，人们都没有明白错误在哪里，因此不清楚究竟是证明有误还是反例不成立。这件事是 Воеводский 转而追求形式化证明的动机之一。
+
+=== 模型定义
+
+=== K 原理的反模型
 
 == 可计算性与模型
 

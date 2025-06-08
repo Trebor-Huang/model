@@ -1,4 +1,4 @@
-= 模型与同伦论
+= 模型与同伦论 <ch:homotopy-theory>
 
 @sec:groupoid $=>$ model using spaces
 
@@ -8,7 +8,7 @@ univalence
 
 identity type and lifting
 
-model structure and spaces
+model structure and spaces (mention directed graph / groupoid model)
 
 Sattler's model structure criteria?
 
