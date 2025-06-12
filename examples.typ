@@ -370,7 +370,7 @@ $)
   给定两个汇编 $X$ 与 $Y$，函数 $f : X -> Y$ *可计算*当且仅当存在程序 $r in AA$ 使得 $a realizes_X x$ 时总有 $r a defined$，并且 $r a realizes_Y f(x)$。
 ]
 
-假如偏组合代数 $AA$ 是 Turing 机或者 $lambda$ 演算，那么函数 $f : NN -> NN$ 在此意义下可计算，当且仅当它在通常的定义下可计算。因此这个定义是合理的推广。另一方面，$nabla NN -> nabla NN$ 的可计算函数就是集合间的任意函数 $f : NN -> NN$，因为任意一个 $r in AA$ 都可以实现 $f$。这解释了为何 $nabla$ 表示无计算内涵。另一个例子是编程语言中的类型信息。编译中往往会擦去代码中的类型，因此多态函数 $forall x bind x -> x$ 可以解释为 $x in nabla"Type"$ 的可计算函数，其中 $nabla"Type"$ 中所有程序都实现了所有类型。这在模型的构造中会多次用到。
+假如偏组合代数 $AA$ 是 Turing 机或者 $lambda$ 演算，那么函数 $f : NN -> NN$ 在此意义下可计算，当且仅当它在通常的定义下可计算。因此这个定义是合理的推广。另一方面，$nabla NN -> nabla NN$ 的可计算函数就是集合间的任意函数 $f : NN -> NN$，因为任意一个 $r in AA$ 都可以实现 $f$。这解释了为何 $nabla$ 表示无计算内涵。另一个例子是编程语言中的类型信息。编译中往往会擦去代码中的类型，因此多态函数 $forall x bind F(x)$ 可以将 $x$ 解释为 $nabla"Type"$ 的元素，其中 $nabla"Type"$ 中所有程序都实现了所有类型。这在模型的构造中会多次用到。
 
 #theorem[
   恒等函数 $id : X -> X$ 总是可计算。可计算函数的复合也可计算。
@@ -418,6 +418,8 @@ $)
 
 We need construction of Pi and Sigma, Nat
 
+Note that even though the realization of pairs doesn't matter up to isomorphism, they do matter up to equality $==>$ affects construction of universes
+
 Extensional equality
 
 Discuss propositions and (homotopy) propositional truncation
@@ -453,6 +455,13 @@ You can improve to $Sigma$ type by searching the minimal one
   - Note that squash-type inductives still can't have large induction, otherwise there's Russell's paradox (mention in appendix? probably no need)
 
 - Alternative model proves independence of strong Sigma types within Prop
+  - $A = NN$ (general recursive functions) for simplicity, maybe rephrase?
+  - Let $X$ be *extra modest* if there exists a subset $A' subset.eq A$ such that programs represent an element iff they are defined on $A'$, and they represent the same element iff the actions on $A'$ are equal. $"Prop"$ can be defined as the universe of extra modest sets. Closed under impredicative Pi types.
+  - Let $T$ be the extra modest set of total recursive functions
+  - Let $X_t$ be a family with underlying set $NN$, $r realizes n$ iff $r(2k) = t(k)$ and [($r(1) = n$ and $t$ is not all zero) OR ($t$ is constant zero and $r(3) = n$)]. $r(k)$ be undefined for other $k$.
+  - The naive construction of $Sigma T X$ is not extra modest over the empty context, but there might be other constructions...
+  - However, the universal property of $Sigma$ specifies the dependent assembly up to isomorphism (in this case, we are over the empty context), therefore we should find isomorphism invariant properties
+  - Assembly $Y$ is *separable* if for unequal elements $y_1, y_2 in Y$, there exists a computable $phi : Y -> Bool$ such that $phi(y_1) = "false"$ and $phi(y_2) = "true"$. (Separable assemblies are modest.)
 
 
 == 操作语义与模型
