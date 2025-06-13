@@ -78,6 +78,7 @@
 #let Unit = math.bb("1")
 #let Bool = math.bb("2")
 #let ite(b,t,f) = $"if" #b "then" #t "else" #f$
+#let refl = text("refl", font: "New Computer Modern")
 #let Set = math.sans("Set")
 #let Psh = math.sans("Psh")
 #let yo = math.class("unary", "よ")

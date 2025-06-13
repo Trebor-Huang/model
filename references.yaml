@@ -137,3 +137,17 @@ elim-pattern-matching-without-K:
     publisher: Cambridge University Press
   serial-number:
     doi: 10.1017/S0956796816000174
+
+independence-results-coc:
+  type: article
+  author: Streicher, Thomas
+  title: Independence results for calculi of dependent types
+  date: 1989
+  serial-number:
+    doi: 10.1007/BFb0018350
+  page-range: 141-154
+  parent:
+    type: book
+    title: Category Theory and Computer Science
+    volume: 389
+    publisher: Springer, Berlin, Heidelberg
