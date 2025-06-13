@@ -97,15 +97,19 @@ Trebor\ #v(1em)
 #set heading(numbering: (a, ..b) => numbering("1.", ..b))
 #show heading.where(level: 1): set heading(numbering: (k) => [第#numbering("一", k)章])
 #show heading.where(level: 4): set heading(numbering: none)
+
+#let is-appendix = state("is-appendix", false)
 #show ref: it => {
   let el = it.element
   if el != none and el.func() == heading {
     context {
       if el.level == 1 {
         link(it.target)[#numbering(el.numbering, ..counter(heading).at(it.target))]
-      } else {
+      } else if not is-appendix.at(it.target) {
         // Re-display the chapter number
         link(it.target)[#numbering("1.1", ..counter(heading).at(it.target)) 节]
+      } else {
+        link(it.target)[附录#numbering("A.1", ..counter(heading).at(it.target))]
       }
     }
   } else {
@@ -129,9 +133,14 @@ Trebor\ #v(1em)
 #include "model.typ"
 
 #counter(heading).update(0)
+#is-appendix.update(true)
 #show heading.where(level: 1): set heading(numbering: (k) => [附录 #numbering("A", k)])
+// TODO correct theorems numbering
 #include "impredicative.typ"
 
+#include "identity.typ"
+
+#is-appendix.update(false)
 #show heading.where(level: 1): set heading(numbering: none)
 
 = 术语翻译表

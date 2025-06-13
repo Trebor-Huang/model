@@ -176,7 +176,7 @@ $)
 其中，对集合 $R$ 的定义必须要用到 $Sigma$ 类型，即先定义 $Delta = sum_(x : VV) x in.not x$，再定义 $R = {pi_1 (r) mid(|) r : Delta}$。
 读者可以在证明助理中开启 $cal(U) : cal(U)$ 的功能 (例如在 Agda 中是 `--type-in-type`)，形式化该证明。
 
-Martin-Löf 在 1971 年提出了最早的 Martin-Löf 类型论，其中有 $cal(U) : cal(U)$ 的规则，看上去可以照搬 Russell 悖论导出矛盾。但是这个类型论不含 $Sigma$ 类型。论文中写作 $Sigma$ 的类型是用 $Pi$ 作非直谓编码的弱 $Sigma$ 类型。因此 Russell 悖论并不能直接套用。1972 年，Girard 才发现这个系统不自洽，见 @sec:girard-paradox.//事实上，Martin-Löf在论文中证明了它是自洽的，但是由于证明的元理论本身满足 $VV in VV$，所以实际上元理论也有矛盾。
+Martin-Löf 在 1971 年提出了最早的 Martin-Löf 类型论，其中有 $cal(U) : cal(U)$ 的规则，看上去可以照搬 Russell 悖论导出矛盾。但是这个类型论不含 $Sigma$ 类型。论文中写作 $Sigma$ 的类型是用 $Pi$ 作非直谓编码的弱 $Sigma$ 类型。因此 Russell 悖论并不能直接套用。1972 年，Girard 才发现这个系统不自洽，见@sec:girard-paradox.//事实上，Martin-Löf在论文中证明了它是自洽的，但是由于证明的元理论本身满足 $VV in VV$，所以实际上元理论也有矛盾。
 
 在 Russell 悖论之前，在朴素集合论中就发现了一系列类似的矛盾，Russell 悖论只是其中最简洁的一个。例如 Cantor 最著名的定理说的是任何集合 $X$ 的元素个数都要严格比幂集 $cal(P)(X)$ 少。但是，如果有全体集合的集合 $VV$，它理应是元素数量最大的集合，因此 $abs(VV) < abs(cal(P)(VV))$ 不应该成立。这是 *Cantor 悖论*。事实上，将 Cantor 定理的证明展开化简之后，这条悖论就会化作 Russell 悖论。
 

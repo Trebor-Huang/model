@@ -2,7 +2,7 @@
 
 @sec:groupoid $=>$ model using spaces
 
-univalence
+univalence @sec:univalence-equivalences
 
 == 相等类型与模型范畴
 

@@ -230,7 +230,7 @@ $Pi$ 类型也具有 $eta$ 规则，因此不额外添加错误值。$Pi A B$ �
   {star, epsilon} quad & s_x = t_x,
   {epsilon} & s_x != t_x
 ) $)
-并且 $"error"("Id"(A, s, t))_x = epsilon$。显然，$overline("Id"(A,s,t))_x$ 应只包含 $star$。
+并且 $"error"("Id"(A, s, t))_x = epsilon$。显然，$overline("Id"(A,s,t))_x$ 应只包含 $star$。 (... @sec:J-equivalences)
 最后，对于其他类型，特别是宇宙类型的处理，留给读者作为练习，亦可参阅 Kovács 的形式化 @exception-agda。
 
 === 函数外延性的反模型
@@ -280,7 +280,7 @@ $)
     Gamma tack p\, q : s = t
   ).
 $)
-我们在 #[@sec:set-model]的集合模型中已经说明了这与 Martin-Löf 类型论是相容的，因此不可能证伪该原理。它究竟可证还是独立，很长一段时间里都是未解之谜。
+证明见@sec:K-equivalences。我们在 #[@sec:set-model]的集合模型中已经说明了这与 Martin-Löf 类型论是相容的，因此不可能证伪该原理。它究竟可证还是独立，很长一段时间里都是未解之谜。
 
 1996 年，Hofmann 与 Streicher [?] 提出了群胚模型，作为 K 原理的反模型。这不仅回答了这个问题，还为其独立性提供了清晰的解释。Martin-Löf 类型论中的类型不仅可以理解为集合，还可以视作_空间_。相等类型的元素则可以视作空间中两个点之间的全体道路构成的空间。这样，人们首次建立了类型论与同伦论之间的联系。为此，在与同伦相关的语境下，我们也将相等类型称作*道路类型*。
 
@@ -338,7 +338,7 @@ $Sigma$ 与 $Pi$ 类型与有向图十分类似。有群胚 $Gamma$，依值群�
 
 给定依值群胚 $A$ 的两个元素 $s$ 与 $t$，定义依值群胚 $"Id"(A, s, t)$ 在 $x in Gamma$ 上的依值点集为 $hom_A^refl(x) (s_x, t_x)$，补全成离散依值群胚 (???)。这样，依值群胚 $A$ 中的道路 $refl(s_x) in hom_A^refl(x) (s, s)$ 就会给出离散依值群胚 $"Id"(A, s, s)$ 在 $x$ 上的依值点。而为了解释相等类型中的元素 $refl(s) : "Id"(A, s, s)$，我们需要给出依值群胚的元素 $r$，定义为 $r_x = refl(s_x)$ (???)
 
-- Must verify J rule
+- Must verify J rule @sec:J-equivalences
   - maybe it's equivalent to combination of smaller rules?
 
 === K 原理的反模型
