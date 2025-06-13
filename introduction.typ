@@ -305,10 +305,10 @@ $)
 
 在 #[@sec:set-model]中，我们已经定义了集合模型。不难在集合模型中给出空类型的语义 —— 就是空集。因此，这就证明了类型论的自洽性。具体是哪个类型论的自洽性，取决于我们为集合模型构造了哪些类型结构。例如，上文中已经讨论了 Martin-Löf 类型论中所有的类型结构，所以这就说明了 Martin-Löf 类型论是自洽的。更具体来说，由于我们使用了 ZFC 集合论加上 Tarski–Grothendieck @ax:tarski-grothendieck，所以以上的讨论证明了 Tarski–Grothendieck 集合论可以推出 Martin-Löf 类型论是自洽的。
 
-集合模型还可以给出许多公理的相容性。例如#define[函数外延性][function extensionality] 是类型
+集合模型还可以给出许多公理的相容性。例如#define[函数外延性][function extensionality]
 #eq($
   (f, g : A -> B) -> [(x : A) -> f(x) = g(x)] -> f = g.
 $)
-在集合模型中这是显然成立的。因此函数外延性与 Martin-Löf 类型论相容。类似地，读者也可以验证 Martin-Löf 类型论与#define[相等证明的唯一性][uniqueness of identity proofs]
+在集合模型中这是显然成立的。因此函数外延性与 Martin-Löf 类型论相容。读者也可以验证 Martin-Löf 类型论与#define[相等证明的唯一性][uniqueness of identity proofs]
 #eq($ (x,y : A) -> (p,q : x = y) -> p = q $)
 相容。之后我们会介绍这两条公理各自的反模型，也就能分别说明它们与 Martin-Löf 类型论独立。
