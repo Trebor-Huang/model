@@ -40,6 +40,10 @@
   titlefmt: box.with(stroke: 0.5pt, outset: (top: 0.25em, bottom: 0.25em, left: 0.1em, right: 0.1em)),
   inset: (left: 0em, right: 0em),
 )
+// In appendices, we need to fix the numbering
+#let theorem-appendix = theorem.with(numbering: "A.1")
+#let lemma-appendix = lemma.with(numbering: "A.1")
+#let definition-appendix = definition.with(numbering: "A.1")
 
 // Figure
 #let numbered-figure = figure.with(kind: "numbered-figure", supplement: "图表", numbering: "1", gap: 1em)

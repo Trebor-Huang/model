@@ -132,10 +132,11 @@ Trebor\ #v(1em)
 
 #include "model.typ"
 
+// Appendix numbering
 #counter(heading).update(0)
 #is-appendix.update(true)
 #show heading.where(level: 1): set heading(numbering: (k) => [附录 #numbering("A", k)])
-// TODO correct theorems numbering
+
 #include "impredicative.typ"
 
 #include "identity.typ"
