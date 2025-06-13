@@ -9,9 +9,39 @@
 == 集合模型 <sec:set-model>
 
 直观上说，对于大多数类型论而言，每个类型可以理解为集合，函数类型对应集合之间的函数构成的集合，乘积类型对应集合的 Descartes 乘积，等等。(同伦类型论不在此列.) 因此，我们理应能够构造出类型论的集合模型。
-依值类型论中，依值类型 $x : A tack B(x) istype$ 可以解释为集合族 ${B(x)}_(x in A)$，即为每个元素 $x in A$ 赋予一个集合 $B(x)$。 $Sigma$ 类型对应不交并
-#eq($ product.co_(x in A) B(x) = {(x, y) mid(|) x in A, y in B(x) }. $)
-相应地，$Pi$ 类型对应乘积 $product_(x in A) B(x)$。
+依值类型论中，依值类型 $x : A tack B(x) istype$ 可以解释为集合族 ${B(x)}_(x in A)$，即为每个元素 $x in A$ 赋予一个集合 $B(x)$。
+
+#numbered-figure[
+  #canvas({
+    import draw: *
+    let dot(pos) = circle(pos, stroke: none, fill: black, radius: 0.09)
+    rect((-1.5,-0.6), (1.5, 0.6), radius: 0.65, stroke: 0.5pt)
+    dot((0,0))
+    dot((-0.8, 0))
+    content((-1,-0.2), $x$)
+    dot((0.8, 0))
+    content((2, 0), $A$)
+
+    rect((-0.5, 1), (0.5, 2.7), stroke: 0.5pt)
+    line((0,0), (0, 1), stroke: 0.5pt)
+    dot((-0.1, 2.2))
+    dot((0.1, 1.8))
+    dot((0, 1.4))
+    rect((-0.6, 1), (-1.65, 2.7), stroke: 0.5pt)
+    line((-0.8, 0), (-1.12, 1), stroke: 0.5pt)
+    content((-1.12, 3), $B(x)$)
+    dot((-1, 2.1))
+    dot((-1.2, 1.5))
+    rect((0.6, 1), (1.65, 2.7), stroke: 0.5pt)
+    line((0.8, 0), (1.12, 1), stroke: 0.5pt)
+    dot((1.1, 1.8))
+    content((2.2, 1.8), $B$)
+  })
+]
+
+在这个图像下，$Sigma$ 类型对应不交并
+#eq($ product.co_(x in A) B(x) = {(x, y) mid(|) x in A, y in B(x) }, $) 也就是图中的所有矩形合在一起得到的集合。
+相应地，$Pi$ 类型对应乘积 $product_(x in A) B(x)$。它的元素 $f$ 需要在每个 $B(x)$ 中选择元素。
 
 不过，上面的说法并不完整。在依值类型论中，_所有_的类型 $Gamma tack A istype$ 都是依值的，即依赖于 $Gamma$ 中的变量。这样看来，语境的解释才应该是集合，而类型解释为集合族。例如，空语境对应单元素类型，而语境扩展 $(Gamma, A)$ 可以解释为不交并 $product.co_(x in Gamma) A(x)$。另一方面，我们还需要区分语法与它们对应的解释。例如可以将 $Gamma$ 的解释记作 $interpret(Gamma)$。这样就能给出完整的集合模型：
 - 语境 $Gamma$ 解释为集合，记作 $interpret(Gamma)$。
