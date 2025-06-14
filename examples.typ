@@ -497,18 +497,26 @@ You can improve to $Sigma$ type by searching the minimal one
   - Assembly $Y$ is *separable* if for unequal elements $y_1, y_2 in Y$, there exists a computable $phi : Y -> Bool$ such that $phi(y_1) = "false"$ and $phi(y_2) = "true"$. (Separable assemblies are modest.)
 
 
-== 操作语义与模型
+// == 操作语义与模型 ???
+
+// - Define operational semantics on raw terms first, then fit a type system on it
+// - Relation to $Lambda$-realizability
+
+== 语义参数性
 
 == 语法翻译
 
 - syntactic version of the exception model/labelled function model
-- injectivity of type constructors via labels
+- validate injectivity of type constructors via labels
+  - trivial countermodel in set model, since $A times Empty = Empty$ strictly holds
+- parametricity??
 
 == 语法性质的证明
 
-- Canonicity
-- Normalization
-  - Injectivity of type constructors
-- Parametricity? We can compare semantic and syntactic versions
+- Promote to own chapter after category theory, only give brief review here
 
-(promote to own chapter?)
+  - Canonicity
+  - Normalization
+    - Injectivity of type constructors
+  - Parametricity? We can compare semantic and syntactic versions
+

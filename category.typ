@@ -85,6 +85,8 @@ LCCC and topos
 
 mention sconing and gluing
 
+will use to prove canonicity etc later down the line
+
 == 模型的函子观点
 
 - diagram as functor from small categories
