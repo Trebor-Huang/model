@@ -203,14 +203,35 @@ Girard 在 U 系统中将 Burali-Forti 悖论的简化版本 (即利用无挠序
 
 尽管 U 系统不自洽，无法作为逻辑系统使用，但它的所有类型都可正规化，因此类型检查仍然是可判定的。与之相反，$cal(U) : cal(U)$ 的系统中类型检查不可判定。另外，所有这些系统都仍是#define[等式自洽][equationally consistent] 的，即并非所有表达式都判值相等。
 
-=== Berardi 悖论
+=== Berardi 悖论 <sec:berardi-paradox>
 
-如果将 $"Prop"$ 中的类型视作命题，那么形式化经典逻辑时不免需要假定排中律与选择公理。 (...)
+在构造演算中，如果将 $"Prop"$ 中的类型视作命题，那么形式化经典逻辑时不免需要假定排中律与选择公理。回忆我们可以用非直谓宇宙编码逻辑连词，如
+#eq($
+  top &= (X : "Prop") -> X -> X \
+  bot &= (X : "Prop") -> X \
+  not p &= p -> bot \
+  p and q &= (X : "Prop") -> (p -> q -> X) -> X \
+  p or q &= (X : "Prop") -> (p -> X) -> (q -> X) -> X \
+  (forall x : A bind p(x)) &= (x : A) -> p(x) \
+  (exists x : A bind p(x)) &= (X : "Prop") -> ((x : A) -> p(x) -> X) -> X \
+  "Id"(A, x, y) &= (P : A -> "Prop") -> P(x) -> P(y)
+$)
+这里 $A$ 可以是任意类型，而 $p$ 与 $q$ 需要在 $"Prop"$ 宇宙中。这样，排中律就是
+#eq($ "EM" : (p : "Prop") -> (p or not p) $)
+而关于类型 $A$ 的选择公理是 (...) 全局
+#eq($
+  epsilon_A &: (p : A -> "Prop") -> (exists a bind p(a)) -> A \
+  rho_A &: (p : A -> "Prop") (h : exists a bind p(a)) -> p(epsilon_A p h)
+$)
+其中 $epsilon_A$ 给定 $A$ 的一个元素，而 $rho_A$ 证明这个元素满足所需的性质。
 
-Inductive types and large elimination (where to put it?)
+ (...)
 
 #theorem-appendix[Barbanera–Berardi][
-  在构造演算中假定排中律与选择公理，则任何 $p : "Prop"$ 的所有元素都相等。
+  在构造演算中假定排中律与全局选择公理，则任何命题 $p : "Prop"$ 的所有元素都相等。
+]
+#proof[
+
 ]
 
 (mention Diaconescu's theorem)
