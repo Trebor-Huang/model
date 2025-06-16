@@ -448,13 +448,16 @@ $)
   给定 $Gamma$ 上的汇编族 $A_x$，它的*不交并* $integral A$ 是汇编。其底集合为 $product.co_(x in Gamma) A_x$，而 $r realizes (x, a)$ 当且仅当 $r = P r_1 r_2$，其中 $r_1 realizes x$，并且在汇编 $A_x$ 中 $r_2 realizes a$。
 ]
 #lemma[
-  $integral A$ 的定义中，无论使用哪种有序对的实现，得到的汇编都是同构的。
+  $integral A$ 的定义中，无论使用哪种有序对的实现，得到的汇编都是同构的.#footnote[尽管同构，它们不一定相等。因此在构造依值类型的时候需要注意类型之间满足的判值等式。]
 ]
 读者照定义应当不难给出语境扩展等运算的构造。对于各种类型而言，汇编族的定义则是将各种表达式编译为 $AA$ 中的程序。例如 $Sigma$ 类型编译为有序对，而 $Pi$ 类型则编译为函数。
 
-We need construction of Pi and Sigma, Nat
+假设有汇编 $Gamma$ 与其上的汇编族 $A_x$，还有 $integral A$ 上的汇编族 $B_((x, a))$。定义 $Sigma$ 类型对应的汇编族 $(Sigma A B)_x$ 为不交并 $product.co_(a in A_x) B_((x, a))$，使得 $r realizes_((Sigma A B)_x) (a, b)$ 当且仅当 $r$ 是有序对程序 $P r_1 r_2$，满足 $r_1 realizes_A_x a$，并且 $r_2 realizes_B_((x, a)) b$。
 
-Note that even though the realization of pairs doesn't matter up to isomorphism, they do matter up to equality $==>$ affects construction of universes
+$Pi$ 类型的底集合则不是全体函数 $product_(a in A_x) B_((x, a))$，只包含可计算的依值函数。某个依值函数 $f$ 可计算，无非就是存在程序 $r$ 能实现它。这里，$r realizes_((Pi A B)_x) f$ 当且仅当 $s realizes_A_x a$ 时 $r s defined$，并且 $r s realizes_B_((x,a)) f(a)$。这样得到的汇编就仍然满足每个元素都至少有一个程序实现的要求。
+
+对于自然数 $NN$ 或者 $Empty$ 与 $Unit$ 等类型，对应的汇编族直接不依赖 $x in Gamma$ 即可。这样，不难算出空语境中 $NN -> NN$ 的元素的确就与可计算函数一一对应。
+
 
 Extensional equality
 
