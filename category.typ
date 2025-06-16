@@ -60,16 +60,50 @@
 #definition[
   依值类型论的*自然模型*包含一个范畴 $cal(C)$，其上两个预层 $"Tm"$ 与 $"Tp"$，还有二者之间的可表映射 $typeof : "Tm" -> "Tp"$。
 ]
+这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。
 
+- start with binary product type
+  - Note that substitution equations are absorbed naturally
+- non-dependent function type
+  - discuss relation to HOAS
+- dependent sigma and pi type
+- internal language of presheaves
+- justify logical framework
 
-Presheaf as discrete fibrations, formulation of representability
+// Presheaf as discrete fibrations, formulation of representability (maybe we don't need this, or put in the appendix)
 
 == 展映射与概括范畴
 
-#define[展映射][display map]
-#define[概括范畴][comprehension category]
+- Motivate display maps as the maps of the form $(Gamma, A) -> Gamma$. #define[展映射][display map]
+- Justify mathematical motivation: dependent structures are hard to define
+- Alternative framework for models of type theory: comprehension categories
+  - mention that this also ties into the already existing program of fibered category theory by Bénabou
+  - It's possible to have multiple $A$'s produce the same display map, so better have a projection $cal(E) -> cal(C)^->$
+  - Elaborate on the morphism structure of $cal(E)$ (morphisms between types)
+  - Substitution action: have a type $A : cal(E)$ over $Gamma$, should have a "pullback square"
+  - Define Grothendieck fibrations
+  - On display maps, substitution act as pullbacks $->$ maps #translate[拉回态射][cartesian morphism] to pullback squares (also cartesian morphisms)
 
-LCCC and topos
+#definition[
+  #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$ 将类型 $A$ 映射到展映射 $(Gamma, A) -> Gamma$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴，并且 $F$ 将拉回态射映到拉回态射。
+]
+
+- Type structures on comprehension categories
+  - Negative types are very easy, harder with positive types
+
+- Examples of comprehension categories with Pi and Sigma types
+  - LCCC
+    - Note that it's very hard to define a CwF with an LCCC! More on this later
+    - Application of type theoretic language
+  - elementary toposes
+    - presheaf categories
+    - sheaves? maybe just over cantor space
+
+- Discuss possible morphisms between types
+  - Motivate equivalence between fibered categories and pseudofunctors
+  - Making $cal(E) -> cal(C)$ discrete or making $F$ full both eliminates this extra information
+    - Discrete fibrations behave much better
+  - Possible use case as modeling subtypes or other kinds of coercions
 
 == 融贯问题
 

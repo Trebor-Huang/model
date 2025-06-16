@@ -38,6 +38,6 @@ Internal universes
 
 == 同伦类型论的内模型
 
-idea of using HoTT to synthetically define infinity-models
+idea of using HoTT/2LTT to synthetically define infinity-models
 
 mention that Set model doesn't work inside HoTT because Set is not a hSet

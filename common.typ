@@ -86,6 +86,8 @@
 #let Set = math.sans("Set")
 #let Psh = math.sans("Psh")
 #let yo = math.class("unary", "よ")
+#let cod = math.op("cod")
+#let dom = math.op("dom")
 
 #let xarrow(arrow: sym.arrow, ..args, sup: none, sub: none) = {
   if args.pos().len() >= 1 {
