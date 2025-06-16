@@ -11,39 +11,41 @@
 直观上说，对于大多数类型论而言，每个类型可以理解为集合，函数类型对应集合之间的函数构成的集合，乘积类型对应集合的 Descartes 乘积，等等。(同伦类型论不在此列.) 因此，我们理应能够构造出类型论的集合模型。
 依值类型论中，依值类型 $x : A tack B(x) istype$ 可以解释为集合族 ${B(x)}_(x in A)$，即为每个元素 $x in A$ 赋予一个集合 $B(x)$。
 
-#numbered-figure[
-  #canvas({
-    import draw: *
-    let dot(pos) = circle(pos, stroke: none, fill: black, radius: 0.09)
-    rect((-1.5,-0.6), (1.5, 0.6), radius: 0.65, stroke: 0.5pt)
-    dot((0,0))
-    dot((-0.8, 0))
-    content((-1,-0.2), $x$)
-    dot((0.8, 0))
-    content((2, 0), $A$)
+#let dot(pos) = draw.circle(pos, stroke: none, fill: black, radius: 0.09)
+#let family(A, B, x, Bx) = {
+  import draw: *
+  rect((-1.5,-0.6), (1.5, 0.6), radius: 0.65, stroke: 0.5pt)
+  dot((0,0))
+  dot((-0.8, 0))
+  content((-1,-0.2), x)
+  dot((0.8, 0))
+  content((2, 0), A)
 
-    rect((-0.5, 1), (0.5, 2.7), stroke: 0.5pt)
-    line((0,0), (0, 1), stroke: 0.5pt)
-    dot((-0.1, 2.2))
-    dot((0.1, 1.8))
-    dot((0, 1.4))
-    rect((-0.6, 1), (-1.65, 2.7), stroke: 0.5pt)
-    line((-0.8, 0), (-1.12, 1), stroke: 0.5pt)
-    content((-1.12, 3), $B(x)$)
-    dot((-1, 2.1))
-    dot((-1.2, 1.5))
-    rect((0.6, 1), (1.65, 2.7), stroke: 0.5pt)
-    line((0.8, 0), (1.12, 1), stroke: 0.5pt)
-    dot((1.1, 1.8))
-    content((2.2, 1.8), $B$)
-  })
+  rect((-0.5, 1), (0.5, 2.7), stroke: 0.5pt)
+  line((0,0), (0, 1), stroke: 0.5pt)
+  dot((-0.1, 2.2))
+  dot((0.1, 1.8))
+  dot((0, 1.4))
+  rect((-0.6, 1), (-1.65, 2.7), stroke: 0.5pt)
+  line((-0.8, 0), (-1.12, 1), stroke: 0.5pt)
+  content((-1.12, 3), Bx)
+  dot((-1, 2.1))
+  dot((-1.2, 1.5))
+  rect((0.6, 1), (1.65, 2.7), stroke: 0.5pt)
+  line((0.8, 0), (1.12, 1), stroke: 0.5pt)
+  dot((1.1, 1.8))
+  content((2.2, 1.8), B)
+}
+#numbered-figure(caption: [集合族])[
+  #canvas(family($A$, $B$, $x$, $B(x)$))
 ]
 
 在这个图像下，$Sigma$ 类型对应不交并
 #eq($ product.co_(x in A) B(x) = {(x, y) mid(|) x in A, y in B(x) }, $) 也就是图中的所有矩形合在一起得到的集合。
 相应地，$Pi$ 类型对应乘积 $product_(x in A) B(x)$。它的元素 $f$ 需要在每个 $B(x)$ 中选择元素。
 
-不过，上面的说法并不完整。在依值类型论中，_所有_的类型 $Gamma tack A istype$ 都是依值的，即依赖于 $Gamma$ 中的变量。这样看来，语境的解释才应该是集合，而类型解释为集合族。例如，空语境对应单元素类型，而语境扩展 $(Gamma, A)$ 可以解释为不交并 $product.co_(x in Gamma) A(x)$。另一方面，我们还需要区分语法与它们对应的解释。例如可以将 $Gamma$ 的解释记作 $interpret(Gamma)$。这样就能给出完整的集合模型：
+不过，上面的说法并不完整。在依值类型论中，_所有_的类型 $Gamma tack A istype$ 都是依值的，即依赖于 $Gamma$ 中的变量。这样看来，语境的解释才应该是集合，而类型解释为集合族。例如，空语境对应单元素类型，而语境扩展 $(Gamma, A)$ 可以解释为不交并 $product.co_(x in Gamma) A(x)$。
+另一方面，我们还需要区分语法与它们对应的解释。例如可以将 $Gamma$ 的解释记作 $interpret(Gamma)$。这样就能给出完整的集合模型：
 - 语境 $Gamma$ 解释为集合，记作 $interpret(Gamma)$。
 - 类型 $Gamma tack A istype$ 解释为集合族，记作 $interpret(A)_x$，其中 $x in interpret(Gamma)$。
 - 空语境解释为单元素集合，即 $interpret(()) = {star}$。需要注意的是，空语境不是空集。因为空语境的 “空” 表示没有变量，因此变量的取值就只有一种情况。这与零个集合的乘积是单元素集，或者幂 $n^0 = 1$ 的道理是一样的。
@@ -91,7 +93,24 @@
 ] <def:model>
 乍看之下模型的定义让人眼花缭乱，但读者浏览#[@ch:examples]中的例子后就会发现定义中大部分内容都会化作简单的概念，或者能显然给出，一般无需多虑。在#[@ch:category]中我们还会引入更多打包简化定义的办法。
 
-要理解代换满足的等式，集合模型有一定启发性。对于集合 $Gamma$ 上的集合族 $A_x$，如果有代换 $sigma : Delta -> Gamma$，即两个集合之间的函数，那么集合族可以作代换得到 $B_y = A_(sigma(y))$，是 $Delta$ 上的集合族。
+要理解代换满足的等式，集合模型有一定启发性。如@fig:set-family-substitution 所示，$Gamma$ 上的集合族 $A_x$，如果有代换 $sigma : Delta -> Gamma$，即两个集合之间的函数，那么集合族可以作代换得到 $B_y = A_(sigma(y))$，是 $Delta$ 上的集合族。
+#numbered-figure(caption: [集合族的代换], placement: auto)[
+  #canvas({
+    import draw: *
+    family($Gamma$, $A$, $x$, $A_x$)
+    circle(radius: 1, (-2.4,-1.5), stroke: 0.5pt)
+    content((-3.8, -1.5), $Delta$)
+    content((-0.6, -1.2), $sigma$)
+
+    dot((-2.6, -1.2))
+    bezier((), (-0.8,0), (-2, -0.2), stroke: 0.5pt)
+    content((-2.85, -1.0), $y$)
+    dot((-2.7, -1.8))
+    bezier((), (0,0), (-1.4, -0.7), stroke: 0.5pt)
+    dot((-2, -1.9))
+    bezier((), (0,0), (-0.5, -1), stroke: 0.5pt)
+  })
+] <fig:set-family-substitution>
 
 类型论模型定义的重要特性是其中只要求等式。并非所有数学结构都可以这样定义。例如域是拥有四则运算的集合，其中除法的除数必须非零。因此在域的定义中就必须用到_不等式_。相对地，环则只拥有加法、减法与乘法，其中的结合律、分配律等等都是纯等式。这种数学结构称作#define[代数结构][algebraic structure]。群、环、向量空间都是代数结构，而域、全序、拓扑空间不是.#footnote[代数结构可以包含多个集合，而不一定只在一个集合上配备运算。这称作#define[多类][multi-sorted] 代数结构。类型论模型的另一个特别之处在于涉及的集合以元素为指标，例如 $"Tp"(Gamma)$ 对每个元素 $Gamma in "Ctx"$ 都有一个集合。这样的代数理论称作#define[广义代数理论][generalized algebraic theory]，或者 Cartmell 理论。]
 
