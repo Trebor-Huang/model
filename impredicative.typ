@@ -53,7 +53,7 @@ $)
     Gamma tack B : cal(U)
   ),
 $)
-由于 $cal(U) : cal(U)$ 不成立，因此 $A$ 和 $B$ 都不能取值为 $cal(U)$ (或者用 Tarski 宇宙的说法，$cal(U)$ 中不存在元素构成 $cal(U)$ 自身的名字)。这样 $cal(U)$ 就只能单独构成一个类型，不能组合成更复杂的类型表达式，保证了与原系统的等价性。改写之后容易看出，这种 $Pi$ 类型也是非直谓性的一种体现，因为 $product_(A:cal(U)) P(A)$ 的定义域是 $cal(U)$ —— 注意不是定义域为 $A : cal(U)$，而是定义域就是 $cal(U)$ 本身，也就是宇宙层级比原系统中的所有类型都高 —— 的 $Pi$ 类型，所处的宇宙仍然是 $cal(U)$，比直谓性要求的要低一层。
+由于 $cal(U) : cal(U)$ 不成立，因此 $A$ 和 $B$ 都不能取值为 $cal(U)$ (或者用 Tarski 宇宙的说法，$cal(U)$ 中不存在元素构成 $cal(U)$ 自身的名字)。这样 $cal(U)$ 就只能单独构成一个类型，不能组合成更复杂的类型表达式，保证了与原系统的等价性。改写之后容易看出，这种 $Pi$ 类型也是非直谓性的一种体现，因为 $product_(A:cal(U)) P(A)$ 的定义域是 $cal(U)$ —— 注意不是定义域为 $A : cal(U)$，而是定义域就是 $cal(U)$ 本身，也就是宇宙层级比原系统中的所有类型都高 —— 但所处的宇宙仍然是 $cal(U)$，比直谓性要求的要低一层。
 
 == 构造演算与其变体 <sec:calculus-of-constructions>
 
@@ -62,34 +62,37 @@ $)
 #translate[构造演算][calculus of constructions]，或缩写为 CoC，是一种只有 $Pi$ 类型与宇宙的类型论。
 读者或许知道这类类型系统被 Barendregt 称作#define[纯类型系统][pure type system]，并且 CoC 的子系统构成一个立方体，称作 $lambda$ 立方。我们_不认为_这是合适的分类。其中的宇宙有一些表现得比较反直觉，只是为了凑齐规律而添加的。它在某些方面分类过于细致，而在另一些方面则不够精细。特别是希望以此为基础添加 $Sigma$ 类型或者更复杂的结构时，无法用纯类型系统的框架描述各种变体。读者可以参阅 Bart Jacobs~@on-cubism 对纯类型系统的批评。
 
-定义*构造演算*为对 $Pi$ 类型封闭，并且包含一个非直谓宇宙 $*$ 的类型论。换句话说，宇宙中有名字
-#eq($
-  rule(
-    Gamma tack dot(Pi)(A, B) : *,
-    Gamma tack A istype,
-    Gamma\, A tack B : *
-  ) quad
-  rule(
-    Gamma tack "El"\(dot(Pi)(A, B)\) = Pi A("El"(B)) istype,
-    Gamma tack A istype,
-    Gamma\, A tack B : *
-  ).
-$)
-注意其中 $A$ 是任意类型。也可以用 Coquand 宇宙，设 $A istype_*$ 与 $A istype$ 两个层级，但只有 $istype_*$ 与宇宙 $*$ 之间有 $"El"$ 和 $ceil(-)$ 的转换操作，而 $istype$ 层级没有宇宙。这样非直谓宇宙的规则就是
-#eq($
-  rule(
-    Gamma tack Pi A B istype_j,
-    Gamma tack A istype_i,
-    Gamma\, A tack B istype_j
-  ) quad (i,j in {*, diameter}).
-$)
-如果认为构造演算是编程语言的类型系统，那么一般称 $*$ 为 $"Set"$，因为程序所操作的类型直观上是集合。不在 $*$ 中的类型则称作#translate[种类][kind]。但如果认为构造演算是逻辑系统，就称 $*$ 为 $"Prop"$，认为其元素是命题。这是因为上文所讲的，在主流数学中唯一存在的非直谓宇宙就是命题构成的宇宙。
+利用 Coquand 层级，可以定义*构造演算*为含有 $istype$ 与 $istype_*$ 两个层级的类型论，使得 $istype_*$ 与宇宙 $*$ 有 $"El"$ 和 $ceil(-)$ 的转换操作，而 $istype$ 没有对应的宇宙。同时，构造演算对 $Pi$ 封闭，并且 $istype_*$ 非直谓。@fig:coc-rules 中有部分规则。
+
+如果认为构造演算是编程语言的类型系统，那么一般称 $*$ 为 $"Set"$，因为程序所操作的类型直观上是集合。不在 $*$ 中的类型则称作#translate[种类][kind]，属于编程语言中#translate[类型体操][type gymnastics] 所操作的事物。但如果认为构造演算是逻辑系统，就称 $*$ 为 $"Prop"$，认为其元素是命题。这是因为上文所讲的，在主流数学中唯一存在的非直谓宇宙就是命题构成的宇宙。
 
 #numbered-figure(caption: [构造演算的规则])[
-  (...)
-]
+  #partir(
+    $$,
+    $rule(
+      Gamma tack "El"(A) istype_*,
+      Gamma tack A : *
+    )$,
+    $rule(
+      Gamma tack ceil(A) : *,
+      Gamma tack A istype_*
+    )$,
+    $rule(
+      Gamma tack "El"(ceil(A)) = A istype_*,
+      Gamma tack A istype_*
+    )$,
+    $$,
+    $rule(
+      Gamma tack Pi A B istype_j,
+      Gamma tack A istype_i,
+      Gamma\, A tack B istype_j
+    ) quad (i,j in {*, diameter})$,
+  )
+] <fig:coc-rules>
 
 === 构造演算用例 <sec:coc-usage-examples>
+
+本节省略宇宙的 $"El"$ 与 $ceil(-)$ 记号。
 
 构造演算的重要性质是可以用非直谓性编码各种数据类型与逻辑谓词。例如与 F 系统中一样可以定义自然数
 #eq($
@@ -132,12 +135,13 @@ $)
 #eq($
   (x : A) times P(x) = (C : *) -> ((x : A) -> P(x) -> C) -> C.
 $)
-注意这里限制了 $C$ 只能处于非直谓宇宙 $*$ 中，并且 $Sigma$ 类型也在 $*$ 里。如果 $A = *$，那么与 F 系统中的 $forall$ 类推，也将这种弱 $Sigma$ 类型称作 $exists$ 类型。事实上，如果加入非直谓强 $exists$ 类型 $(exists X bind P(X)) : *$，并且具备投影函数 $(exists X bind P(X)) -> *$，那么系统就有矛盾 @impredicative-sigma。这说明非直谓宇宙是无法编码这种类型的。但是，这并不排除可以编码 $(x : A) times B(x)$，其中 $A$ 与 $B$ 都在 $*$ 宇宙中。 (... will give a countermodel)
+注意这里限制了 $C$ 只能处于非直谓宇宙 $*$ 中，并且 $Sigma$ 类型也在 $*$ 里。如果 $A = *$，那么与 F 系统中的 $forall$ 类推，也将这种弱 $Sigma$ 类型称作 $exists$ 类型。事实上，如果加入非直谓强 $exists$ 类型 $(exists X bind P(X)) : *$，并且具备投影函数 $(exists X bind P(X)) -> *$，那么系统就有矛盾 @impredicative-sigma。这说明非直谓宇宙是无法编码这种类型的。但是，这并不排除可以编码 $(x : A) times B(x)$，其中 $A$ 与 $B$ 都在 $*$ 宇宙中。 #author-note[(... will give a countermodel)]
 
 与 $Sigma$ 类型类似，归纳类型的非直谓编码也只能构造弱版本。这对一般编程而言足矣，但要作为逻辑系统，就必须要有完整的归纳法。假设读者已熟悉归纳类型的大致原理，下文只将探讨这些类型与非直谓宇宙的交互。
 
 === 宇宙层级
 
+#author-notes[
 Talk about adding more universes, reveal Girard paradox
 
 Resort to adding predicative universe hierarchy (adding two for both Set and Prop)
@@ -148,7 +152,11 @@ Resort to adding predicative universe hierarchy (adding two for both Set and Pro
   - Tricky a priori, if $"Prop" : "Set"$ ($V_1$ is not small)
   - Easy in Coquand hierarchies, mark variables by sort, but cumulativity won't hold, i.e. $(Pi_"Prop" A B)' != Pi_"Set" A' B'$
   - Easy if Prop is not a universe, Pi and Forall separated
+]
 
+=== 归纳类型
+
+Examples of inductive types, (predicative restriction pushed to the story)
 
 == 寓言一则
 
@@ -218,14 +226,14 @@ Girard 在 U 系统中将 Burali-Forti 悖论的简化版本 (即利用无挠序
 $)
 这里 $A$ 可以是任意类型，而 $p$ 与 $q$ 需要在 $"Prop"$ 宇宙中。这样，排中律就是
 #eq($ "EM" : (p : "Prop") -> (p or not p) $)
-而关于类型 $A$ 的选择公理是 (...) 全局
+而关于类型 $A$ 的选择公理是 #author-note[(...) 全局]
 #eq($
   epsilon_A &: (p : A -> "Prop") -> (exists a bind p(a)) -> A \
   rho_A &: (p : A -> "Prop") (h : exists a bind p(a)) -> p(epsilon_A p h)
 $)
 其中 $epsilon_A$ 给定 $A$ 的一个元素，而 $rho_A$ 证明这个元素满足所需的性质。
 
- (...)
+#author-note[(...)]
 
 #theorem-appendix[Barbanera–Berardi][
   在构造演算中假定排中律与全局选择公理，则任何命题 $p : "Prop"$ 的所有元素都相等。

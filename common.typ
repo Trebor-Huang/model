@@ -6,6 +6,13 @@
 #let edgeM = edge.with(label-side: center)
 
 #let hyperlink(dest, body) = link(dest, underline(text(fill: color.oklch(45%, 55%, 250deg), body), offset: 0.2em))
+#let author-note(body) = [
+  #set text(fill: luma(60%))
+  #body
+]
+#let author-notes(body) = block(fill: luma(90%), radius: 0.5em, outset: 0.5em)[
+  #body
+]
 
 // Translation (used for indexing)
 #let translation-table = state("translations", ())
