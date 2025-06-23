@@ -59,8 +59,7 @@ $)
 
 === 定义
 
-#translate[构造演算][calculus of constructions]，或缩写为 CoC，是一种只有 $Pi$ 类型与宇宙的类型论。
-读者或许知道这类类型系统被 Barendregt 称作#define[纯类型系统][pure type system]，并且 CoC 的子系统构成一个立方体，称作 $lambda$ 立方。我们_不认为_这是合适的分类。其中的宇宙有一些表现得比较反直觉，只是为了凑齐规律而添加的。它在某些方面分类过于细致，而在另一些方面则不够精细。特别是希望以此为基础添加 $Sigma$ 类型或者更复杂的结构时，无法用纯类型系统的框架描述各种变体。读者可以参阅 Bart Jacobs~@on-cubism 对纯类型系统的批评。
+#translate[构造演算][calculus of constructions] 是一种只有 $Pi$ 类型与宇宙的类型论。在文献中常被缩写为 CoC，早期文献也作 CC。读者或许知道这类类型系统被 Barendregt 称作#define[纯类型系统][pure type system]，并且构造演算的子系统构成一个立方体，称作 $lambda$ 立方。我们_不认为_这是合适的分类。其中的宇宙有一些表现得比较反直觉，只是为了凑齐规律而添加的。它在某些方面分类过于细致，而在另一些方面则不够精细。特别是希望以此为基础添加 $Sigma$ 类型或者更复杂的结构时，无法用纯类型系统的框架描述各种变体。读者可以参阅 Bart Jacobs~@on-cubism 对纯类型系统的批评。
 
 利用 Coquand 层级，可以定义*构造演算*为含有 $istype$ 与 $istype_*$ 两个层级的类型论，使得 $istype_*$ 与宇宙 $*$ 有 $"El"$ 和 $ceil(-)$ 的转换操作，而 $istype$ 没有对应的宇宙。同时，构造演算对 $Pi$ 封闭，并且 $istype_*$ 非直谓。@fig:coc-rules 中有部分规则。
 
@@ -89,6 +88,8 @@ $)
     ) quad (i,j in {*, diameter})$,
   )
 ] <fig:coc-rules>
+
+一般认为构造演算的 $istype_*$ 与 $istype$ 之间没有累积性，但是添加累积性似乎对表达能力没有什么影响。
 
 === 构造演算用例 <sec:coc-usage-examples>
 
@@ -141,11 +142,43 @@ $)
 
 === 宇宙层级
 
+构造演算只有一个宇宙，有时显得有些捉襟见肘。一个自然的想法是添加无限多个层级 $istype_i$ 与对应的宇宙 $*_i$，使得 $tack *_i istype_(i+1)$。这样，所有的类型都在某个宇宙之中有名字。
+
+对于 $Pi$ 类型，由于构造演算中的规则是
+#eq($
+  rule(
+    Gamma tack Pi A B istype_j,
+    Gamma tack A istype_i,
+    Gamma\, A tack B istype_j
+  ),
+$)
+最直观的想法是直接将其套用在新增的层级上。这样，就有无限多层非直谓宇宙。不过，这样得到的类型论是有矛盾的。Girard 发现，只要两个非直谓宇宙之间有元素关系，类型论就有矛盾。这就是 Girard 悖论，在@sec:girard-paradox 有详细讲述。
+
+#let imax = math.op("imax")
+既然更高的宇宙不能是非直谓的，我们只好将其定为直谓宇宙。回忆对于直谓宇宙层级而言有规则
+#eq($
+  rule(
+    Gamma tack Pi A B istype_max{i, j},
+    Gamma tack A istype_i,
+    Gamma\, A tack B istype_j
+  ).
+$)
+这样，如果要将最底层宇宙（即 $i = 0$，有些文献也定作 $i = -1$）改为非直谓的，就只需要将 $max{i,j}$ 改为 $imax(i, j)$，定义为
+#eq($
+  imax(i, j) &= cases(
+    0 & (j = 0),
+    max{i, j} quad & (j != 0)
+  ).
+$)
+此类型论在文献中记作 $"CC"_omega$，没有固定名称。这些直谓宇宙一般写作 $"Type"_i$。
+
+#author-note[(...) on set models and consistency]
+
+由于我们有时候将最底层的非直谓宇宙看作 $"Prop"$，而有时看作 $"Set"$，出于实用考虑我们也可以将其一分为二。换句话说，可以考虑两个非直谓宇宙，都在最底层且没有元素关系，一个称为 $"Prop"$，一个称为 $"Set"$。这不会导致矛盾，因为对于该类型论的任何表达式，将 $"Prop"$ 与 $"Set"$ 均替换为 $*$ 之后，得到的就是 $"CC"_omega$ 中的合法表达式，所以如果一者有矛盾，另一者就一定有矛盾。
+
+#author-note[(...) compare Prop with hProp (discuss choice)]
+
 #author-notes[
-Talk about adding more universes, reveal Girard paradox
-
-Resort to adding predicative universe hierarchy (adding two for both Set and Prop)
-
 - Proposition as elements of `Prop`, compare with HoTT
 - Choice and Diaconescu's theorem(?)
 - Proof irrelevant model of Prop using ZFC sets
