@@ -8,7 +8,7 @@
 
 另一方面，自 Lawvere 始有利用范畴结构研究逻辑的办法，称作范畴逻辑学。例如一阶逻辑中的量词 $exists$ 和 $forall$ 与伴随函子有密切的联系。这发展出了一套将各类范畴与逻辑相对应的理论。范畴的性质越好，能支撑的逻辑原理就越多。其中#translate[初等意象][elementary topos] 是性质优良的范畴，可以支撑构造主义高阶逻辑。既然类型论也有充当逻辑的功能，一个自然的问题就是这两者之间有什么关系。
 
-== 模型的等价定义
+== 模型的定义
 
 === 具族范畴与自然模型
 
@@ -19,7 +19,7 @@
 元素 $"Tm"(Gamma, A)$ 也有类似的代换操作，但是它还取决于类型 $A$，因此不能直接写作预层。这有多种解决办法。
 - 可以将同一个语境下的所有元素合并在一起，得到 #eq($ "Tm"(Gamma) = product.co_(A in"Tp"(Gamma)) "Tm"(Gamma, A). $) 这在代换下就构成预层。有自然变换 $typeof : "Tm" -> "Tp"$ 取出元素的类型。这样三个对象 $("Tp", "Tm", typeof)$ 就完全记录了所需的信息。
 - 可以将元素与类型合在一起，得到集合族。每个类型 $A in "Tp"(Gamma)$ 都附带一个集合 $"Tm"(Gamma, A)$，这就构成 $"Tp"(Gamma)$ 上的集合族。准确来说，定义范畴 $Fam$ 的对象是集合族，而 $A_(x in X)$ 到 $B_(y in Y)$ 的箭头由函数 $f : X -> Y$ 与 $F_x : A_x -> B_(f(x))$ 组成。这样，$"Tm"$ 与 $"Tp"$ 的数据就能组合为一个函子 $cal(C)^"op" -> Fam$。
-- 可以让语境与类型合起来构成新的范畴。具体来说，定义范畴 $integral_cal(C)"Tp"$ 的对象为有序对 $(Gamma; A)$，临时用分号与语境扩展 $(Gamma, A)$ 示区分。从 $(Gamma; A)$ 到 $(Delta; B)$ 的箭头是代换 $sigma : Gamma -> Delta$，满足 $B sigma = A$。这样 $"Tm"$ 就可以视作 $\(integral_cal(C)"Tp"\)^"op" -> Set$ 的预层。
+- 可以让语境与类型合起来构成新的范畴。具体来说，定义范畴 $integral_cal(C)"Tp"$ 的对象为有序对 $(Gamma; A)$，_临时用分号_与语境扩展 $(Gamma, A)$ 示区分。从 $(Gamma; A)$ 到 $(Delta; B)$ 的箭头是代换 $sigma : Gamma -> Delta$，满足 $B sigma = A$。这样 $"Tm"$ 就可以视作 $\(integral_cal(C)"Tp"\)^"op" -> Set$ 的预层。
   注意有序对之间的箭头 $(Gamma; A) -> (Delta; B)$ 与语境扩展之间的代换 $(Gamma, A) -> (Delta, B)$ 不同，因为后者还包含一个元素 $Gamma, A tack B sigma$，但是我们还没定义元素 $"Tm"$，所以不能这么办。
 
 第一种方案最简洁，只需要两个预层与它们之间的映射，不需要额外引入新的范畴，因此以下我们采用第一种方案。不过其余两个办法也大同小异。
@@ -59,8 +59,22 @@
 我们总结以上的讨论，可以将模型的概念用范畴语言重新表述。模型的这种形式称作#translate[自然模型][natural model]。这个定义由 Steve Awodey~@natural-model 提出，不过 Marcelo Fiore 也独立观察到此事。
 #definition[
   依值类型论的*自然模型*包含一个范畴 $cal(C)$，其上两个预层 $"Tm"$ 与 $"Tp"$，还有二者之间的可表映射 $typeof : "Tm" -> "Tp"$。
+]<def:natural-model>
+这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。在 (...) 中还会介绍如何用范畴语言处理各种类型结构。
+
+/*
+在预层范畴中的一切范畴构造都会附带代换操作。这样，范畴论的语言可以自动处理例如 $(A times B) sigma = A sigma times B sigma$ 的等式。我们完整叙述自然模型中乘积类型的定义为例。
+#definition[
+  给定范畴 $cal(C)$ 上的自然模型，考虑预层
+  #eq($ F(Gamma) = {(A, B, a, b) mid(|) vec(A in "Tp"(Gamma)\, B in "Tp"(Gamma),
+  a in "Tm"(Gamma, A)\, b in "Tm"(Gamma, B),
+  delim: #none)}. $)
+  则 $F -> "Tp" times "Tp"$ 有显然的投影映射。假如有自然变换 $G : "Tp" times "Tp" -> "Tp"$，使得它与 $typeof$ 的拉回恰好是 $F$，那么就称其为此模型中的*乘积类型结构*。
 ]
-这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。
+
+(... we really need to introduce internal language first, or don't boast about substitutions yet)
+
+(maybe we can wait until after LCCC, emphasize dialectics)
 
 - start with binary product type
   - Note that substitution equations are absorbed naturally
@@ -69,10 +83,13 @@
 - dependent sigma and pi type
 - internal language of presheaves
 - justify logical framework
+*/
 
 // Presheaf as discrete fibrations, formulation of representability (maybe we don't need this, or put in the appendix)
 
-== 展映射与概括范畴
+=== 展映射与概括范畴
+
+在模型的定义中，不难看出形如 $(Gamma, A) -> Gamma$ 的代换是有特殊地位的。在集合模型中，任何映射都同构于这样的映射 (...), families and fibrations
 
 - Motivate display maps as the maps of the form $(Gamma, A) -> Gamma$. #define[展映射][display map]
 - Justify mathematical motivation: dependent structures are hard to define
@@ -94,7 +111,7 @@
 - Examples of comprehension categories with Pi and Sigma types
   - LCCC
     - Note that it's very hard to define a CwF with an LCCC! More on this later
-    - Application of type theoretic language
+    - Application of type theoretic language (exponentiable arrows closed under pullback)
   - elementary toposes
     - presheaf categories
     - sheaves? maybe just over cantor space
@@ -116,6 +133,8 @@
 (also mention universes in sheaf topos)
 
 == 语法的泛性质
+
+What are morphisms between models?
 
 mention sconing and gluing
 
