@@ -60,7 +60,20 @@
 #definition[
   依值类型论的*自然模型*包含一个范畴 $cal(C)$，其上两个预层 $"Tm"$ 与 $"Tp"$，还有二者之间的可表映射 $typeof : "Tm" -> "Tp"$。
 ]<def:natural-model>
-这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。在 (...) 中还会介绍如何用范畴语言处理各种类型结构。
+这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。
+
+考虑模型中单元素类型结构的定义。它要求在每个 $"Tp"(Gamma)$ 中选出元素 $Unit_Gamma$。类似地，空类型结构也要求选出元素 $Empty_Gamma$。从某个集合 $X$ 中选出元素，用范畴语言表述就是选定映射 $1 -> X$，其中 $1$ 是单元素集合，即集合范畴的终对象。
+
+我们考虑预层 $1$ 使得 $1(Gamma)$ 均为单元素集合。这是预层范畴中的终对象。这样，预层间的映射 $1 -> "Tp"$ 就在每个 $"Tp"(Gamma)$ 中选出了元素。因此，我们应当要求有两个映射 $Unit, Empty : 1 -> "Tp"$，满足某些条件。此时，注意预层映射的自然性正好是代换需要满足的等式 $Unit_Gamma sigma = Unit_Delta$ 与 $Empty_Gamma sigma = Empty_Delta$。因此使用范畴语言时，代换等式往往会自然地打包进各种构造中。
+
+单元素类型还需要满足每个 $"Tm"(Gamma, Unit_Gamma)$ 恰有一个元素。在自然模型中，$"Tm"$ 被改为合并了各种类型的元素集的预层。因此要表述这个条件，应该考虑
+#eq($ U(Gamma) = {u mid(|) u in "Tm"(Gamma), typeof(u) = Unit_Gamma}. $)
+这构成一个预层。用范畴语言的说法，就是拉回
+#eq(diagram($
+  U edge(->) edge("d", ->) & "Tm" edgeL("d", ->, typeof)\
+  1 edgeR(->, Unit) & "Tp"
+$))
+我们要求 $U$ 是单元素预层，即 $U -> 1$ 是预层同构.（不过注意 $Empty$ 不能要求拉回是空预层，因为某些语境下空类型是有元素的，例如 $x : Empty tack x : Empty$.）在 (...) 中还会进一步介绍如何用范畴语言处理其他类型结构。
 
 /*
 在预层范畴中的一切范畴构造都会附带代换操作。这样，范畴论的语言可以自动处理例如 $(A times B) sigma = A sigma times B sigma$ 的等式。我们完整叙述自然模型中乘积类型的定义为例。
@@ -141,6 +154,8 @@ mention sconing and gluing
 will use to prove canonicity etc later down the line
 
 == 模型的函子观点
+
+(a category of algebras, model is a map from an algebra to a specified subcategory)
 
 - diagram as functor from small categories
 - algebraic structure as product preserving functor
