@@ -172,20 +172,22 @@ $)
 $)
 此类型论在文献中记作 $"CC"_omega$，没有固定名称。这些直谓宇宙一般写作 $"Type"_i$。
 
-#author-note[(...) on set models and consistency]
+这么修改之后，还有没有矛盾呢? 我们只需找到一个模型。根据前文的讨论，我们可以在集合模型中试将最底层的类型解释为至多有一个元素的集合。这样，无论多少个这样的集合取 $Pi$ 类型，得到的结果都还是只有一个元素，不会导致悖论。
+
+不过，这么做有一些困难。理论上宇宙 $*$ 应该只有两个元素，空集和单元素集，但是单元素集不只一个。事实上，根据 #[@sec:set-theory]的讨论， $V_1 = {x mid(|) exists y bind x = {y}}$ 是真类。一个想法是强行选定一个单元素集 $1 = {varnothing}$，但是这样与 $Pi$ 类型的构造不兼容。
+
+集合模型中将 $Pi$ 类型解释为集合乘积 $product_(x in A) B(x)$。具体展开定义后，这种集合的元素 $f$ 形如 $f = {(a_1, b_1), (a_2, b_2), ...}$，是有序对的集合，记录了每个 $a in A$ 应当映射到什么元素。如果 $B(x)$ 都只有一个元素，那么 $product_(x in A) B(x)$ 也只有一个元素，但是这个元素本身内部还有许多元素，结构非常复杂。因此如果将宇宙 $*$ 定为只有两个元素，那么它就不能对 $Pi$ 类型封闭。
+
+#let coerce = math.class("unary", sym.arrow.t)
+为此，我们可以再修改 $Pi$ 类型的定义。如果陪域满足 $tack B istype_*$，那么 $Pi A B$ 就根据 $B$ 是否总有元素定义为空集或者某个固定的单元素集。如果 $tack B istype_i$ $(i > 1)$，那么就按照一般的办法解释为集合的乘积。这样的确可以构造出 $"CC"_omega$（包括构造演算）的模型。不过此时累积性就难以成立：临时用 $coerce A$ 显式写出从 $istype_*$ 到 $istype_1$ 的转换，那么这个集合模型中 $coerce(Pi A B) istype_1$ 与 $Pi (coerce A) (coerce B) istype_1$ 就不相等。一方面，我们可以接受此事。从 Curry–Howard 对应的角度来看，这就相当于认为非直谓宇宙 $"Prop"$ 的 $forall$ 命题与直谓宇宙的 $Pi$ 类型并不完全是同一种东西，而是只有同构关系。另一方面，#[@sec:realizability-model]中介绍的模型则满足累积性。
 
 由于我们有时候将最底层的非直谓宇宙看作 $"Prop"$，而有时看作 $"Set"$，出于实用考虑我们也可以将其一分为二。换句话说，可以考虑两个非直谓宇宙，都在最底层且没有元素关系，一个称为 $"Prop"$，一个称为 $"Set"$。这不会导致矛盾，因为对于该类型论的任何表达式，将 $"Prop"$ 与 $"Set"$ 均替换为 $*$ 之后，得到的就是 $"CC"_omega$ 中的合法表达式，所以如果一者有矛盾，另一者就一定有矛盾。
 
-#author-note[(...) compare Prop with hProp (discuss choice)]
+在现代视角下，Curry–Howard对应应当将命题解释为至多有一个元素的类型，而非全体类型。这样，每个宇宙 $cal(U)$ 都能导出一个子类型
+#eq($ "hProp"_cal(U) = (A : cal(U)) times (forall x, y : "El"(A) bind x = y) $)
+表示其中的命题，我们临时记作 $"hProp"$ 以示区分。另一方面，在构造演算的集合模型中，$"Prop"$ 宇宙下的类型的确至多有一个元素，但这并不能在构造演算或者 $"CC"_omega$ 中得证.（事实上， #[@sec:realizability-model]给出的模型就是反模型.）因此，二者有许多相似之处，但不完全相同。
 
-#author-notes[
-- Proposition as elements of `Prop`, compare with HoTT
-- Choice and Diaconescu's theorem(?)
-- Proof irrelevant model of Prop using ZFC sets
-  - Tricky a priori, if $"Prop" : "Set"$ ($V_1$ is not small)
-  - Easy in Coquand hierarchies, mark variables by sort, but cumulativity won't hold, i.e. $(Pi_"Prop" A B)' != Pi_"Set" A' B'$
-  - Easy if Prop is not a universe, Pi and Forall separated
-]
+我们自然可以向 $"Prop"$ 添加公理，要求该宇宙中的所有类型都至多有一个元素。也可以向 $"hProp"_cal(U)$ 添加公理增加非直谓性，例如要求 $"hProp"_cal(U) tilde.eq "hProp"_(cal(U)')$ 对任何两个宇宙 $cal(U)$ 与 $cal(U)'$ 都成立。这样取直谓 $Pi$ 类型抬升了宇宙层级之后总可以通过此等价降回来。有若干定理给出 $"Prop"$ 与 $"hProp"$ 分别添加对应的公理之后是等价的。
 
 === 归纳类型
 
