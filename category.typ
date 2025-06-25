@@ -118,8 +118,17 @@ $))
   #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$ 将类型 $A$ 映射到展映射 $(Gamma, A) -> Gamma$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴，并且 $F$ 将拉回态射映到拉回态射。
 ]
 
-- Type structures on comprehension categories
-  - Negative types are very easy, harder with positive types
+- Discuss possible morphisms between types
+  - Motivate equivalence between fibered categories and pseudofunctors
+  - Making $cal(E) -> cal(C)$ discrete or making $F$ full both eliminates this extra information
+    - Discrete fibrations behave much better
+  - Possible use case as modeling subtypes or other kinds of coercions
+
+=== 范畴的依值类型语言
+
+(special type of comprehension categories: every arrow is a display map)
+
+- $Sigma, Pi$ and extensional equality type structures on comprehension categories
 
 - Examples of comprehension categories with Pi and Sigma types
   - LCCC
@@ -129,11 +138,9 @@ $))
     - presheaf categories
     - sheaves? maybe just over cantor space
 
-- Discuss possible morphisms between types
-  - Motivate equivalence between fibered categories and pseudofunctors
-  - Making $cal(E) -> cal(C)$ discrete or making $F$ full both eliminates this extra information
-    - Discrete fibrations behave much better
-  - Possible use case as modeling subtypes or other kinds of coercions
+=== 自然模型的类型结构
+
+Use internal language of presheaves to describe type structures
 
 == 融贯问题
 

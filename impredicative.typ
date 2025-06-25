@@ -198,6 +198,16 @@ Examples of inductive types, (predicative restriction pushed to the story)
 - The universe structure of CoC, CIC and pCIC (in story)
 - talk about inductive types, large elimination, and squash types
 
+---
+
+- Start with CoC
+- Add $"CC"_omega$
+- Add inductives to CIC
+- Paradoxes: Berardi paradox, Impredicativity is not set theoretic
+- We ban large elimination for Prop, and remove impredicativity for Set
+- Squash-like types are now allowed
+- This creates pCIC (pCuIC with cumulativity (essentially Coq))
+
 == 悖论三则
 
 === 朴素集合论的悖论
