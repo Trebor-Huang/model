@@ -187,11 +187,13 @@ $)
 #eq($ "hProp"_cal(U) = (A : cal(U)) times (forall x, y : "El"(A) bind x = y) $)
 表示其中的命题，我们临时记作 $"hProp"$ 以示区分。另一方面，在构造演算的集合模型中，$"Prop"$ 宇宙下的类型的确至多有一个元素，但这并不能在构造演算或者 $"CC"_omega$ 中得证.（事实上， #[@sec:realizability-model]给出的模型就是反模型.）因此，二者有许多相似之处，但不完全相同。
 
-我们自然可以向 $"Prop"$ 添加公理，要求该宇宙中的所有类型都至多有一个元素。也可以向 $"hProp"_cal(U)$ 添加公理增加非直谓性，例如要求 $"hProp"_cal(U) tilde.eq "hProp"_(cal(U)')$ 对任何两个宇宙 $cal(U)$ 与 $cal(U)'$ 都成立。这样取直谓 $Pi$ 类型抬升了宇宙层级之后总可以通过此等价降回来。有若干定理给出 $"Prop"$ 与 $"hProp"$ 分别添加对应的公理之后是等价的。
+我们自然可以向 $"Prop"$ 添加公理，要求该宇宙中的所有类型都至多有一个元素。这称作#define[证明无关性][proof irrelevance]。也可以向 $"hProp"_cal(U)$ 添加公理增加非直谓性，例如要求 $"hProp"_cal(U) tilde.eq "hProp"_(cal(U)')$ 对任何两个宇宙 $cal(U)$ 与 $cal(U)'$ 都成立。这样取直谓 $Pi$ 类型抬升了宇宙层级之后总可以通过此等价降回来。有若干定理给出 $"Prop"$ 与 $"hProp"$ 分别添加对应的公理之后是等价的。
 
 === 归纳类型
 
-Examples of inductive types, (predicative restriction pushed to the story)
+Examples of inductive types
+
+squash types and their impredicative encodings (compare with HoTT squashes)
 
 == 寓言一则
 
@@ -258,7 +260,9 @@ Girard 在 U 系统中将 Burali-Forti 悖论的简化版本 (即利用无挠序
 
 === Berardi 悖论 <sec:berardi-paradox>
 
-在构造演算中，如果将 $"Prop"$ 中的类型视作命题，那么形式化经典逻辑时不免需要假定排中律与选择公理。回忆我们可以用非直谓宇宙编码逻辑连词，如
+在构造演算中，如果将 $"Prop"$ 中的类型视作命题，那么形式化经典逻辑时不免需要假定排中律与选择公理。Berardi 悖论说的是这些假设可以推出证明无关性，即 $p : "Prop"$ 总是满足 $(x, y : p) -> x = y$。这意味着不能将最底层宇宙的类型同时视作命题和集合，因为集合应当可以有多个不同的元素。
+
+回忆我们可以用非直谓宇宙编码逻辑连词，如
 #eq($
   top &= (X : "Prop") -> X -> X \
   bot &= (X : "Prop") -> X \
@@ -267,24 +271,48 @@ Girard 在 U 系统中将 Burali-Forti 悖论的简化版本 (即利用无挠序
   p or q &= (X : "Prop") -> (p -> X) -> (q -> X) -> X \
   (forall x : A bind p(x)) &= (x : A) -> p(x) \
   (exists x : A bind p(x)) &= (X : "Prop") -> ((x : A) -> p(x) -> X) -> X \
-  "Id"(A, x, y) &= (P : A -> "Prop") -> P(x) -> P(y)
+  "Id"(A, x, y) &= (P : A -> "Prop") -> P(x) -> P(y) \
+  // norm(A) &= (X : "Prop") -> (A -> X) -> X
 $)
 这里 $A$ 可以是任意类型，而 $p$ 与 $q$ 需要在 $"Prop"$ 宇宙中。这样，排中律就是
-#eq($ "EM" : (p : "Prop") -> (p or not p) $)
-而关于类型 $A$ 的选择公理是 #author-note[(...) 全局]
-#eq($
-  epsilon_A &: (p : A -> "Prop") -> (exists a bind p(a)) -> A \
-  rho_A &: (p : A -> "Prop") (h : exists a bind p(a)) -> p(epsilon_A p h)
-$)
-其中 $epsilon_A$ 给定 $A$ 的一个元素，而 $rho_A$ 证明这个元素满足所需的性质。
+#eq($ "EM" : (p : "Prop") -> (p or not p). $)
+选择公理则有多种说法。
 
-#author-note[(...)]
+一般的选择公理说的是，给定类型族 $B(x) istype$ 与谓词 $P : (x : A) -> B(x) -> "Prop"$，如果命题 $forall (x : A) bind exists (y : B(x)) bind P(x, y)$ 成立，那么就存在函数在每个 $B(x)$ 中选出一个元素，即
+#eq($ exists (f : (x : A) -> B(x)) bind forall (x : A) bind P(x, f(x)). $)
+如果类型论中有 $Sigma$ 类型，可以将 $B$ 与 $P$ 合并成类型族 $C(x) = sum_(y : B(x)) P(x, y)$。这样选择公理化为非常对称的形式
+#eq($ ((x : A) -> norm(C(x))) -> norm((x : A) -> C(x)). $)
+在同伦类型论中，这个形式更为常见。不过 $"CC"_omega$ 没有 $Sigma$ 类型，因此需要用上面的复杂形式。
+
+(...) 全局选择，无 $Sigma$ 类型的情况
 
 #theorem-appendix[Barbanera–Berardi][
-  在构造演算中假定排中律与全局选择公理，则任何命题 $p : "Prop"$ 的所有元素都相等。
+  在构造演算中假定排中律与全局选择公理，则任何命题 $p : "Prop"$ 的所有元素相等，即 $"Id"(p, x, y)$ 有元素。
 ]
 #proof[
+可以用非直谓宇宙编码 $Bool$ 类型为 $(X : "Prop") -> X -> X -> X$。其中 $"true"$ 和 $"false"$ 分别返回第一个与第二个参数。分类讨论算符 $ite(b, x, y)$ 在非直谓编码下就是 $b p x y$。注意这里 $x$ 与 $y$ 的类型必须一致。
 
+要找到两个元素不相等的类型，最显然的办法就是考虑 $Bool$。事实上，假如 $"true"$ 与 $"false"$ 相等，那么任何 $p : "Prop"$ 的元素 $x, y : p$ 都两两相等，这意味着只需要考虑 $Bool$ 即可。具体证明是注意到 $ite("true", x, y) = x$ 而 $ite("false", x, y) = y$，因此如果有 $omega : "Id"(Bool, "true", "false")$，则 $omega(lambda b bind "Id"(p, x, ite(b, x, y)))("refl"(x))$ 就证明了 $"Id"(p, x, y)$.#footnote[这个证明无法说明更高宇宙中的类型元素都相等，例如对 $X : "Type"_2$ 的元素就不适用。这是因为 $Bool$ 的非直谓编码中 $X$ 只能取值于 $"Prop"$ 宇宙，因此 $ite(b, x, y)$ 只能是命题宇宙中的类型的元素。]
+
+将函数类型 $X -> Bool$ 也记作 $Bool^X$，类比（经典逻辑）集合论中的幂集。设 $UU = (X : "Prop") -> Bool^X$。那么显然有映射 $pi : UU -> Bool^UU$，定义是 $pi = lambda u bind u UU$。反过来，可以利用排中律定义映射 $iota : Bool^UU -> UU$，即
+#eq($
+  iota alpha X = cases(
+    alpha & (X = UU),
+    (...) quad & (X != UU)
+  )
+$)
+其中对命题 $X = UU$ 是否成立利用排中律分类讨论，而省略号可以任填 $Bool^X$ 的元素，例如输出 $"false"$ 的常函数即可。这样，函数复合 $pi compose iota$ 就是恒等函数。
+
+不过，这个分类讨论其实不能成立，因为两个分支中的表达式类型不相同。换句话说，单纯的分类讨论 $ite(b, x, y)$ 不能满足要求，而需要_依值分类讨论_。用非直谓编码的 $Bool$ 是无法定义依值分类讨论的，这与上文提到的强 $Sigma$ 类型情况类似。利用选择公理，我们可以绕开依值分类讨论。
+
+#let retract = sym.lt.tri
+令 $A retract B$ 为命题 $exists f : A -> B bind exists g : B -> A bind g compose f = id_A$ 的缩写。那么显然有
+#eq($ (cal(P)(X) retract cal(P)(UU)) -> exists f : cal(P)(X) -> cal(P)(UU) bind exists g : cal(P)(UU) -> cal(P)(X) bind g compose f = id, $)
+再由排中律，可以将两个存在量词移到前面来。换句话说，由 $p -> exists x bind q(x)$ 可以对 $p$ 分类讨论推出 $exists x bind p -> q(x)$。这样，就可以用全局选择取出具体的 $f_X$ 与 $g_X$，使得当 $cal(P)(X) retract cal(P)(UU)$ 成立时，$g_X compose f_X = id$。注意 $X = UU$ 时 $cal(P)(X) retract cal(P)(UU)$ 显然成立，因此定义
+#eq($ iota alpha X = g_X (f_X (alpha)) $)
+即可。
+
+以上我们构造了 $pi : UU -> Bool^UU$ 与 $iota : Bool^UU -> UU$，满足 $pi compose iota = id_(Bool^UU)$。这其实足够导出 Russell 悖论，不过由于我们使用的是 $Bool$ 而不是 $"Prop"$，其最终结论是 $Bool$ 中的 $"true"$ 与 $"false"$ 相等，而非 $top <-> bot$。后者会使得一切命题都有证明，而前者仅仅使一切命题的证明都相等。
 ]
 
 (mention Diaconescu's theorem)
