@@ -73,7 +73,7 @@
   U edge(->) edge("d", ->) & "Tm" edgeL("d", ->, typeof)\
   1 edgeR(->, Unit) & "Tp"
 $))
-我们要求 $U$ 是单元素预层，即 $U -> 1$ 是预层同构.（不过注意 $Empty$ 不能要求拉回是空预层，因为某些语境下空类型是有元素的，例如 $x : Empty tack x : Empty$.）在 (...) 中还会进一步介绍如何用范畴语言处理其他类型结构。
+我们要求 $U$ 是单元素预层，即 $U -> 1$ 是预层同构.（不过注意 $Empty$ 不能要求拉回是空预层，因为某些语境下空类型是有元素的，例如 $x : Empty tack x : Empty$.）在 #[@sec:natural-type-structure]中还会进一步介绍如何用范畴语言处理其他类型结构。
 
 /*
 在预层范畴中的一切范畴构造都会附带代换操作。这样，范畴论的语言可以自动处理例如 $(A times B) sigma = A sigma times B sigma$ 的等式。我们完整叙述自然模型中乘积类型的定义为例。
@@ -108,7 +108,7 @@ $))
 - Justify mathematical motivation: dependent structures are hard to define
 - Alternative framework for models of type theory: comprehension categories
   - mention that this also ties into the already existing program of fibered category theory by Bénabou
-  - It's possible to have multiple $A$'s produce the same display map, so better have a projection $cal(E) -> cal(C)^->$
+  - It's possible to have multiple $A$'s produce the same display map (empty set example), so better have a projection $cal(E) -> cal(C)^->$
   - Elaborate on the morphism structure of $cal(E)$ (morphisms between types)
   - Substitution action: have a type $A : cal(E)$ over $Gamma$, should have a "pullback square"
   - Define Grothendieck fibrations
@@ -138,7 +138,11 @@ $))
     - presheaf categories
     - sheaves? maybe just over cantor space
 
-=== 自然模型的类型结构
+#definition[
+  假如有集合 $X$，配有两个集合 $X_0$、$X_1$ 与双射 $X tilde.equiv X_0 times X_1$，再配有集合 $X_00$、$X_01$、$X_10$、$X_11$ 与双射 $X_0 tilde.equiv X_00 times X_01$ 和 $X_1 tilde.equiv X_10 times X_11$，以此类推，就称此结构为 *Cantor 层*。Cantor 层之间的态射由一族映射 $f_b : X_b -> Y_b$ 组成，使得与配备的双射都交换。
+]
+
+=== 自然模型的类型结构 <sec:natural-type-structure>
 
 Use internal language of presheaves to describe type structures
 

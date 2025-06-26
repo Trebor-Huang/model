@@ -151,3 +151,51 @@ independence-results-coc:
     title: Category Theory and Computer Science
     volume: 389
     publisher: Springer, Berlin, Heidelberg
+
+groupoid-interpretation:
+  type: article
+  title: The groupoid interpretation of type theory
+  author:
+    - Hofmann, Martin
+    - Streicher, Thomas
+  date: 1996
+  parent:
+    type: book
+    title: Twenty-five years of constructive type theory
+    volume: 36
+  page-range: 83-111
+  url: https://ncatlab.org/nlab/files/HofmannStreicherGroupoidInterpretation.pdf
+
+inf-groupoid-homotopy-type:
+  type: article
+  title: $infinity$-groupoids and homotopy types
+  author:
+    - Kapranov, M. M.
+    - Voevodsky, V. A.
+  date: 1991
+  page-range: 29-46
+  parent:
+    title: Cahiers de Topologie et Géométrie Différentielle Catégoriques
+    volume: 32
+    issue: 1
+  url: https://eudml.org/doc/91469
+
+homotopy-type-3-groupoid:
+  type: misc
+  note: ArXiv preprint
+  title: Homotopy types of strict 3-groupoids
+  author: Simpson, Carlos
+  date: 1998
+  serial-number:
+    doi: 10.48550/arXiv.math/9810059
+
+simplicial-model:
+  type: misc
+  note: ArXiv preprint
+  title: The Simplicial Model of Univalent Foundations (after Voevodsky)
+  author:
+    - Kapulkin, Chris
+    - Lumsdaine, Peter LeFanu
+  date: 2012
+  serial-number:
+    doi: 10.48550/arXiv.1211.2851

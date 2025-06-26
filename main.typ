@@ -130,6 +130,8 @@ Trebor\ #v(1em)
 
 #include "category.typ"
 
+#include "syntax.typ"
+
 #include "model.typ"
 
 // Appendix numbering

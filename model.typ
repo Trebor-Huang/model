@@ -22,7 +22,7 @@ Sattler's model structure criteria?
 
 == 单纯集模型
 
-Воеводский (Voevodsky), paper by Chris Kapulkin and Peter LeFanu Lumsdaine
+Воеводский (Voevodsky), paper by Chris Kapulkin and Peter LeFanu Lumsdaine @simplicial-model
 
 Introduce fibrant types
 
@@ -35,6 +35,11 @@ BCH model
 Internal language and cartesian models
 
 Internal universes
+
+(homotopy canonicity??)
+
+problems with cubical models: they don't represent space
+$==>$ equivariant cubical model etc
 
 == 同伦类型论的内模型
 

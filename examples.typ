@@ -282,7 +282,7 @@ $)
 $)
 证明见@sec:K-equivalences。我们在 #[@sec:set-model]的集合模型中已经说明了这与 Martin-Löf 类型论是相容的，因此不可能证伪该原理。它究竟可证还是独立，很长一段时间里都是未解之谜。
 
-1996 年，Hofmann 与 Streicher [?] 提出了群胚模型，作为 K 原理的反模型。这不仅回答了这个问题，还为其独立性提供了清晰的解释。Martin-Löf 类型论中的类型不仅可以理解为集合，还可以视作_空间_。相等类型的元素则可以视作空间中两个点之间的全体道路构成的空间。这样，人们首次建立了类型论与同伦论之间的联系。为此，在与同伦相关的语境下，我们也将相等类型称作*道路类型*。
+1996 年，Hofmann 与 Streicher @groupoid-interpretation 提出了群胚模型，作为 K 原理的反模型。这不仅回答了这个问题，还为其独立性提供了清晰的解释。Martin-Löf 类型论中的类型不仅可以理解为集合，还可以视作_空间_。相等类型的元素则可以视作空间中两个点之间的全体道路构成的空间。这样，人们首次建立了类型论与同伦论之间的联系。为此，在与同伦相关的语境下，我们也将相等类型称作*道路类型*。
 
 在类型论的语法中，类型的定义表面上只会描述其元素的构成，而其中的道路则是 “自动生成” 的。例如给出一条 $A times B$ 中的道路就等价于同时给出 $A$ 中的道路与 $B$ 中的道路。再如函数 $(a, b : X) -> (a = b) -> (f(a) = f(b))$ 是靠 J 消去子定义的，无法在定义函数 $f$ 时控制此函数的表现。如果以空间作为模型，就可以精确控制道路的去处，进而给出各种命题的反模型。
 
@@ -319,7 +319,7 @@ $)
 
 群胚可以刻画空间的零维与一维同伦信息。一个自然的想法是能否同理给出刻画更高维信息的纯代数结构，乃至完全包含所有同伦信息。花些功夫可以定义出 2-群胚与 3-群胚等，但是定义的组合复杂度增长迅速，很难推广到无穷群胚的情况。对此的研究是高阶代数的来由。
 
-1991 年，Воеводский (Voevodsky) 与 Михаил Капранов (Mikhail Kapranov) 给出了一种无穷群胚的定义，并证明了这种无穷群胚能在同伦意义下表示所有的空间 [?]。但是 1998 年，由 Carlos Simpson~[?] 给出了反例，因此证明有误。事实上球面 $SS^2$ 就不在其表达能力范围内。然而，很长一段时间内，人们都没有明白错误在哪里，因此不清楚究竟是证明有误还是反例不成立。这件事是 Воеводский 转而追求形式化证明、发展同伦类型论的动机之一。
+1991 年，Воеводский (Voevodsky) 与 Михаил Капранов (Mikhail Kapranov) 给出了一种无穷群胚的定义，并证明了这种无穷群胚能在同伦意义下表示所有的空间 @inf-groupoid-homotopy-type。但是 1998 年，由 Carlos Simpson~@homotopy-type-3-groupoid 给出了反例，因此证明有误。事实上球面 $SS^2$ 就不在其表达能力范围内。然而，很长一段时间内，人们都没有明白错误在哪里，因此不清楚究竟是证明有误还是反例不成立。这件事是 Воеводский 转而追求形式化证明、发展同伦类型论的动机之一。
 
 === 模型定义
 
@@ -454,7 +454,7 @@ $)
 
 假设有汇编 $Gamma$ 与其上的汇编族 $A_x$，还有 $integral A$ 上的汇编族 $B_((x, a))$。定义 $Sigma$ 类型对应的汇编族 $(Sigma A B)_x$ 为不交并 $product.co_(a in A_x) B_((x, a))$，使得 $r realizes_((Sigma A B)_x) (a, b)$ 当且仅当 $r$ 是有序对程序 $P r_1 r_2$，满足 $r_1 realizes_A_x a$，并且 $r_2 realizes_B_((x, a)) b$。
 
-$Pi$ 类型的底集合则不是全体函数 $product_(a in A_x) B_((x, a))$，只包含可计算的依值函数。某个依值函数 $f$ 可计算，无非就是存在程序 $r$ 能实现它。这里，$r realizes_((Pi A B)_x) f$ 当且仅当 $s realizes_A_x a$ 时 $r s defined$，并且 $r s realizes_B_((x,a)) f(a)$。这样得到的汇编就仍然满足每个元素都至少有一个程序实现的要求。
+$Pi$ 类型的底集合则不是全体函数 $product_(a in A_x) B_((x, a))$，而只包含可计算的依值函数。某个依值函数 $f$ 可计算，无非就是存在程序 $r$ 能实现它。这里，$r realizes_((Pi A B)_x) f$ 当且仅当 $s realizes_A_x a$ 时 $r s defined$，并且 $r s realizes_B_((x,a)) f(a)$。这样得到的汇编就仍然满足每个元素都至少有一个程序实现的要求。
 
 对于自然数 $NN$ 或者 $Empty$ 与 $Unit$ 等类型，对应的汇编族直接不依赖 $x in Gamma$ 即可。这样，不难算出空语境中 $NN -> NN$ 的元素的确就与可计算函数一一对应。
 
@@ -508,21 +508,9 @@ You can improve to $Sigma$ type by searching the minimal one
 // - Define operational semantics on raw terms first, then fit a type system on it
 // - Relation to $Lambda$-realizability
 
-== 语义参数性
-
 == 语法翻译
 
 - syntactic version of the exception model/labelled function model
 - validate injectivity of type constructors via labels
   - trivial countermodel in set model, since $A times Empty = Empty$ strictly holds
-- parametricity??
-
-== 语法性质的证明
-
-- Promote to own chapter after category theory, only give brief review here
-
-  - Canonicity
-  - Normalization
-    - Injectivity of type constructors
-  - Parametricity? We can compare semantic and syntactic versions
 

@@ -1,7 +1,7 @@
 #import "common.typ": *
 = 非直谓宇宙 <appendix:impredicative>
 
-非直谓性在逻辑学和哲学中概念比较模糊，没有统一的定义。在类型论的语境中，非直谓性则具体指代函数类型 (或者 $Pi$ 类型) 所处的宇宙满足的规则。就一般直觉而言，假如类型 $A$ 在宇宙层级 $kappa$ 中，而 $B$ 在层级 $lambda$ 中，那么函数类型 $A -> B$ 应该取二者大者，即 $max{kappa, lambda}$。但是，如果某个宇宙层级是*非直谓*的，那么只要陪域 $B$ 在此层级中，任何函数类型 $A -> B$ 就也处在此层级中。
+非直谓性在逻辑学和哲学中概念比较模糊，没有统一的定义。在类型论的语境中，非直谓性则具体指代函数类型 (或者 $Pi$ 类型) 所处的宇宙满足的规则。就一般直觉而言，假如类型 $A$ 在宇宙层级 $kappa$ 中，而 $B$ 在层级 $lambda$ 中，那么函数类型 $A -> B$ 应该取其大者，即 $max{kappa, lambda}$。但是，如果某个宇宙层级是*非直谓*的，那么只要陪域 $B$ 在此层级中，任何函数类型 $A -> B$ 就也处在此层级中。
 
 具体来说，用 Tarski 宇宙描述的规则是
 #eq($
@@ -197,11 +197,6 @@ squash types and their impredicative encodings (compare with HoTT squashes)
 
 == 寓言一则
 
-- The universe structure of CoC, CIC and pCIC (in story)
-- talk about inductive types, large elimination, and squash types
-
----
-
 - Start with CoC
 - Add $"CC"_omega$
 - Add inductives to CIC
@@ -315,4 +310,4 @@ $)
 以上我们构造了 $pi : UU -> Bool^UU$ 与 $iota : Bool^UU -> UU$，满足 $pi compose iota = id_(Bool^UU)$。这其实足够导出 Russell 悖论，不过由于我们使用的是 $Bool$ 而不是 $"Prop"$，其最终结论是 $Bool$ 中的 $"true"$ 与 $"false"$ 相等，而非 $top <-> bot$。后者会使得一切命题都有证明，而前者仅仅使一切命题的证明都相等。
 ]
 
-(mention Diaconescu's theorem)
+// (mention Diaconescu's theorem)
