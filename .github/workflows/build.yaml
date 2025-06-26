@@ -7,16 +7,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: typst-community/setup-typst@v3
 
-      - name: Get Source Han Serif font
+      - name: Get fonts
         run: |
+          mkdir fonts
+          wget https://mirrors.ctan.org/fonts/newcomputermodern/otf/NewCM10-Book.otf -P fonts/
+          wget https://mirrors.ctan.org/fonts/newcomputermodern/otf/NewCM10-BookItalic.otf -P fonts/
+
           wget https://github.com/adobe-fonts/source-han-serif/releases/download/2.002R/09_SourceHanSerifSC.zip
           unzip 09_SourceHanSerifSC.zip
+          mv OTF/SimplifiedChinese/* fonts
 
           wget https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Caligraphic-Regular.ttf
-          mv KaTeX_Caligraphic-Regular.ttf OTF/SimplifiedChinese
+          mv KaTeX_Caligraphic-Regular.ttf fonts
           wget https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Caligraphic-Bold.ttf
-          mv KaTeX_Caligraphic-Bold.ttf OTF/SimplifiedChinese
-      - run: typst compile main.typ model.pdf --font-path ./OTF/SimplifiedChinese/
+          mv KaTeX_Caligraphic-Bold.ttf fonts
+      - run: typst compile main.typ model.pdf --font-path ./fonts/
       - uses: actions/upload-artifact@v4
         with:
           name: model
