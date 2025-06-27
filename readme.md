@@ -1,60 +1,10 @@
 # 依值类型论的模型
 
-在[此处](https://github.com/Trebor-Huang/model/actions)下载（需要登录 GitHub 账号）
+在[此处](https://github.com/Trebor-Huang/model/actions)下载 pdf 文档（需要登录 GitHub 账号）。
 
-(...)
+> 为什么类型论的研究需要模型? 究其根本，模型就是给语法赋予含义的数学结构。类型论可以有多种含义。例如可以通过描述表达式如何化简求值给出含义，也可以描述类型论的表达式如何编译为程序 —— 可以是 x86 指令集，也可以是数学上的 Turing 机、Gödel 编码等。在数学中，有许多复杂的数学对象蕴含类似于类型论的结构。如果构造了合适的模型，类型论就有了新的含义，可以将这些复杂对象之间的关系表述成简单的式子。同伦类型论就是这种思路的成功范例。同时，模型还可以帮助我们证明语法具备的性质，例如正规化、参数性等等。
+>
+> 类型论的语法与语义是互相作用的。为了描述某些语义对象，我们从这些对象的结构中提取出一套类型论的语法。而研究这套语法的性质时，又会提出别的模型为它提供语义。因此，若要理解当代前沿类型论的发展，对于模型与语义的理解就尤为重要。
+>
+> 本书的首要目的是为中文读者提供尽可能准确而不过时的介绍。同时，我也希望其中的表述对计算机与数学专业的读者都足够易懂。为此，书中包含许多例子，藉以展示实操用到的种种技术。对范畴论的知识要求已尽可能延后，[…]
 
-## 待办
-
-- [ ] Parametricity??
-- [ ] Syntactic models??
-- [ ] Pick font and include in repo
-- [ ] Modularize
-- [ ] Chinese readme
-- [ ] Text operator font
-
-## 大纲
-
-- Preliminaries
-  - Basic concepts of type theory
-    - Universes / type judgements
-    - Substitutions and contextuality
-    - Canonical forms and normal forms
-  - Basic category theory
-    - Diagram chasing
-    - Natural isomorphisms calculation
-- Introduction
-  - Set models of type theory
-  - The syntax model
-  - Category with families
-- Zoo of models (avoid using CwF terminology)
-  - Digraph model (rejects excluded middle)
-    - Discuss intuition of presheaf models
-  - Exception model (rejects funext)
-    - Optional: polynomial model
-  - Groupoid model (rejects UIP)
-  - Models of computability
-    - Assemblies, modest sets
-    - Computable logical principles
-      - Countable choice
-      - Markov's principle
-      - Church's thesis
-    - Impredicative universe
-  - Operational semantics (PER model)
-  - Canonicity model
-    - Optional: Normalization model (discuss strong normalization)
-- Models and categories
-  - CwF, natural model, discrete fibrations
-  - Display maps and comprehension
-    - Locally cartesian closed categories and topos
-    - Compare with HOL
-  - Coherence problem
-  - Functorial viewpoint of models (Uemura)
-  - Discuss substructural and modal
-- Models and Homotopy theory
-  - Identity types and model categories
-  - Voevodsky's simplicial model
-  - Cubical models
-    - BCH
-    - Unifying approach to cartesian theories
-  - Homotopy theory of models?
