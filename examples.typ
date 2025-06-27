@@ -328,6 +328,10 @@ $)
   给定群胚 $Gamma$，定义*依值群胚* $A$ 包含如下资料：对于每个点 $x in Gamma$ 配备集合 $A_x$，对于每条道路 $p in hom_Gamma (x, y)$ 与 $alpha in A_x$ 和 $beta in A_y$ 配备道路集 $hom_A^p (alpha, beta)$。有平凡道路 $refl(alpha) in hom_A^(refl(x)) (alpha, alpha)$、道路逆转 $(-)^(-1) : hom_A^p (alpha, beta) -> hom_A^(p^(-1)) (beta, alpha)$ 与道路拼接操作
   #eq($ hom_A^p (y, z) times hom_A^q (x, y) -> hom_A^(p * q) (x, z), $)
   满足单位律、结合律，并且道路逆转满足 $xi * xi^(-1) = refl(alpha)$ 与 $xi^(-1) * xi = refl(beta)$。
+
+  (... fibration: every morphism has a lift with specified starting point)
+
+  (motivate through @sec:J-equivalences)
 ]
 此定义与依值有向图 (@def:dependent-graph) 类似，只不过这里还为群胚中的每个运算规定了对应的依值运算。同样可以定义全群胚 $integral A$ 表示语境扩展。空语境 $()$ 则对应只有一个点 $star$ 与一条平凡道路 $refl(star)$ 的群胚。不难看出，空语境上的依值群胚恰好与普通的群胚是等价的。
 
@@ -351,7 +355,13 @@ $Pi$ 类型则有些许复杂，不过同样可以利用有向图 #[@sec:graph-e
 $))
 如果道路复合 $t_p * mu = nu * s_p$，就定义此依值道路集有一个元素，否则没有元素。
 
-- Must verify J rule @sec:J-equivalences
+最后，我们还需要验证 J 原理。根据@sec:J-equivalences 的结论，我们只需构造 $"contr"$ 与 $"transp"$ 两个运算，并且验证它们与代换交换。
+
+对于 $"contr"$ 而言，我们需要计算 $Sigma$ 类型 $(y : A) times (x = y)$ 在群胚模型中的解释。先就 $A$ 不依值的情况建立直觉。此时群胚 $(y : A) times (x = y)$ 的点是有序对 $(y, p)$，其中 $y in A$，$p in hom_A (x, y)$。从 $(y, p)$ 到 $(y', p')$ 的道路集与 ${q in hom_A (y, y') mid(|) q * p = p'}$ 有双射。$"contr"$ 说明该类型中的所有元素都等于 $(x, refl)$，在群胚语义中就是为每个点 $(y, p)$ 选择一条到 $(x, refl)$ 的道路，满足一些条件。显然应当选择道路 $p^(-1)$，此时需要满足的条件是对于任何道路 $q in hom_A (y, y')$，如果 $q * p = p'$，那么 $(p')^(-1) * q = p^(-1)$。不难看出这总是成立。同时，如果 $q = refl$，那么 $q^(-1)$ 自然也是 $refl$，因此这满足所需的判值相等关系。
+
+依值情况类似，只需再验证 $"contr"_A (s, t, p) sigma = "contr"_(A sigma) (s sigma, t sigma, p sigma)$ 即可，繁而不难。
+
+对于 $"transp"$ 而言，我们同样先考虑 $x : A tack P(x) istype$，即 $A$ 本身不依值的简单情况。此时 $P$ 是关于 $A$ 的依值群胚。因此给定道路 $p in hom_A (x, y)$ (...)
 
 === K 原理的反模型
 

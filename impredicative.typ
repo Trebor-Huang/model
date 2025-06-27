@@ -203,6 +203,7 @@ squash types and their impredicative encodings (compare with HoTT squashes)
 - Paradoxes: Berardi paradox, Impredicativity is not set theoretic
 - We ban large elimination for Prop, and remove impredicativity for Set
 - Squash-like types are now allowed
+- We can also allow "obviously irrelevant" large elimination, including $top, bot, and, =$ and accessibility predicates
 - This creates pCIC (pCuIC with cumulativity (essentially Coq))
 
 == 悖论三则

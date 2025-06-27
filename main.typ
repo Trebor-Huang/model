@@ -109,7 +109,7 @@ Trebor\ #v(1em)
         // Re-display the chapter number
         link(it.target)[#numbering("1.1", ..counter(heading).at(it.target)) 节]
       } else {
-        link(it.target)[附录#numbering("A.1", ..counter(heading).at(it.target))]
+        link(it.target)[附录 #numbering("A.1", ..counter(heading).at(it.target))]
       }
     }
   } else {
