@@ -321,23 +321,37 @@ $)
 
 1991 年，Воеводский (Voevodsky) 与 Михаил Капранов (Mikhail Kapranov) 给出了一种无穷群胚的定义，并证明了这种无穷群胚能在同伦意义下表示所有的空间 @inf-groupoid-homotopy-type。但是 1998 年，由 Carlos Simpson~@homotopy-type-3-groupoid 给出了反例，因此证明有误。事实上球面 $SS^2$ 就不在其表达能力范围内。然而，很长一段时间内，人们都没有明白错误在哪里，因此不清楚究竟是证明有误还是反例不成立。这件事是 Воеводский 转而追求形式化证明、发展同伦类型论的动机之一。
 
-=== 模型定义
+=== 依值群胚与纤维化
 
-按照惯例，我们将语境解释为群胚，而类型解释为依值群胚，定义如下。
 #definition[
   给定群胚 $Gamma$，定义*依值群胚* $A$ 包含如下资料：对于每个点 $x in Gamma$ 配备集合 $A_x$，对于每条道路 $p in hom_Gamma (x, y)$ 与 $alpha in A_x$ 和 $beta in A_y$ 配备道路集 $hom_A^p (alpha, beta)$。有平凡道路 $refl(alpha) in hom_A^(refl(x)) (alpha, alpha)$、道路逆转 $(-)^(-1) : hom_A^p (alpha, beta) -> hom_A^(p^(-1)) (beta, alpha)$ 与道路拼接操作
   #eq($ hom_A^p (y, z) times hom_A^q (x, y) -> hom_A^(p * q) (x, z), $)
   满足单位律、结合律，并且道路逆转满足 $xi * xi^(-1) = refl(alpha)$ 与 $xi^(-1) * xi = refl(beta)$。
-
-  (... fibration: every morphism has a lift with specified starting point)
-
-  (motivate through @sec:J-equivalences)
 ]
-此定义与依值有向图 (@def:dependent-graph) 类似，只不过这里还为群胚中的每个运算规定了对应的依值运算。同样可以定义全群胚 $integral A$ 表示语境扩展。空语境 $()$ 则对应只有一个点 $star$ 与一条平凡道路 $refl(star)$ 的群胚。不难看出，空语境上的依值群胚恰好与普通的群胚是等价的。
+此定义与依值有向图 (@def:dependent-graph) 类似，只不过这里还为群胚中的每个运算规定了对应的依值运算。不过，我们不会将类型直接解释为依值群胚。这是因为我们希望相等类型的元素由群胚中的道路给出，因此还需要保证依值群胚的道路满足相等类型的性质。
 
-依值群胚 $A$ 的语义元素 $a$ 需要为每个点 $x in Gamma$ 选择依值点 $a_x in A_x$，为每条道路 $p in hom_Gamma (x, y)$ 选择依值道路 $a_p in hom_A^p (a_x, a_y)$，满足 $a_(refl(x)) = refl(a_x)$、$a_(p*q) = a_p * a_q$ 与 $a_(p^(-1)) = a_p^(-1)$。这里等式左侧用到 $Gamma$ 中的运算，而右侧是依值群胚 $A$ 中的运算。
+根据@sec:J-equivalences 的结论， $"contr"$, $"transp"$
 
-$Sigma$ 与 $Pi$ 类型与有向图十分类似。有群胚 $Gamma$，依值群胚 $A$ 与 $integral A$ 上的依值群胚 $B$，我们需要定义 $Gamma$ 上的依值群胚 $Sigma A B$ 与 $Pi A B$。前者非常直观，定义 $x in Gamma$ 上的依值点集为 ${(a, b) mid(|) a in A_x, b in B_((x, a))}$，即点的有序对。道路集也是道路的有序对。
+  (...)
+
+#definition[
+  给定群胚 $Gamma$ 与依值群胚 $A$，如果对于每条道路 $p in hom_Gamma (x, y)$ 与 $A$ 中的依值点 $alpha in A_x$，都有一条 $p$ 上的依值道路 $xi in hom_A^p (alpha, beta)$ 以 $alpha$ 为起点，就称 $A$ 是#define[纤维化][fibration]。
+]
+定义中的道路 $xi$ 称作 $p$ 的#define[抬升][lift]。注意在抬升的定义中只能限制 $xi$ 的一个端点。(...)
+
+(...) action under substitution
+
+(...) a glimpse of models for homotopy type theory
+
+=== 模型定义
+
+在群胚模型中，语境的解释是群胚，类型的解释则是纤维化。同样可以定义全群胚 $integral A$ 表示语境扩展。空语境 $()$ 则对应只有一个点 $star$ 与一条平凡道路 $refl(star)$ 的群胚。不难看出，空语境上的依值群胚恰好与普通的群胚是等价的，并且总是满足纤维化的要求。
+
+群胚纤维化 $A$ 的语义元素 $a$ 需要为每个点 $x in Gamma$ 选择依值点 $a_x in A_x$，为每条道路 $p in hom_Gamma (x, y)$ 选择依值道路 $a_p in hom_A^p (a_x, a_y)$，满足 $a_(refl(x)) = refl(a_x)$、$a_(p*q) = a_p * a_q$ 与 $a_(p^(-1)) = a_p^(-1)$。这里等式左侧用到 $Gamma$ 中的运算，而右侧是依值群胚 $A$ 中的运算。
+
+$Sigma$ 与 $Pi$ 类型与有向图十分类似。有群胚 $Gamma$，依值群胚 $A$ 与 $integral A$ 上的依值群胚 $B$，我们可以定义 $Gamma$ 上的依值群胚 $Sigma A B$ 与 $Pi A B$，并且当 $A$ 与 $B$ 都是群胚纤维化时，$Sigma A B$ 与 $Pi A B$ 也是群胚纤维化。
+
+前者非常直观，定义 $x in Gamma$ 上的依值点集为 ${(a, b) mid(|) a in A_x, b in B_((x, a))}$，即点的有序对。道路集也是道路的有序对。定义道路抬升时，只需依次将道路 $p$ 抬升到 $A$ 与 $B$ 上，并将其合为有序对即可。
 
 $Pi$ 类型则有些许复杂，不过同样可以利用有向图 #[@sec:graph-exponential]中提到的技巧计算。
 直观上来说，群胚模型中的函数不仅要描述每个点的映射，还要描述每条道路的表现，也就是手动给出
@@ -345,6 +359,8 @@ $Pi$ 类型则有些许复杂，不过同样可以利用有向图 #[@sec:graph-e
 的映射关系。不过，$f$ 是依值函数时，语法上表述这个映射关系的方法就显得比较复杂。群胚模型中引入了依值道路的概念，就是为了仍然能够直接手动描述此关系。
 
 具体而言，$(Pi A B)_x$ 的依值顶点 $f$ 应当是映射，将 $a in A_x$ 映射到 $f(a) in B_((x, a))$，将 $alpha in hom_A^(refl(x)) (a_1, a_2)$ 映射到 $f(alpha) in hom_B^((refl(x), alpha)) (f(a_1), f(a_2))$。使得其保持道路的各种运算。而给定道路 $p in hom_Gamma (x, y)$，依值道路 $phi in hom_(Pi A B)^p (f_1, f_2)$ 应该将每个 $alpha in hom_A^p (a_1, a_2)$ 映射到依值道路 $hom_B^((p, alpha)) (f_1 (a_1), f_2 (a_2))$，同样需要保持道路的运算。
+
+(...) lifting Pi types
 
 给定依值群胚 $A$ 与两点 $a, b in A_x$，它们之间有道路集合 $hom_A^refl(x) (a, b)$。我们希望将其作为相等类型的语义。但相等类型本身也应该是群胚，包含道路之间的道路。由于依值群胚 $A$ 没有记录二维信息，我们需要类比离散群胚的做法，为集合 $hom_A^refl(x) (a, b)$ 补上必须的道路。
 
@@ -355,17 +371,19 @@ $Pi$ 类型则有些许复杂，不过同样可以利用有向图 #[@sec:graph-e
 $))
 如果道路复合 $t_p * mu = nu * s_p$，就定义此依值道路集有一个元素，否则没有元素。
 
+(...) lifting
+
 最后，我们还需要验证 J 原理。根据@sec:J-equivalences 的结论，我们只需构造 $"contr"$ 与 $"transp"$ 两个运算，并且验证它们与代换交换。
 
 对于 $"contr"$ 而言，我们需要计算 $Sigma$ 类型 $(y : A) times (x = y)$ 在群胚模型中的解释。先就 $A$ 不依值的情况建立直觉。此时群胚 $(y : A) times (x = y)$ 的点是有序对 $(y, p)$，其中 $y in A$，$p in hom_A (x, y)$。从 $(y, p)$ 到 $(y', p')$ 的道路集与 ${q in hom_A (y, y') mid(|) q * p = p'}$ 有双射。$"contr"$ 说明该类型中的所有元素都等于 $(x, refl)$，在群胚语义中就是为每个点 $(y, p)$ 选择一条到 $(x, refl)$ 的道路，满足一些条件。显然应当选择道路 $p^(-1)$，此时需要满足的条件是对于任何道路 $q in hom_A (y, y')$，如果 $q * p = p'$，那么 $(p')^(-1) * q = p^(-1)$。不难看出这总是成立。同时，如果 $q = refl$，那么 $q^(-1)$ 自然也是 $refl$，因此这满足所需的判值相等关系。
 
 依值情况类似，只需再验证 $"contr"_A (s, t, p) sigma = "contr"_(A sigma) (s sigma, t sigma, p sigma)$ 即可，繁而不难。
 
-对于 $"transp"$ 而言，我们同样先考虑 $x : A tack P(x) istype$，即 $A$ 本身不依值的简单情况。此时 $P$ 是关于 $A$ 的依值群胚。因此给定道路 $p in hom_A (x, y)$ (...)
+对于 $"transp"$ 而言，我们同样先考虑 $x : A tack P(x) istype$，即 $A$ 本身不依值的简单情况。此时 $P$ 是关于 $A$ 的群胚纤维化。因此给定道路 $p in hom_A (x, y)$ (...)
 
 === K 原理的反模型
 
-有了群胚模型，不难想到如何违反 K 原理，或者与其等价的相等证明唯一性原理。考虑群胚 $H = "B"ZZ\/2ZZ$，视作空语境下的依值群胚。更具体来说，$H$ 有一个点 $star$，有两条道路 $refl(star)$ 与 $eta$，满足 $eta * eta = refl(star)$。这样，相等类型 $"Id"(H, star, star)$ 就有两个不相等的元素，违反了相等证明的唯一性。论证的细节与之前的几个反模型论证完全一致，读者可以自行补充。
+有了群胚模型，不难想到如何违反 K 原理，或者与其等价的相等证明唯一性原理。考虑群胚 $H = "B"ZZ\/2ZZ$，视作空语境下的依值群胚 (自动是纤维化)。更具体来说，$H$ 有一个点 $star$，有两条道路 $refl(star)$ 与 $eta$，满足 $eta * eta = refl(star)$。这样，相等类型 $"Id"(H, star, star)$ 就有两个不相等的元素，违反了相等证明的唯一性。论证的细节与之前的几个反模型论证完全一致，读者可以自行补充。
 
 当然，由于群胚只记录了一维信息，它是满足更高维的相等证明唯一性的。具体而言，命题
 #eq($
@@ -471,7 +489,11 @@ $Pi$ 类型的底集合则不是全体函数 $product_(a in A_x) B_((x, a))$，�
 
 Extensional equality
 
-Discuss propositions and (homotopy) propositional truncation
+=== 命题、命题截断
+
+- Homotopy Propositions, impredicative propositions, strict propositions (coincides with homotopy propositions in extensional type theory)
+- Homotopy proposition truncation, impredicative inhabited type, irrelevant squash type
+- Will deal with impredicative universe in @sec:impredicative-universe, the homotopy propositions are included in that universe in this model
 
 === 可计算的逻辑原理
 
