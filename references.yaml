@@ -199,3 +199,11 @@ simplicial-model:
   date: 2012
   serial-number:
     doi: 10.48550/arXiv.1211.2851
+
+hott-book:
+  type: book
+  title: "Homotopy Type Theory: Univalent Foundations of Mathematics"
+  author: The Univalent Foundations Program
+  date: 2013
+  url: https://homotopytypetheory.org/book/
+

@@ -321,7 +321,7 @@ $)
 
 1991 年，Воеводский (Voevodsky) 与 Михаил Капранов (Mikhail Kapranov) 给出了一种无穷群胚的定义，并证明了这种无穷群胚能在同伦意义下表示所有的空间 @inf-groupoid-homotopy-type。但是 1998 年，由 Carlos Simpson~@homotopy-type-3-groupoid 给出了反例，因此证明有误。事实上球面 $SS^2$ 就不在其表达能力范围内。然而，很长一段时间内，人们都没有明白错误在哪里，因此不清楚究竟是证明有误还是反例不成立。这件事是 Воеводский 转而追求形式化证明、发展同伦类型论的动机之一。
 
-有了群胚，依值类型应该仿照集合族定义为群胚族。其中，有道路 $p : "Id"(A, x, y)$ 时，依值类型 $B(x)$ 到 $B(y)$ 有转移映射 $"transp"(p)$。正如群胚使我们能精确控制道路的表现，群胚族也需要让我们精确控制转移映射的表现。
+有了群胚，依值类型应该仿照集合族定义为群胚族。其中，有道路 $p : "Id"(A, x, y)$ 时，依值类型 $B(x)$ 到 $B(y)$ 有转移映射 $transp(p)$。正如群胚使我们能精确控制道路的表现，群胚族也需要让我们精确控制转移映射的表现。
 #definition[
   给定群胚 $Gamma$，*群胚族* $A$ 为每个点 $x in Gamma$ 赋予群胚 $A_x$，为每条道路 $p in hom_Gamma (x, y)$ 赋予同态 $A_p : A_x -> A_y$，使得 $A_refl(x)$ 是恒等映射，并且 $A_p compose A_q = A_(p * q)$。这自动保证 $A_p$ 都可逆，并且 $A_(p^(-1)) = A_p^(-1)$。
 ]
@@ -329,7 +329,9 @@ $)
 
 === 依值群胚与纤维化
 
-本节讨论群胚模型中依值类型的另一种解释，与后文无关，可以跳过。阅读了有向图模型之后，读者可能期望依值群胚的定义如下：
+本节讨论群胚模型中依值类型的另一种解释，与后文无关，可以跳过。
+
+阅读了有向图模型之后，读者可能期望依值群胚的定义如下：
 
 #definition[
   给定群胚 $Gamma$，定义*依值群胚* $A$ 包含如下资料：对于每个点 $x in Gamma$ 配备集合 $A_x$，对于每条道路 $p in hom_Gamma (x, y)$ 与 $alpha in A_x$ 和 $beta in A_y$ 配备道路集 $hom_A^p (alpha, beta)$。有平凡道路 $refl(alpha) in hom_A^(refl(x)) (alpha, alpha)$、道路逆转 $(-)^(-1) : hom_A^p (alpha, beta) -> hom_A^(p^(-1)) (beta, alpha)$ 与道路拼接操作
@@ -338,7 +340,7 @@ $)
 ]
 此定义与依值有向图 (@def:dependent-graph) 类似，只不过这里还为群胚中的每个运算规定了对应的依值运算。这个定义不能直接作为类型的解释。这是因为我们希望相等类型的元素由群胚中的道路给出，因此还需要保证依值群胚的道路满足相等类型的性质。
 
-根据@sec:J-equivalences 的结论， $"contr"$, $"transp"$
+根据@sec:J-equivalences 的结论， $contr$, $transp$
 
   (...)
 
@@ -355,32 +357,48 @@ $)
 
 在群胚模型中，语境的解释是群胚，类型的解释则是群胚族。空语境 $()$ 则对应只有一个点 $star$ 与一条平凡道路 $refl(star)$ 的群胚。不难看出，空语境上的群胚族恰好与普通的群胚是等价的。
 #definition[
-  给定群胚 $Gamma$ 上的群胚族 $A$，定义*全群胚* $integral A$ 的点是有序对 ${(x, a) mid(|) x in Gamma, a in Gamma_x}$，而从 $(x, a)$ 到 $(y, b)$ 的道路集是有序对 $(p, theta)$，其中 $p in hom_Gamma (x, y)$，并且 $theta$ 是群胚 $A_b$ 中从 $A_p (a)$ 到 $b$ 的道路#footnote[这里，$theta$ 也可取为从 $a$ 到 $A_(p^(-1)) (b)$ 的道路，两者构成双射。]。道路拼接是 $(p, theta) * (q, psi) = (p * q, theta * A_p (psi))$。
+  给定群胚 $Gamma$ 上的群胚族 $A$，定义*全群胚* $integral A$ 的点是有序对 ${(x, a) mid(|) x in Gamma, a in Gamma_x}$，而从 $(x, a)$ 到 $(y, b)$ 的道路集是有序对 $(p, theta)$，其中 $p in hom_Gamma (x, y)$，并且 $theta$ 是群胚 $A_b$ 中从 $A_p (a)$ 到 $b$ 的道路#footnote[这里，$theta$ 也可取为从 $a$ 到 $A_(p^(-1)) (b)$ 的道路，因为有双射 $hom_A_x (a, A_(p^(-1)) (b)) tilde.equiv hom_A_y (A_p (a), b)$。我们可以认为这两个等价的集合中的元素描述了 $p$ 上的 “依值道路”，见 HoTT 书~@hott-book[式 6.2.2]。]。道路拼接是 $(p, theta) * (q, psi) = (p * q, theta * A_p (psi))$。
 ]
 
 #definition[
-  给定群胚 $Gamma$ 上的群胚族 $A$，定义 $A$ 的元素族 $a in "Tm"(Gamma, A)$ 为每个点 $x in Gamma$ 选择元素 $a_x in A_x$，为每条道路 $p in hom_Gamma (x, y)$ 选择道路 $a_p in hom_A_b (A_p (a), b)$。
+  给定群胚 $Gamma$ 上的群胚族 $A$，定义 $A$ 的元素族 $a in "Tm"(Gamma, A)$ 为每个点 $x in Gamma$ 选择元素 $a_x in A_x$，为每条道路 $p in hom_Gamma (x, y)$ 选择道路 $a_p in hom_A_b (A_p (a), b)$，使得 $a_refl = refl$ 与 $a_(p*q) = a_p * A_p (a_q)$ 成立。这些等式无非是让 $a$ 保持群胚运算，不过因为依值类型的原因需要插入映射 $A_p$ 进行转换。
 ]
 
-接下来我们考虑 $Sigma$ 与 $Pi$ 类型。有群胚 $Gamma$，群胚族 $A$ 与 $integral A$ 上的群胚族 $B$，我们需要定义 $Gamma$ 上的群胚族 $Sigma A B$ 与 $Pi A B$。
+对于群胚模型中类型结构，建议读者先试着自己构造，再对照下文。
 
+我们考虑 $Sigma$ 与 $Pi$ 类型。有群胚 $Gamma$，群胚族 $A$ 与 $integral A$ 上的群胚族 $B$，我们需要定义 $Gamma$ 上的群胚族 $Sigma A B$ 与 $Pi A B$。
 前者非常直观，群胚 $(Sigma A B)_x$ 的顶点集是 ${(a, b) mid(|) a in A_x, b in B_((x, a))}$，而从 $(a, b)$ 到 $(a', b')$ 的道路集则是
 #eq($ {(alpha, beta) mid(|) alpha in hom_A_x (a, a'), beta in hom_B_(\(x, a'\)) (B_((refl(x), alpha)) (b), b')} $)
-这与全群胚的定义非常接近。而对于 $Gamma$ 中的道路，$(Sigma A B)_p$ 对应的群胚同态则将 $(a, b)$ 映射到 $(A_p (a), B_((p, refl)) (b))$。请读者验证该定义正确，并且 $(Sigma A B) sigma = Sigma (A sigma) (B sigma')$。
+这来自于 Martin-Löf 类型论中的定理：
+#lemma[
+  给定类型 $A$ 与依值类型 $B(a)$，$Sigma A B$ 上从 $(a, b)$ 到 $(a', b')$ 的道路由一条从 $a$ 到 $a'$ 的道路 $p$ 与一条从 $transp(p, b)$ 到 $b'$ 的道路唯一决定。
+]
+#proof[
+  见 HoTT 书~@hott-book[定理 2.7.2]。
+]
 
-$Pi$ 类型则有些许复杂，(...)
+而对于 $Gamma$ 中的道路，$(Sigma A B)_p$ 对应的群胚同态则将 $(a, b)$ 映射到 $\(A_p (a), B_((p,refl)) (b)\)$。这个定义则同样来自 Martin-Löf 类型论中的定理，见 HoTT 书~@hott-book[定理 2.7.4]。请读者验证以上定义正确，并且 $(Sigma A B) sigma = Sigma (A sigma) (B sigma')$。
+
+$Pi$ 类型则有些许复杂，不过也可以按照 #[@sec:graph-exponential]的办法求解，或者参考 HoTT 书~@hott-book[2.9 节] 中对 $Pi$ 类型上的道路的刻画。
+- 群胚 $(Pi A B)_x$ 的点 $f$ 由两个映射组成，一个将 $a in A_x$ 映射到 $f(a) in B_((x, a))$，另一个将 $p in hom_A_x (a, a')$ 映射到 $f(p) in hom_B_(\(x, a'\)) (B_((refl, p)) (f(a)), f(a'))$，使得 $f$ 保持群胚运算，即 $f(refl) = refl$ 与 $f(p * q) = f(p) * B_((refl, p))(f(q))$ 成立。
+- 群胚 $(Pi A B)_x$ 中，$f$ 到 $g$ 的道路 $xi$ 则由 $B$ 中的一族道路 $xi_a in hom_B_((x, a)) (f(a), g(a))$ 给出，其中 $a in A_x$。对于每条道路 $p in hom_A_x (a, a')$，道路 $xi$ 需要满足正方形
+  (...)
+  交换，即 $xi_a$ (...)
+- 最后，对于 $Gamma$ 中的道路 $p in hom_Gamma (x, y)$，对应的同态则将 $f$ 映射到 $g = (Pi A B)_p (f)$，满足在顶点上
+  #eq($ g(a) = B_((p, refl)) f(A_(p^(-1)) (a)). $)
+  即先反向将 $a in A_y$ 拉回 $A_x$，应用 $f$ 之后再移动至 $B_((x, a))$~@hott-book[式 2.9.4--5]。$g$ 在道路上的表现过于冗杂，从略。
 
 对于相等类型 $"Id"(A, a_1, a_2)$ 而言，我们先考虑 $A$ 是不依值的普通群胚的情况。此时我们希望相等类型的元素就是 $A$ 中的道路。至于道路之间的道路，我们则按离散群胚的办法补上。这样，$"Id"(A, a_1, a_2)$ 的解释就是离散群胚 $hom_A (a_1, a_2)$。
 
 当 $A$ 是群胚族时，我们定义群胚族 $"Id"(A, a_1, a_2)$ (...)
 
-最后，我们还需要验证 J 原理。根据@sec:J-equivalences 的结论，我们只需构造 $"contr"$ 与 $"transp"$ 两个运算，并且验证它们与代换交换。
+最后，我们还需要验证 J 原理。根据@sec:J-equivalences 的结论，我们只需构造 $contr$ 与 $transp$ 两个运算，并且验证它们与代换交换。
 
-对于 $"contr"$ 而言，我们需要计算 $Sigma$ 类型 $(y : A) times (x = y)$ 在群胚模型中的解释。先就 $A$ 不依值的情况建立直觉。此时群胚 $(y : A) times (x = y)$ 的点是有序对 $(y, p)$，其中 $y in A$，$p in hom_A (x, y)$。从 $(y, p)$ 到 $(y', p')$ 的道路集同构于 ${q in hom_A (y, y') mid(|) q * p = p'}$。$"contr"$ 说明该类型中的所有元素都等于 $(x, refl)$，在群胚语义中就是为每个点 $(y, p)$ 选择一条到 $(x, refl)$ 的道路，满足一些条件。显然应当选择道路 $p^(-1)$，此时需要满足的条件是对于任何道路 $q in hom_A (y, y')$，如果 $q * p = p'$，那么 $(p')^(-1) * q = p^(-1)$。不难看出这总是成立。同时，如果 $q = refl$，那么 $q^(-1)$ 自然也是 $refl$，因此这满足所需的判值相等关系。
+对于 $contr$ 而言，我们需要计算 $Sigma$ 类型 $(y : A) times (x = y)$ 在群胚模型中的解释。先就 $A$ 不依值的情况建立直觉。此时群胚 $(y : A) times (x = y)$ 的点是有序对 $(y, p)$，其中 $y in A$，$p in hom_A (x, y)$。从 $(y, p)$ 到 $(y', p')$ 的道路集同构于 ${q in hom_A (y, y') mid(|) q * p = p'}$。$contr$ 说明该类型中的所有元素都等于 $(x, refl)$，在群胚语义中就是为每个点 $(y, p)$ 选择一条到 $(x, refl)$ 的道路，满足一些条件。显然应当选择道路 $p^(-1)$，此时需要满足的条件是对于任何道路 $q in hom_A (y, y')$，如果 $q * p = p'$，那么 $(p')^(-1) * q = p^(-1)$。不难看出这总是成立。同时，如果 $q = refl$，那么 $q^(-1)$ 自然也是 $refl$，因此这满足所需的判值相等关系。
 
-依值情况类似，只需再验证 $"contr"_A (s, t, p) sigma = "contr"_(A sigma) (s sigma, t sigma, p sigma)$ 即可，繁而不难。
+依值情况类似，只需再验证 $contr_A (s, t, p) sigma = contr_(A sigma) (s sigma, t sigma, p sigma)$ 即可，繁而不难。
 
-对于 $"transp"$ 而言，我们同样先考虑 $x : A tack P(x) istype$，即 $A$ 本身不依值的简单情况。 (...)
+对于 $transp$ 而言，我们同样先考虑 $x : A tack P(x) istype$，即 $A$ 本身不依值的简单情况。 (...)
 
 === K 原理的反模型
 

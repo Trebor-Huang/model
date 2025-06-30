@@ -90,7 +90,7 @@
 #let Bool = math.bb("2")
 #let ite(b,t,f) = $"if" #b "then" #t "else" #f$
 #let refl = text("refl", font: "New Computer Modern")
-#let transp = text("transp", font: "New Computer Modern")
+#let transp = text("transport", font: "New Computer Modern")
 #let contr = text("contr", font: "New Computer Modern")
 #let Set = math.sans("Set")
 #let Psh = math.sans("Psh")
