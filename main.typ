@@ -46,8 +46,36 @@
 Trebor\ #v(1em)
 #set text(size: 14pt)
 #datetime.today().display("[year]年[month padding:none]月[day padding:none]日")
-#v(1.2fr)
+#v(1.5fr)
+#place(
+  bottom+center,
+)[
+#set text(size: 1.5em)
+#diagram(node-outset: 0.2em, {
+  let scale = 80%
+  node((1,1.5), $"Tp"$, name: <Tp>)
+  node((1,0), $"Tm"$, name: <Tm>)
+  edgeL(<Tm>, "->", <Tp>, $pi$, mark-scale: scale)
+
+  node((0,2), $Gamma$, name: <Gamma>)
+  node((0,0.5), $Delta$, name: <Delta>)
+  edgeM(<Delta>, "->", <Gamma>, box($f$, inset: 0.2em), label-pos: 40%, mark-scale: scale)
+
+  node((-1,1.5), $tilde(Gamma)$, name: <Gamma1>)
+  node((-1,0), $tilde(Delta)$, name: <Delta1>)
+  edgeR(<Delta1>, "->", <Gamma1>, $i^* f$, mark-scale: scale)
+
+  edgeR(<Gamma1>, ">->", <Gamma>, $i$, mark-scale: scale)
+  edge(<Gamma>, "-->", <Tp>, mark-scale: scale)
+  edge(<Gamma1>, "->", <Tp>, mark-scale: scale)
+
+  edge(<Delta1>, ">->", <Delta>, mark-scale: scale)
+  edge(<Delta>, "-->", <Tm>, mark-scale: scale)
+  edge(<Delta1>, "->", <Tm>, mark-scale: scale)
+})
 ]
+]
+
 
 #set page(numbering: "i")
 #counter(page).update(1)
