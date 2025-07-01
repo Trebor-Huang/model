@@ -215,22 +215,37 @@ $)
 
 类型构造的思路是，对于不含 $eta$ 等式的类型 $A$，我们与集合模型的构造相比额外添加一个值作为 $"error"(A)$ 的定义。对于含有 $eta$ 等式的类型，比如 $A times B$，则不作添加，直接定义 $"error"(A times B)_x = ("error"(A)_x, "error"(B)_x)$。这是因为如果额外添加错误值，那么这个新的元素就无法满足 $eta$ 等式。
 
+==== 单元素类型
 对于最简单的单元素类型，我们定义 $Unit_x = {star}$ 为单元素集合，$overline(Unit)_x = {star}$ 为全体元素。根据之前的讨论，单元素类型选定的错误值按 $eta$ 等式必须等于 $star$。这意味着 $"error"(A)_x$ 有可能在 $overline(A)_x$ 中，即属于正常值。另一方面，我们也不能将 $star$ 改为异常值，即将 $overline(Unit)_x$ 定义为空集。因为这样 $"Tm"(Gamma, Unit)$ 也是空集，不合要求。
 
 假如执意添加新的错误值会如何呢? 定义另一个类型 $P$，满足 $P_x = {star, epsilon}$ 为二元素集合，$overline(P)_x = {star}$，而 $"error"(P)_x = epsilon$。由于 $"Tm"(Gamma, P)$ 只包含正常元素族，所以在空语境中 $P$ 只有一个语义元素 $star$。但是，假如 $Gamma = {g}$ 恰有一个元素，并且 $g$ 是异常值，那么 $"Tm"(Gamma, P)$ 就有两个不相等的元素，不满足 $eta$ 规则。
 
 这个类型 $P$ 可以看作利用归纳类型定义的单元素类型，因为归纳类型没有 $eta$ 规则。需要注意的是，有些证明助理为了方便，将恰有一个构造子的归纳类型视作带有 $eta$ 的#translate[记录类型][record type]。但这两者在理论上是满足不同规则的。
 
-在定义 Boole 类型时，我们额外添加一个错误值 $epsilon$。当消去子 $ite(b, t, f)$ 遇到这个错误值时，就返回 $"error"(A)$，其中 $A$ 是消去子的返回类型。因为没有 $eta$ 等式，所以这样定义不会破坏需要的性质。
+==== Boole 类型
+构造 $Bool$ 的解释时，我们额外添加错误值 $epsilon$。当消去子 $ite(b, t, f)$ 遇到这个错误值时，就返回 $"error"(A)$，其中 $A$ 是消去子的返回类型。因为 $Bool$ 没有 $eta$ 等式，所以这样定义不会破坏需要的性质。
 
+==== $Sigma$ 类型
+集合 $(Sigma A B)_x = product.co_(a in A_x) B_((x, a))$，其中正常元素是两个分量都正常的有序对，而错误值 $"error"(Sigma A B)_x = ("error"(A)_x, "error"(B)_((x, "error"(A)_x)))$.
+
+==== $Pi$ 类型
 $Pi$ 类型也具有 $eta$ 规则，因此不额外添加错误值。$Pi A B$ 的定义与集合模型中的定义一样，是集合 #eq($ (Pi A B)_x = product_(a in A_x) B_((x, a)). $) 其中正常元素 $f in \(overline(Pi A B)\)_x$ 是那些将正常元素 $a in overline(A)_x$ 映射到正常元素 $f(a) in overline(B)_((x, a))$ 的函数。将错误值 $"error"(Pi A B)_x$ 定义为函数 $a |-> "error"(B)_((x, a))$，也就是将所有 $A$ 中的元素都映射到 $B$ 的错误值。读者熟悉构造时，可以试着考虑 $B$ 不依赖 $A$ 时，即普通函数类型的特殊情形是怎么样的。
 
-相等类型没有 $eta$ 规则，因此我们额外添加一个错误值。具体来说，
+==== 相等类型
+因为相等类型没有 $eta$ 规则，我们额外添加一个错误值。具体来说，
 #eq($ "Id"(A, s, t)_x = cases(
   {star, epsilon} quad & s_x = t_x,
   {epsilon} & s_x != t_x
 ) $)
-并且 $"error"("Id"(A, s, t))_x = epsilon$。显然，$overline("Id"(A,s,t))_x$ 应只包含 $star$。 (... @sec:J-equivalences)
+并且 $"error"("Id"(A, s, t))_x = epsilon$。显然，$overline("Id"(A,s,t))_x$ 应只包含 $star$。
+
+在有向图模型中，我们通过相等类型的外延性避免了验证 J 原理。异常模型中的相等类型不满足外延性，不过还有其他办法减少工作量。根据@sec:J-equivalences，我们只需构造 $contr$ 与 $transp$ 两条规则的解释即可。
+
+$contr$ 说的是在 $Sigma$ 类型 $(x : A) times (s = x)$ 中的所有元素都等于 $(s, refl(s))$。给定带异常集合 $Gamma$ 与依值带异常集合 $A$，对正常元素族 $s in "Tm"(Gamma, A)$，类型 $T = sum_(a : A) (s = a)$ 满足 $T_x = {(a, epsilon) mid(|) a in A_x} union {(s_x, star)}$，其中只有 $(s_x, star)$ 是正常值。我们需要构造语义元素 $Gamma, u : T tack c : u = (s, refl(s))$。为此，我们在 $u = (s_x, star)$ 时定义 $c_((x, u)) = star$，否则定义 $c_((x, u)) = epsilon$。不难看出这满足 $contr$ 的等式要求，并且有代换等式 $contr_A (s, t, p) sigma = contr_A (s sigma, t sigma, p sigma)$。
+
+$transp$ 说的则是对于两个元素 $s, t$ 与依值类型 $P(x)$，如果有 $p : s = t$，那么就有函数 $P(s) -> P(t)$。我们也可以类似地构造，即当 $s_x = t_x$ 的确成立时取恒等函数，否则输出类型 $P(t)$ 的错误值 $"error"(P(t))_x$。
+
+
 最后，对于其他类型，特别是宇宙类型的处理，留给读者作为练习，亦可参阅 Kovács 的形式化 @exception-agda。
 
 === 函数外延性的反模型
