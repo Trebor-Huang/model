@@ -47,8 +47,9 @@ Trebor\ #v(1em)
 #set text(size: 14pt)
 #datetime.today().display("[year]年[month padding:none]月[day padding:none]日")
 #v(1.5fr)
-#place(
-  bottom+center,
+
+#let realignment = place(
+  bottom+center
 )[
 #set text(size: 1.5em)
 #diagram(node-outset: 0.2em, {
@@ -74,6 +75,53 @@ Trebor\ #v(1em)
   edge(<Delta1>, "->", <Tm>, mark-scale: scale)
 })
 ]
+
+#let magic = place(
+  bottom + center,
+canvas({
+  import draw: *
+  set-style(stroke: (thickness: 2mm, cap: "round", join: "round", paint: luma(50%)))
+
+  circle((0,0), radius: 2.75)
+  let top-height = 1.6
+  let bottom-height = -top-height - 0.1
+  let stem-pos = -0.73
+  let bowl-width = 1.05
+  let bowl-depth = 1.45
+  let descend-height = 1.25
+  let descend-width = bowl-width * 0.9
+  bezier(
+    (stem-pos, bottom-height),
+    (stem-pos - descend-width, bottom-height + descend-height),
+    (stem-pos, bottom-height + descend-height)
+  )
+  line((stem-pos, bottom-height), (stem-pos, top-height))
+  for _ in (1,2) {
+    arc(
+      (rel: (0, bowl-width - bowl-depth)),
+      radius: bowl-width/2,
+      start: -180deg,
+      stop: 0deg,
+    )
+    line((), (rel: (0, bowl-depth - bowl-width)))
+  }
+
+  circle((0,0), radius: 4)
+  let N = 32
+  for i in range(N) {
+    content(
+      (angle: i * 360deg/N, radius: 3.1),
+      text(
+        size: 24pt, fill: luma(40%),
+        ($Sigma$, $tilde.equiv$, $Pi$, $cal(U)$).at(calc.rem(i, 4))
+      ),
+      angle: - 90deg + i * 360deg/N,
+      anchor: "south"
+    )
+  }
+}))
+
+#magic
 ]
 
 
