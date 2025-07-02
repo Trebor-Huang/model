@@ -94,7 +94,7 @@
 #let contr = math.op(text("contr", font: "New Computer Modern"))
 #let Set = math.sans("Set")
 #let Psh = math.sans("Psh")
-#let yo = math.class("unary", "よ")
+#let yo = math.class("unary", box("よ", inset: (left: -0.1em, right: -0.1em)))
 #let cod = math.op("cod")
 #let dom = math.op("dom")
 

@@ -381,7 +381,8 @@ $)
 
 对于群胚模型中类型结构，建议读者先试着自己构造，再对照下文。
 
-我们考虑 $Sigma$ 与 $Pi$ 类型。有群胚 $Gamma$，群胚族 $A$ 与 $integral A$ 上的群胚族 $B$，我们需要定义 $Gamma$ 上的群胚族 $Sigma A B$ 与 $Pi A B$。
+==== $Sigma$ 与 $Pi$ 类型
+设有群胚 $Gamma$、群胚族 $A$ 与 $integral A$ 上的群胚族 $B$，我们需要定义 $Gamma$ 上的群胚族 $Sigma A B$ 与 $Pi A B$。
 前者非常直观，群胚 $(Sigma A B)_x$ 的顶点集是 ${(a, b) mid(|) a in A_x, b in B_((x, a))}$，而从 $(a, b)$ 到 $(a', b')$ 的道路集则是
 #eq($ {(alpha, beta) mid(|) alpha in hom_A_x (a, a'), beta in hom_B_(\(x, a'\)) (B_((refl(x), alpha)) (b), b')} $)
 这来自于 Martin-Löf 类型论中的定理：
@@ -397,15 +398,19 @@ $)
 $Pi$ 类型则有些许复杂，不过也可以按照 #[@sec:graph-exponential]的办法求解，或者参考 HoTT 书~@hott-book[2.9 节] 中对 $Pi$ 类型上的道路的刻画。
 - 群胚 $(Pi A B)_x$ 的点 $f$ 由两个映射组成，一个将 $a in A_x$ 映射到 $f(a) in B_((x, a))$，另一个将 $p in hom_A_x (a, a')$ 映射到 $f(p) in hom_B_(\(x, a'\)) (B_((refl, p)) (f(a)), f(a'))$，使得 $f$ 保持群胚运算，即 $f(refl) = refl$ 与 $f(p * q) = f(p) * B_((refl, p))(f(q))$ 成立。
 - 群胚 $(Pi A B)_x$ 中，$f$ 到 $g$ 的道路 $xi$ 则由 $B$ 中的一族道路 $xi_a in hom_B_((x, a)) (f(a), g(a))$ 给出，其中 $a in A_x$。对于每条道路 $p in hom_A_x (a, a')$，道路 $xi$ 需要满足正方形
-  (...)
-  交换，即 $xi_a$ (...)
+  #eq(diagram($
+    f(a) edge(xi_a) edgeR("d", f(p)) & g(a) edgeL("d", g(p)) \
+    f(a') edgeR(xi_a') & g(a')
+  $))
+  交换，即 $g(p) * xi_a = xi_a' * f(p)$ 成立。
 - 最后，对于 $Gamma$ 中的道路 $p in hom_Gamma (x, y)$，对应的同态则将 $f$ 映射到 $g = (Pi A B)_p (f)$，满足在顶点上
   #eq($ g(a) = B_((p,refl)) f(A_(p^(-1)) (a)). $)
   即先反向将 $a in A_y$ 拉回 $A_x$，应用 $f$ 之后再移动至 $B_((x, a))$~@hott-book[式 2.9.4--5]。$g$ 在道路上的表现过于冗杂，从略。
 
-对于相等类型 $"Id"(A, a_1, a_2)$ 而言，我们先考虑 $A$ 是不依值的普通群胚的情况。此时我们希望相等类型的元素就是 $A$ 中的道路。至于道路之间的道路，我们则按离散群胚的办法补上。这样，$"Id"(A, a_1, a_2)$ 的解释就是离散群胚 $hom_A (a_1, a_2)$。
+==== 相等类型
+对于 $"Id"(A, a_1, a_2)$ 而言，我们先思考 $A$ 是不依值的普通群胚的简单情况。此时我们希望相等类型的元素就是 $A$ 中的道路。至于道路之间的道路，我们则按离散群胚的办法补上。这样，$"Id"(A, a_1, a_2)$ 的解释就是离散群胚 $hom_A (a_1, a_2)$。
 
-当 $A$ 是群胚族时，我们定义群胚族 $"Id"(A, a_1, a_2)$ (...)
+对于一般情形，即当 $A$ 是群胚族时，我们定义群胚族 $"Id"(A, a_1, a_2)$ (...)
 
 最后，我们还需要验证 J 原理。根据@sec:J-equivalences 的结论，我们只需构造 $contr$ 与 $transp$ 两个运算，并且验证它们与代换交换。
 

@@ -270,7 +270,9 @@ $)
     Gamma tack A dot(times) B : cal(U),
     Gamma tack A : cal(U),
     Gamma tack B : cal(U)
-  )\
+  )
+$)
+#eq($
   rule(
     Gamma tack "El"(A dot(times) B) = "El"(A) times "El"(B) istype,
     Gamma tack A : cal(U),
