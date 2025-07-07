@@ -179,10 +179,12 @@ $)
 
 $Sigma$ 类型的 $beta$ 与 $eta$ 相等，分别对应等式
 #eq($
-  "proj"_1 (a, b) &= a\
-  "proj"_2 (a, b) &= b\
-  ("proj"_1 (a), "proj"_2 (a)) &= p.
+  "proj"_1 ("pair"(a, b)) &= a\
+  "proj"_2 ("pair"(a, b)) &= b\
+  "pair"("proj"_1 (p), "proj"_2 (p)) &= p.
 $)
+这意味着 $"pair"$ 实际上是个双射 $"Tm"(Gamma, Sigma A B) tilde.equiv product.co_(a in"Tm"(Gamma, A)) "Tm"(Gamma, B[id, a])$，其中从左到右的映射是 $p |-> ("proj"_1 (p), "proj"_2 (p))$，而从右到左的映射是 $(a, b) |-> "pair"(a, b)$。
+
 同样，除了这些等式还有代换需要满足的等式。对于类型本身有
 #eq($
   (Sigma A B)sigma = Sigma (A sigma) (B sigma')
@@ -207,13 +209,13 @@ $)
     Gamma tack t : A
   )
 $)
-这两条规则分别对应一元运算 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B[id, t])$。 代换需要满足 $"lam"(t) sigma = "lam"(t sigma')$ 与 $"app"(f, t) sigma = "app"(f sigma, t sigma)$。同样， $sigma' = [sigma compose frak(p), frak(q)]$ 表示最后一个变量不变，而其他变量按 $sigma$ 代换。
+这两条规则分别对应一元运算 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B[id, t])$。代换需要满足 $"lam"(t) sigma = "lam"(t sigma')$ 与 $"app"(f, t) sigma = "app"(f sigma, t sigma)$。同样， $sigma' = [sigma compose frak(p), frak(q)]$ 表示最后一个变量不变，而其他变量按 $sigma$ 代换。
 $beta$ 与 $eta$ 等式分别是
 #eq($
   "app"("lam"(t), s) &= t[id, s] \
   "lam"("app"(t frak(p), frak(q))) &= t.
 $)
-这实际上给出了 $"lam"$ 的反函数 $"lam"^(-1) (t) = "app"(t frak(p), frak(q))$。换句话说是将语境 $Gamma$ 中的函数 $t$ 映射到语境 $(Gamma, x : A)$ 中的表达式 $t(x)$，其中 $x$ 是新变量。 $beta$ 与 $eta$ 等式保证了这两个映射互逆。
+与 $Sigma$ 类型的情况类似，这意味着 $"lam"$ 是个双射。它的反函数是 $"lam"^(-1) (t) = "app"(t frak(p), frak(q))$，换句话说是将语境 $Gamma$ 中的函数 $t$ 映射到语境 $(Gamma, x : A)$ 中的表达式 $t(x)$，其中 $x$ 是新变量。 $beta$ 与 $eta$ 等式保证了这两个映射互逆。
 
 ==== 空类型 <sec:empty-type>
 类似单元素类型，我们要求每个语境下选出类型 $Empty_Gamma in "Tp"(Gamma)$，并且在代换下 $Empty_Delta sigma = Empty_Gamma$。空类型没有构造子，只有消去子：
