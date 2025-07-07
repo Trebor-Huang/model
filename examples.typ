@@ -211,7 +211,7 @@ $)
 $)
 需要满足 $"elim"_P ("zero", z, s) = "zero"$ 与 $"elim"_P ("suc"(k), z, s) = s[k \/ n, "elim"_P (k, z, s) \/ p]$，还有代换等式 $"elim"_P (n, z, s) sigma = "elim"_(P sigma') (n sigma, z sigma, s sigma'')$。
 
-我们将自然数类型也解释为单元素类型 $A_x = {star}$。将 $"zero"$ 解释为唯一的元素，而 $"suc"$ 则是恒等函数。此时，消去子 $"elim"_P (k, z, s)$ 的类型是 $P(k)$，但是 $k$ 与 $"zero"$ 在模型中相等，所以令 $"elim"_P (k, z, s) = z$ 即可。由于所有类型都至多有一个元素，需要满足的等式都显然成立。
+我们将自然数类型也解释为单元素类型 $NN_x = {star}$。将 $"zero"$ 解释为唯一的元素，而 $"suc"$ 则是恒等函数。此时，消去子 $"elim"_P (k, z, s)$ 的类型是 $P(k)$，但是 $k$ 与 $"zero"$ 在模型中相等，所以令 $"elim"_P (k, z, s) = z$ 即可。由于所有类型都至多有一个元素，需要满足的等式都显然成立。
 
 === $0 != 1$ 的独立性
 
@@ -395,21 +395,19 @@ $)
   给定群胚 $Gamma$，定义*依值群胚* $A$ 包含如下资料：对于每个点 $x in Gamma$ 配备集合 $A_x$，对于每条道路 $p in hom_Gamma (x, y)$ 与 $alpha in A_x$ 和 $beta in A_y$ 配备道路集 $hom_A^p (alpha, beta)$。有平凡道路 $refl(alpha) in hom_A^(refl(x)) (alpha, alpha)$、道路逆转 $(-)^(-1) : hom_A^p (alpha, beta) -> hom_A^(p^(-1)) (beta, alpha)$ 与道路拼接操作
   #eq($ hom_A^p (y, z) times hom_A^q (x, y) -> hom_A^(p * q) (x, z), $)
   满足单位律、结合律，并且道路逆转满足 $xi * xi^(-1) = refl(alpha)$ 与 $xi^(-1) * xi = refl(beta)$。
-]
+]<def:dependent-groupoid>
 此定义与依值有向图 (@def:dependent-graph) 类似，只不过这里还为群胚中的每个运算规定了对应的依值运算。这个定义不能直接作为类型的解释。这是因为我们希望相等类型的元素由群胚中的道路给出，因此还需要保证依值群胚的道路满足相等类型的性质。
 
-根据@sec:J-equivalences 的结论， $contr$, $transp$
-
-  (...)
+根据@sec:J-equivalences 的结论，J 原理可以拆分为 $contr$ 与 $transp$ 两个部分。其中 $contr$ 的部分不难满足，但 $transp$ 则有些问题。按照依值群胚的定义，完全可以有 $Gamma$ 的两个点 $x$ 与 $y$，有道路连接，同时依值群胚 $A$ 满足 $A_x$ 为空，但是 $A_y$ 不为空。此时就无法将 $A_y$ 中的元素转换到 $A_x$ 中。为此，我们需要额外给依值群胚添加条件，使得它能满足 $transp$ 的要求。
 
 #definition[
   给定群胚 $Gamma$ 与依值群胚 $A$，如果对于每条道路 $p in hom_Gamma (x, y)$ 与 $A$ 中的依值点 $alpha in A_x$，都有一条 $p$ 上的依值道路 $xi in hom_A^p (alpha, beta)$ 以 $alpha$ 为起点，就称 $A$ 是#define[纤维化][fibration]。
 ]
-定义中的道路 $xi$ 称作 $p$ 的#define[抬升][lift]。注意在抬升的定义中只能限制 $xi$ 的一个端点。(...)
+定义中的道路 $xi$ 称作 $p$ 的#define[抬升][lift]。注意在抬升的定义中只能限制 $xi$ 的一个端点。
 
-(...) action under substitution
+这种纤维化的结构是同伦论的基石。我们可以用群胚纤维化构造 Martin-Löf 类型论的模型。而用拓扑空间的纤维化结构则可以定义同伦类型论的解释。这会在#[@ch:homotopy-theory]讲解。
 
-(...) a glimpse of models for homotopy type theory
+每个群胚族（@def:dependent-groupoid）$A$ 都给出一个依值群胚，并且这种依值群胚总是纤维化。令 $x in Gamma$ 上的依值点集为 $A_x$ 的点集，而从 $alpha in A_x$ 到 $beta in A_y$ 的道路集则是二元组 #eq($ {(p, xi) mid(|) p in hom_Gamma (x, y), xi in hom_A_y (A_p (x), y) }. $) 此构造在下文中会解释，称作 *Grothendieck 构造*。事实上，下文中群胚族的全群胚定义，恰好就是先将群胚族按此法视作依值群胚，再取全群胚。
 
 === 模型定义
 
