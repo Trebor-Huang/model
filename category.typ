@@ -102,9 +102,17 @@ $))
 
 === 展映射与概括范畴
 
-在模型的定义中，不难看出形如 $(Gamma, A) -> Gamma$ 的代换是有特殊地位的。在集合模型中，任何映射都同构于这样的映射 (...), families and fibrations
+在模型的定义中，不难看出形如 $(Gamma, A) -> Gamma$ 的代换是有特殊地位的。在范畴语义中，这些态射也有许多优秀的性质。我们将其称作#define[展映射][display map]。这个概念在类型论以外也有重要应用。
 
-- Motivate display maps as the maps of the form $(Gamma, A) -> Gamma$. #define[展映射][display map]
+在集合模型中，任何映射都同构于某个 $(Gamma, A) -> Gamma$。给定映射 $f : Y -> X$，可以定义集合族 $A_x = f^(-1) {x}$，也就是 $A_x = {y mid(|) f(y) = x}$。这样，不交并 $product.co_(x in X) A_x$ 与 $Y$ 就有双射。因此，集合族与映射两个概念可以相互转换。在别的数学概念中，则不是所有映射都能与依值对象进行对应。例如对角映射 $X -> X^2$ 一般找不到对应的依值对象，除非这个模型中的相等类型满足外延性。因此，异常模型 (@sec:exception)、容器模型 (@sec:polynomial)、群胚模型 (@sec:groupoid) 等等都包含不是展映射的映射。
+
+- fibrations as nice projections
+- fibrations as hard-to-describe dependencies
+- fibrations as smallness conditions
+
+---
+
+- Motivate display maps as the maps of the form $(Gamma, A) -> Gamma$. 
 - Justify mathematical motivation: dependent structures are hard to define
 - Alternative framework for models of type theory: comprehension categories
   - mention that this also ties into the already existing program of fibered category theory by Bénabou

@@ -207,3 +207,12 @@ hott-book:
   date: 2013
   url: https://homotopytypetheory.org/book/
 
+type-theory-book:
+  type: book
+  title: Principles of Dependent Type Theory
+  author:
+    - Anguili, Carlo
+    - Gratzer, Daniel
+  note: In preparation
+  url: https://www.danielgratzer.com/papers/type-theory-book.pdf
+
