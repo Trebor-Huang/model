@@ -14,7 +14,7 @@
 
 #let Fam = math.sans("Fam")
 
-比较范畴的定义 (@def:category) 与模型的定义 (@def:model) 中代换的部分，呼之欲出的是语义语境与语义代换构成范畴 $cal(C)$。语义类型 $"Tp"(Gamma)$ 则为每个语义语境赋予一个集合，这看上去与函子的定义 (@def:functor) 非常接近。不过需要注意的是，这里箭头的方向是相反的，即 $sigma : Delta -> Gamma$ 将 $Gamma$ 语境下的类型映射到 $Delta$ 下的类型。因此，$"Tp"$ 构成函子 $cal(C)^"op" -> Set$，也就是一个预层。
+比较范畴 (@def:category) 与模型 (@def:model) 的定义中代换的部分，呼之欲出的是语义语境与语义代换构成范畴 $cal(C)$。语义类型 $"Tp"(Gamma)$ 则为每个语义语境赋予一个集合，这看上去与函子 (@def:functor) 非常接近。不过需要注意的是，这里箭头的方向是相反的，即 $sigma : Delta -> Gamma$ 将 $Gamma$ 语境下的类型映射到 $Delta$ 下的类型。因此，$"Tp"$ 构成函子 $cal(C)^"op" -> Set$。我们将这种函子称作 $cal(C)$ 上的*预层*。
 
 元素 $"Tm"(Gamma, A)$ 也有类似的代换操作，但是它还取决于类型 $A$，因此不能直接写作预层。这有多种解决办法。
 - 可以将同一个语境下的所有元素合并在一起，得到 #eq($ "Tm"(Gamma) = product.co_(A in"Tp"(Gamma)) "Tm"(Gamma, A). $) 这在代换下就构成预层。有自然变换 $typeof : "Tm" -> "Tp"$ 取出元素的类型。这样三个对象 $("Tp", "Tm", typeof)$ 就完全记录了所需的信息。
@@ -106,14 +106,49 @@ $))
 
 在集合模型中，任何映射都同构于某个 $(Gamma, A) -> Gamma$。给定映射 $f : Y -> X$，可以定义集合族 $A_x = f^(-1) {x}$，也就是 $A_x = {y mid(|) f(y) = x}$。这样，不交并 $product.co_(x in X) A_x$ 与 $Y$ 就有双射。因此，集合族与映射两个概念可以相互转换。在别的数学概念中，则不是所有映射都能与依值对象进行对应。例如对角映射 $X -> X^2$ 一般找不到对应的依值对象，除非这个模型中的相等类型满足外延性。因此，异常模型 (@sec:exception)、容器模型 (@sec:polynomial)、群胚模型 (@sec:groupoid) 等等都包含不是展映射的映射。
 
+研究展映射的一大动机是许多时候依值对象不好直接描述。例如光滑流形 $M$ 上的向量丛可以看作是 $M$ 上的 “依值向量空间”，为每个点 $x in M$ 赋予向量空间 $V_x$，使得 $x$ 在流形上运动时 $V_x$ 的变化是光滑的。但一个向量空间族何时光滑难以定义，因此在数学中往往转而考虑全空间 $E = product.co_(x in M) V_x$ 上的光滑结构与光滑映射 $E -> M$.
+//#footnote[另一种办法是通过定义 “$Pi$ 类型”，即从 $x in M$ 到 $V_x$ 的光滑函数，间接描述向量族的光滑结构。]
+同理，在数学中研究对象 $B$ 上的依值对象 $A_x$ 时，往往转而考虑全空间 $E$ 与映射 $p : E -> B$，间接研究依值对象。这种技术在代数几何中达到巅峰，以 Grothendieck 的#translate[相对视角][relative point of view] 为典型。例如希望表达每个 $A_x$ 都是紧空间，则说 $p$ 是紧合映射; 希望表达每个 $A_x$ 都是仿射空间，则说 $p$ 是仿射映射，等等。
+
+另一方面，展映射仍然是范畴中的箭头，因此如果通过刻画展映射间接描述依值类型，就可以用上范畴论中的许多工具。这又与 Bénabou 发展的纤维化范畴论不谋而合。
+
 - fibrations as nice projections
 - fibrations as hard-to-describe dependencies
-- fibrations as smallness conditions
+- fibrations as smallness conditions (category with class of small maps)
+- fibrations stay morphisms, so more categorical language apply
+
+如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过在范畴论中，一般直接推广为任意的函子 $F : cal(E) -> cal(C)^->$ 性质更好，如无必要不需额外要求是子范畴的含入函子。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
+
+接下来，我们需要将代换操作翻译到展映射的语言中。(pullback)
+
+#definition[
+考虑函子 $p : cal(E) -> cal(C)$。给定 $cal(E)$ 中的箭头 $f : B -> A$ 与其在 $p$ 下的像 $sigma = p(f) : Delta -> Gamma$。考虑任意如下图中的情况：
+#eq(diagram({
+  node((0,0), $B$, name: <B>)
+  node((1,0), $A$, name: <A>)
+  edgeR(<B>, "->", <A>, $f$)
+
+  node((0,1), $Delta$, name: <Delta>)
+  node((1,1), $Gamma$, name: <Gamma>)
+  edgeR(<Delta>, "->", <Gamma>, $sigma$)
+
+  edge(<B>, "|->", <Delta>)
+  edge(<A>, "|->", <Gamma>)
+
+  node((-1, -0.5), $X$, name: <X>)
+  node((-1, 0.5), $p(X)$, name: <pX>)
+  edge(<X>, "|->", <pX>)
+
+  edgeR(<pX>, "->", <Delta>, $delta$)
+  edge(<X>, "->", <A>, bend: 15deg, $h$)
+  edge(<X>, "-->", <B>)
+}))
+其中 $p(h) = sigma compose delta$。如果存在唯一的箭头 $g : X -> B$，使得 $h = f compose g$，并且 $p(g) = delta$，就称 $f$ 与 $sigma$ 构成的方形是 *$p$-拉回方*。假如对任意 $sigma : Delta -> Gamma$ 与 $A$ 满足 $p(A) = Gamma$，总存在 $p$-拉回方，就说函子 $p$ 是*纤维化*函子。
+]
+我们也说 $p$ 定义了 $cal(C)$ 上的*纤维范畴*，并且有时用 $cal(E)$ 指代这个纤维范畴。
 
 ---
 
-- Motivate display maps as the maps of the form $(Gamma, A) -> Gamma$. 
-- Justify mathematical motivation: dependent structures are hard to define
 - Alternative framework for models of type theory: comprehension categories
   - mention that this also ties into the already existing program of fibered category theory by Bénabou
   - It's possible to have multiple $A$'s produce the same display map (empty set example), so better have a projection $cal(E) -> cal(C)^->$
@@ -123,7 +158,7 @@ $))
   - On display maps, substitution act as pullbacks $->$ maps #translate[拉回态射][cartesian morphism] to pullback squares (also cartesian morphisms)
 
 #definition[
-  #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$ 将类型 $A$ 映射到展映射 $(Gamma, A) -> Gamma$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴，并且 $F$ 将拉回态射映到拉回态射。
+  #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴 $cal(E) -> cal(C)$，并且 $F$ 将拉回态射映到拉回态射。
 ]
 
 - Discuss possible morphisms between types
