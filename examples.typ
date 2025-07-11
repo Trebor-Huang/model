@@ -579,9 +579,45 @@ $Pi$ 类型的底集合则不是全体函数 $product_(a in A_x) B_((x, a))$，�
 
 === 命题、命题截断
 
-- Homotopy Propositions, impredicative propositions, strict propositions (coincides with homotopy propositions in extensional type theory)
-- Homotopy proposition truncation, impredicative inhabited type, irrelevant squash type
-- Will deal with impredicative universe in @sec:impredicative-universe, the homotopy propositions are included in that universe in this model
+在讨论可计算的逻辑原理之前，我们需要确定如何将一阶逻辑、高阶逻辑中的命题翻译至依值类型论。如果我们直接将 $exists$ 命题翻译为 $Sigma$ 类型，那么许多公理之间的结构将会截然不同。例如 “选择公理”
+#eq($ [forall x bind exists y bind P(x, y)] -> [exists f bind forall x bind P(x, f(x))] $)
+在此翻译下就是可证的。然而，通常数学中需要用到选择公理的命题，如所有向量空间都有基等，反而不能用这个翻译证明。这说明将 $exists$ 命题翻译为 $Sigma$ 类型不是合理的比较方案。
+
+在依值类型论中有几种办法解决这个问题。其一是定义命题为所有元素都相等的类型。此时 $sum_(x : A) P(x)$ 就不是命题。我们需要给出*命题截断*操作，将某个类型 $B$ 转化为所有元素都相等的新类型 $norm(B)$，保证前者有元素当且仅当后者有元素 (是真命题)。这样就能将 $exists x : A bind P(x)$ 定义为 $norm(sum_(x : A) P(x))$。命题截断可以看作商类型的特殊情况，即取所有元素都等价的等价关系。
+#numbered-figure(
+  caption: [命题截断的部分规则],
+  partir(
+    $rule(
+      Gamma tack norm(A) istype,
+      Gamma tack A istype
+    )$,
+    $rule(
+      Gamma tack abs(a) : norm(A),
+      Gamma tack a : A
+    )$,
+    $rule(
+      Gamma tack "trunc"(u, v) : "Id"(norm(A), u, v),
+      Gamma tack u\, v : norm(A)
+    )$
+  )
+)
+在同伦类型论中，命题截断是高维归纳类型的一种，有对应的消去子。不过由于具现模型满足相等证明的唯一性（甚至满足外延性），我们考虑一个更简单的消去子:
+#eq($
+  rule(
+    Gamma tack "elim"_B (x, f, p) : B,
+    // Gamma tack B istype,
+    Gamma tack x : norm(A),
+    Gamma\, a : A tack f(a) : B,
+    Gamma\, a : A\, a' : A tack p : "Id"(B, f(a), f(a'))
+  )
+$)
+满足 $"elim"_B (abs(x), f, p) = f(x)$。由于 $norm(A)$ 的所有元素都相等，我们不考虑 $B$ 依值的情况。另一个更弱的消去子是要求 $B$ 也是类型，即 $B$ 的所有元素都相等。不过这个消去子有时无法满足类型论的需求。例如给定 $exists x : NN bind f(x) = "true"$，我们理应可以从零开始搜索，找到最小的 $x : NN$ 满足条件，进而得到 $sum_(x : NN) f(x) = "true"$。用这个更弱的消去子不足以写出这样的程序。
+
+一个常见的变体是将上文提到的所有相等类型替换为判值相等。换句话说，命题是所有元素都判值相等的类型。这种命题在 Agda 中称作 `Prop`，而在 Rocq 中称作 `SProp`。不过，此时的命题截断一般要么需要外延类型论，要么采用前文提到的更弱的消去子，同时添加一些特殊情况使得它足够强。这往往要牺牲类型论的一些性质，这里不再讨论。
+
+在集合模型中，可以将命题截断解释为商集：定义集合族 $A_x$ 每个集合上的等价关系 $tilde$ 满足 $a tilde a'$ 恒成立。定义 $norm(A)_x = A_x \/ class("normal", tilde)$ 即可。此时 $abs(a)$ 即可解释为商集中的等价类 $abs(a)_x = [a_x]$。同样，在具现模型中也可以如此定义，并且令 $r realizes_norm(A)_x u$ 当且仅当存在等价类 $u$ 中的元素 $a$ 使得 $r realizes_A_x a$。
+
+最后，还有一种解释命题的办法，即考虑一个非直谓宇宙 $"Prop"$，并在各种类型的消去子上作限制。读者可以参考@appendix:impredicative 中的介绍。#[@sec:impredicative-universe]会考察具现模型中非直谓宇宙的语义。
 
 === 可计算的逻辑原理
 
