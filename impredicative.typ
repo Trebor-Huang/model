@@ -136,7 +136,7 @@ $)
 #eq($
   (x : A) times P(x) = (C : *) -> ((x : A) -> P(x) -> C) -> C.
 $)
-注意这里限制了 $C$ 只能处于非直谓宇宙 $*$ 中，并且 $Sigma$ 类型也在 $*$ 里。如果 $A = *$，那么与 F 系统中的 $forall$ 类推，也将这种弱 $Sigma$ 类型称作 $exists$ 类型。事实上，如果加入非直谓强 $exists$ 类型 $(exists X bind P(X)) : *$，并且具备投影函数 $(exists X bind P(X)) -> *$，那么系统就有矛盾 @impredicative-sigma。这说明非直谓宇宙是无法编码这种类型的。但是，这并不排除可以编码 $(x : A) times B(x)$，其中 $A$ 与 $B$ 都在 $*$ 宇宙中。 #author-note[(... will give a countermodel)]
+注意这里限制了 $C$ 只能处于非直谓宇宙 $*$ 中，并且 $Sigma$ 类型也在 $*$ 里。如果 $A = *$，那么与 F 系统中的 $forall$ 类推，也将这种弱 $Sigma$ 类型称作 $exists$ 类型。事实上，如果加入非直谓强 $exists$ 类型 $(exists X bind P(X)) : *$，并且具备投影函数 $(exists X bind P(X)) -> *$，那么系统就有矛盾 @impredicative-sigma。这说明非直谓宇宙是无法编码这种类型的。但是，这并不排除可以编码 $A$ 与 $B$ 都在 $*$ 宇宙中的 $Sigma$ 类型 $(x : A) times B(x)$。我们将在 #[@sec:impredicative-universe]证明也这是不可能的。
 
 与 $Sigma$ 类型类似，归纳类型的非直谓编码也只能构造弱版本。这对一般编程而言足矣，但要作为逻辑系统，就必须要有完整的归纳法。假设读者已熟悉归纳类型的大致原理，下文只将探讨这些类型与非直谓宇宙的交互。
 
@@ -285,7 +285,13 @@ $)
 #eq($ ((x : A) -> norm(C(x))) -> norm((x : A) -> C(x)). $)
 在同伦类型论中，这个形式更为常见。不过 $"CC"_omega$ 没有 $Sigma$ 类型，因此需要用上面的复杂形式。
 
-(...) 全局选择，无 $Sigma$ 类型的情况
+在（有 $Sigma$ 类型的）类型论中，全局选择#footnote[这与集合论的全局选择只有形似，因为 ZF 等集合论的真类与类型论中的性质差异很大。]则说的是将选择公理结论中的 $exists$ 换做 $Sigma$，或者 $norm(A)$ 换做 $A$。这样不仅存在选择函数，还能给出固定的一个选择函数。例如从 $forall (x : A) bind exists (y : B(x)) bind P(x, y)$ 可以推出
+#eq($ sum_(f : (x : A) -> B(x)) forall (x : A) bind P(x, f(x)). $)
+这等价于说
+#eq($ ((x : A) -> norm(C(x))) -> (x : A) -> C(x). $)
+它实际上等价于更简洁的公理：$norm(A) -> A$。
+
+不过，在无 $Sigma$ 类型的类型论中无法作出这样的化简，因此需要拆分成两步。有算符 $epsilon$，给定谓词 $P$ 满足 $forall (x : A) bind exists (y : B(x)) bind P(x, y)$，给出函数 $f : (x : A) -> B(x)$。再有公理说明 $f$ 满足 $P(x, f(x))$ 总是成立。
 
 #theorem-appendix[Barbanera–Berardi][
   在构造演算中假定排中律与全局选择公理，则任何命题 $p : "Prop"$ 的所有元素相等，即 $"Id"(p, x, y)$ 有元素。
