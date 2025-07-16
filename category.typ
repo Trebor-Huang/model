@@ -112,9 +112,25 @@ $))
 
 另一方面，展映射仍然是范畴中的箭头，因此如果通过刻画展映射间接描述依值类型，就可以用上范畴论中的许多工具。这又与 Bénabou 发展的纤维化范畴论不谋而合。这一节，我们来考察另一种定义依值类型的模型的办法，称作概括范畴。
 
-如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过在范畴论中，一般直接推广为任意的函子 $F : cal(E) -> cal(C)^->$ 性质更好，如无必要不需额外要求是子范畴的含入函子。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
+如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过我们暂且先取任意的函子 $F : cal(E) -> cal(C)^->$，稍后再讨论将此函子限定为子范畴含入映射的情况。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
 
-接下来，我们需要将代换操作翻译到展映射的语言中。(pullback)
+接下来，我们需要将代换操作翻译到展映射的语言中。考虑集合族 $A_x$ 与对应的展映射 $p : (Gamma, A) -> Gamma$。假如有映射 $sigma : Delta -> Gamma$，那么 $Delta$ 上对应的集合族是 $(A sigma)_x = A_(sigma(x))$，因此有
+#eq($ (Delta, A sigma) &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in (Gamma, A), p(y) = sigma(x)} $)
+其中最后一步是将集合族语言的 $A_(sigma(x))$ 转而利用展映射 $(Gamma, A) -> Gamma$ 表达得到的。最后这个集合在范畴论的语言中就是#translate[拉回][pullback]。换句话说，我们有拉回方
+#eq(diagram($
+  (Delta, A sigma) edge(->) edge("d", ->)
+  & (Gamma, A) edge("d", ->) \
+  Delta edge(->, sigma) & Gamma
+$))
+那么，我们大致上就要要求展映射 $(Gamma, A) -> Gamma$ 可以沿着任何代换 $Delta -> Gamma$ 作拉回，并且得到的新映射 $(Delta, A sigma) -> Delta$ 仍然是展映射。
+
+范畴语言中，展映射是某个对象 $A in cal(E)$，有函子将其映射到 $(Gamma, A) -> Gamma$。因此我们的实际情况是
+#eq(diagram($
+  A sigma edge(->) edge("d", |->)
+  & A edge("d", |->) \
+  Delta edge(->, sigma) & Gamma
+$))
+其中上半部分在 $cal(E)$ 中，由上至下的映射是 $p = cod compose F : cal(E) -> cal(C)$。那么，我们只需先定义这种图表上的广义 “拉回”，再要求 $F$ 将每个这样的广义拉回映射到 $cal(C)^->$ 中真正的拉回方。
 
 #definition[
 考虑函子 $p : cal(E) -> cal(C)$。给定 $cal(E)$ 中的箭头 $f : B -> A$ 与其在 $p$ 下的像 $sigma = p(f) : Delta -> Gamma$。考虑任意如下图中的情况：
@@ -138,22 +154,40 @@ $))
   edge(<X>, "->", <A>, bend: 15deg, $h$)
   edge(<X>, "-->", <B>)
 }))
-其中 $p(h) = sigma compose delta$。如果存在唯一的箭头 $g : X -> B$，使得 $h = f compose g$，并且 $p(g) = delta$，就称 $f$ 与 $sigma$ 构成的方形是 *$p$-拉回方*，或称 $f$ 是*拉回态射*。假如对任意 $sigma : Delta -> Gamma$ 与 $A$ 满足 $p(A) = Gamma$，总存在 $p$-拉回方，就说函子 $p$ 是*纤维化*函子。
+其中 $p(h) = sigma compose delta$。如果存在唯一的箭头 $g : X -> B$，使得 $h = f compose g$，并且 $p(g) = delta$，就称 $f$ 与 $sigma$ 构成的方形是 *$p$-拉回方*，或称 $f$ 是#define[拉回态射][cartesian morphism]。假如对任意 $sigma : Delta -> Gamma$ 与 $A$ 满足 $p(A) = Gamma$，总存在 $p$-拉回方，就说函子 $p$ 是#define[纤维化][Grothendieck fibration]函子。
 ]
-我们也说 $p$ 定义了 $cal(C)$ 上的*纤维范畴*，并且有时用 $cal(E)$ 指代这个纤维范畴。
+我们也说 $p$ 定义了 $cal(C)$ 上的#define[纤维范畴][fibered category]，并且有时单用 $cal(E)$ 指代这个纤维范畴。
 
----
+#lemma[
+  $cod : cal(C)^-> -> cal(C)$ 是纤维化函子当且仅当 $cal(C)$ 有全部拉回。
+]
+#proof[
+代入纤维化的定义得到 $cod$-拉回方的图表是
+#eq(diagram({
+  node((0,0), $B$, name: <B>)
+  node((1,0), $A$, name: <A>)
+  edgeR(<B>, "->", <A>, $f$)
 
-- Alternative framework for models of type theory: comprehension categories
-  - mention that this also ties into the already existing program of fibered category theory by Bénabou
-  - It's possible to have multiple $A$'s produce the same display map (empty set example), so better have a projection $cal(E) -> cal(C)^->$
-  - Elaborate on the morphism structure of $cal(E)$ (morphisms between types)
-  - Substitution action: have a type $A : cal(E)$ over $Gamma$, should have a "pullback square"
-  - Define Grothendieck fibrations
-  - On display maps, substitution act as pullbacks $->$ maps #translate[拉回态射][cartesian morphism] to pullback squares (also cartesian morphisms)
+  node((0,1), $Delta$, name: <Delta>)
+  node((1,1), $Gamma$, name: <Gamma>)
+  edgeR(<Delta>, "->", <Gamma>, $sigma$)
+
+  edge(<B>, "->", <Delta>)
+  edge(<A>, "->", <Gamma>)
+
+  node((-1, -0.5), $X$, name: <X>)
+  node((-1, 0.5), $Xi$, name: <pX>)
+  edge(<X>, "->", <pX>)
+
+  edgeR(<pX>, "->", <Delta>, $delta$)
+  edge(<X>, "->", <A>, bend: 15deg, $h$)
+  edge(<X>, "-->", <B>)
+}))
+可以发现正好是拉回的图表，不过将 $X -> Delta$ 拆分为两步。不难看出 $cod$-拉回方与范畴 $cal(C)$ 的拉回方是等价的。
+]
 
 #definition[
-  #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴 $cal(E) -> cal(C)$，并且 $F$ 将拉回态射映到拉回态射。
+  #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴 $cal(E) -> cal(C)$，并且 $F$ 将拉回态射映到拉回态射.#footnote[我们无需要求 $cal(C)$ 有全部拉回，即 $cod : cal(C)^-> -> cal(C)$ 不一定是纤维范畴。不过如果加上这个条件，$F$ 就是纤维化范畴之间的保持结构的映射。] 同时，$cal(C)$ 有终对象表示空语境。
 ]
 
 - Discuss possible morphisms between types
