@@ -176,6 +176,14 @@ $)
 
 前面提到有向图模型是预层模型的特殊情况。一个经典的结论是，预层模型满足排中律当且仅当这个代数结构中所有操作都有逆。例如一个集合 $X$ 配上运算 $iota : X -> X$ 满足 $iota(iota(x)) = x$，这样 $iota$ 的逆运算是它自己。
 
+=== 模型与综合数学
+
+Axiomatize the interval type and make some constructions
+
+Translate to external language
+
+Compare with synthetic homotopy theory
+
 == 恒等模型与宇宙
 
 在 Peano 公理系统中，除了归纳法，还需要一系列公理，例如 $0 != "suc"(n)$。在依值类型论中，则可以直接用归纳子证明 $0 != "suc"(n)$。具体办法是先定义 $"Code" : NN -> cal(U)$ 为
