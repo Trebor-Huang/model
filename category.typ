@@ -230,7 +230,7 @@ Use internal language of presheaves to describe type structures
 
 (also mention universes in sheaf topos)
 
-== 语法的泛性质
+== 语法模型的泛性质
 
 What are morphisms between models?
 

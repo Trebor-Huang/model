@@ -237,6 +237,12 @@ canvas({
 // Bibliography
 #[
 #set text(lang: "en")
-#show link: set text(font: "DejaVu Sans Mono", size: 0.8em, fill: blue)
+#show regex("[A-Z]\. "): it => it.text.slice(0,2) + sym.space.thin
+#show link: set text(font: "DejaVu Sans Mono", size: 0.8em, fill: blue.darken(10%))
+#show regex("(10\.|http).+"): it => text(
+  for i in it.text {
+    i + sym.zws
+  }
+)
 #bibliography("references.yaml", title: "参考文献", style: "ieee-alt.csl") // TODO style
 ]

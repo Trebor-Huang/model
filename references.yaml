@@ -24,6 +24,14 @@ exception-agda:
   url: https://github.com/AndrasKovacs/antifunext
   note: GitHub repository
 
+polynomial-agda:
+  type: repository
+  author: Kovács, András
+  title: Polynomial model
+  date: 2020
+  url: https://github.com/AndrasKovacs/polynomial-model
+  note: GitHub repository
+
 mltt-1971:
   type: misc
   author: Martin-Löf, Per
@@ -216,3 +224,17 @@ type-theory-book:
   note: In preparation
   url: https://www.danielgratzer.com/papers/type-theory-book.pdf
 
+synthetic-computability:
+  type: article
+  title: First Steps in Synthetic Computability Theory
+  date: 2006
+  author: Bauer, Andrej
+  page-range: 5-31
+  parent:
+    - type: periodical
+      title: Electronic Notes in Theoretical Computer Science
+      volume: 155
+    # - type: conference
+    #   title: Proceedings of the 21st Annual Conference on Mathematical Foundations of Programming Semantics (MFPS XXI)
+  serial-number:
+    doi: 10.1016/j.entcs.2005.11.049

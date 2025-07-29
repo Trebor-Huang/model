@@ -315,7 +315,17 @@ $transp$ 说的则是对于两个元素 $s, t$ 与依值类型 $P(x)$，如果�
 
 此节选读。#translate[容器][container] 模型，或称多项式模型，是函数外延性的另一个反模型。在编程中，容器是能装载一系列元素的数据结构。例如列表 $"List"(X)$ 可以装载零个或多个元素，有序对 $X times X$ 恰好可以装载两个，等等。
 
+describing containers using set families (also called polynomials)
+
+alternative description as two-step games
+
+dependent containers (motivate exponentials? see if yoneda suffices)
+
+type constructors
+
 例子：并非所有映射都是展映射
+
+elide detailed construction into @polynomial-agda
 
 == 群胚 <sec:groupoid>
 
@@ -629,6 +639,8 @@ $)
 
 === 可计算的逻辑原理
 
+以下几个命题均在具现模型中成立。换句话说，这些命题都有可计算解释，尽管它们在纯构造主义逻辑中无法证明 (也无法证伪)。在类型论中添加类似这些命题的公理，就可以作为可计算理论的综合语言使用。例如，可以在综合语言中证明 Rice 定理等等可计算理论的经典定理。这样，就能将可计算性理论中繁琐的编码隐藏在语言之下，展示出各种论证的核心思想。读者也可参考 Bauer~@synthetic-computability 的论文。
+
 ==== 可数选择
 
 - Discuss various notions of choice
@@ -645,6 +657,10 @@ $ (not forall (x : NN) bind f(n) != "true") --> exists (x : NN) bind f(n) = "tru
 You can improve to $Sigma$ type by searching the minimal one
 
 ==== Church 原理
+
+surjection $NN -> NN^NN$
+
+Halting problem and Rice's theorem
 
 === 非直谓宇宙 <sec:impredicative-universe>
 
