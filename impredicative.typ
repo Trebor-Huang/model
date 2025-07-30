@@ -213,7 +213,7 @@ squash types and their impredicative encodings (compare with HoTT squashes)
 
 == 悖论三则
 
-=== 朴素集合论的悖论
+=== 朴素集合论的悖论 <sec:paradoxes-naive>
 
 Russell 悖论是集合论中最广为人知的悖论。它说明了并不是所有属性 $P$ 都能用于构成集合 ${x mid(|) P(x)}$。只消考察集合 $R = {x mid(|) x in.not x}$。
 
@@ -238,7 +238,7 @@ Martin-Löf 在 1971 年提出了最早的 Martin-Löf 类型论，其中有 $ca
 
 除了基数以外，对序数的研究中也产生了类似的悖论。Cantor 证明了任意序数之间都可相互比较，即 $alpha < beta$、$alpha = beta$ 与 $alpha > beta$ 三者必居其一。但数学家 Burali-Forti 在 1897 年又证明了存在不可比较的序数! 他的论证是如果所有序数都可比较，那么全体序数的集合也是良序集 $"No"$，就应该构成最大的序数 $Omega$。但这是不可能的，因为 $Omega + 1 > Omega$。这就是 *Burali-Forti 悖论*。
 
-这则悖论可以做一些简化，避免用到序数的全套理论。例如可以只用良基关系 (...) 假如良基集合 $A$ 与 $B$ 的某个真子集同构，就说 $A < B$。这样全体良基集合的集合 $"WF"$ 也是良基的。进一步分析可以得到 $"WF" < "WF"$，矛盾。这是 *Мириманов 悖论*。还可以定义无挠序的概念：
+这则悖论可以做一些简化，避免用到序数的全套理论。例如可以只用良基关系 (@def:well-founded)。假如良基集合 $A$ 与 $B$ 的某个真子集同构，就说 $A < B$。这样全体良基集合的集合 $"WF"$ 也是良基的。进一步分析可以得到 $"WF" < "WF"$，矛盾。这是 *Мириманов 悖论*。还可以定义无挠序的概念：
 #definition-appendix[
   如果全序集 $A$ 满足任何子集 ${x in A mid(|) x < a_0}$ 与 $A$ 本身没有保序同构，就说 $A$ 是*无挠*的。这种子集称作 $A$ 的#define[前段][initial segment]。
 ]
