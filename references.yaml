@@ -238,3 +238,17 @@ synthetic-computability:
     #   title: Proceedings of the 21st Annual Conference on Mathematical Foundations of Programming Semantics (MFPS XXI)
   serial-number:
     doi: 10.1016/j.entcs.2005.11.049
+
+comprehension-type-theory:
+  type: misc
+  note: ArXiv preprint
+  title: A Type Theory for Comprehension Categories with Applications to Subtyping
+  author:
+    - Najmaei, Niyousha
+    - vd.Weide, Niels
+    - Ahrens, Benedikt
+    - North, Paige Randall
+  date: 2025
+  serial-number:
+    doi: 10.48550/arXiv.2503.10868
+

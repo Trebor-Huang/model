@@ -419,7 +419,7 @@ $)
 根据@sec:J-equivalences 的结论，J 原理可以拆分为 $contr$ 与 $transp$ 两个部分。其中 $contr$ 的部分不难满足，但 $transp$ 则有些问题。按照依值群胚的定义，完全可以有 $Gamma$ 的两个点 $x$ 与 $y$，有道路连接，同时依值群胚 $A$ 满足 $A_x$ 为空，但是 $A_y$ 不为空。此时就无法将 $A_y$ 中的元素转换到 $A_x$ 中。为此，我们需要额外给依值群胚添加条件，使得它能满足 $transp$ 的要求。
 
 #definition[
-  给定群胚 $Gamma$ 与依值群胚 $A$，如果对于每条道路 $p in hom_Gamma (x, y)$ 与 $A$ 中的依值点 $alpha in A_x$，都有一条 $p$ 上的依值道路 $xi in hom_A^p (alpha, beta)$ 以 $alpha$ 为起点，就称 $A$ 是#define[纤维化][fibration]。
+  给定群胚 $Gamma$ 与依值群胚 $A$，如果对于每条道路 $p in hom_Gamma (x, y)$ 与 $A$ 中的依值点 $alpha in A_x$，都有一条 $p$ 上的依值道路 $xi in hom_A^p (alpha, beta)$ 以 $alpha$ 为起点，就称 $A$ 是#define[群胚纤维化][fibration in groupoids]，在上下文中仅讨论群胚时可以简称纤维化。
 ]
 定义中的道路 $xi$ 称作 $p$ 的#define[抬升][lift]。注意在抬升的定义中只能限制 $xi$ 的一个端点。
 

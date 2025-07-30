@@ -58,7 +58,7 @@
 // Equations
 #let eq(content) = [\
   #box(align(center, content), width: 1fr)\
-]
+] // TODO add parameter and manually tune some vertical spacing
 #let varnothing = sym.diameter
 #let cal(it) = text(font: "KaTeX_Caligraphic", it) // TODO spacing difference?
 

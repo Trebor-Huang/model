@@ -112,7 +112,7 @@ $))
 
 另一方面，展映射仍然是范畴中的箭头，因此如果通过刻画展映射间接描述依值类型，就可以用上范畴论中的许多工具。这又与 Bénabou 发展的纤维化范畴论不谋而合。这一节，我们来考察另一种定义依值类型的模型的办法，称作概括范畴。
 
-如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过我们暂且先取任意的函子 $F : cal(E) -> cal(C)^->$，稍后再讨论将此函子限定为子范畴含入映射的情况。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
+如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过我们可暂且先取任意的函子 $F : cal(E) -> cal(C)^->$，有需要时再讨论将此函子限定为子范畴含入映射的情况。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
 
 接下来，我们需要将代换操作翻译到展映射的语言中。考虑集合族 $A_x$ 与对应的展映射 $p : (Gamma, A) -> Gamma$。假如有映射 $sigma : Delta -> Gamma$，那么 $Delta$ 上对应的集合族是 $(A sigma)_x = A_(sigma(x))$，因此有
 #eq($ (Delta, A sigma) &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in (Gamma, A), p(y) = sigma(x)} $)
@@ -190,11 +190,30 @@ $))
   #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴 $cal(E) -> cal(C)$，并且 $F$ 将拉回态射映到拉回态射.#footnote[我们无需要求 $cal(C)$ 有全部拉回，即 $cod : cal(C)^-> -> cal(C)$ 不一定是纤维范畴。不过如果加上这个条件，$F$ 就是纤维化范畴之间的保持结构的映射。] 同时，$cal(C)$ 有终对象表示空语境。
 ]
 
-- Discuss possible morphisms between types
-  - Motivate equivalence between fibered categories and pseudofunctors
-  - Making $cal(E) -> cal(C)$ discrete or making $F$ full both eliminates this extra information
-    - Discrete fibrations behave much better
-  - Possible use case as modeling subtypes or other kinds of coercions
+将概括范畴与自然模型相比，事实上多出了额外的信息。概括范畴中 $cal(E)$ 的对象直观上是类型 $Gamma tack A istype$ 的语义解释，而这个范畴中的态射则是类型之间的某种态射。假设 $Gamma tack A istype$，$Delta tack B istype$。$F : cal(E) -> cal(C)^->$ 将态射 $A -> B$ 映射到某个代换 $(Gamma, A) -> (Delta, B)$。但是并非所有这样的代换都一定在 $F$ 的像里，并且 $cal(E)$ 中的多个态射可能映射到同一个代换。而自然模型中没有额外规定类型之间的态射。我们有三种办法解决此问题。
+
+其一是令 $cal(E)$ 是 $cal(C)^->$ 的满子范畴，这样相当于要求 $A -> B$ 的映射与代换 $(Gamma, A) -> (Delta, B)$ 一一对应，使得这些额外的自由度被 $cal(C)$ 完全决定。这是让 $cal(E)$ 海纳百川，兼收并蓄。
+
+其二是令 $cal(E)$ 只包含纤维化要求必须存在的映射。换句话说， $cal(E)$ 中的任何态射都出现在某个 $p$-拉回方中。这有更简洁的描述。
+#definition[
+考虑函子 $p : cal(E) -> cal(C)$。给定 $cal(C)$ 中的态射 $sigma : Delta -> Gamma$ 与 $A in cal(E)$，使得 $p(A) = Gamma$，如果总是存在唯一的 $f : B -> A$ 使得 $p(f) = sigma$，就说 $p$ 是#define[离散纤维化][discrete fibration]。
+#eq(diagram({
+  node((0,0), $B$, name: <B>)
+  node((1,0), $A$, name: <A>)
+  edge(<B>, "-->", <A>, $f$)
+
+  node((0,1), $Delta$, name: <Delta>)
+  node((1,1), $Gamma$, name: <Gamma>)
+  edgeR(<Delta>, "->", <Gamma>, $sigma$)
+
+  edge(<B>, "|->", <Delta>)
+  edge(<A>, "|->", <Gamma>)
+}))
+此时，此图一定是 $p$-拉回方。因此离散纤维化都是纤维化。
+]
+假如在概括范畴中令 $p : cal(E) -> cal(C)$ 是离散纤维化，就使得 $cal(E)$ 中只包含必须的态射，从而也消除了多余的自由度。
+
+第三种办法则是反其道而行之，不去修改概括范畴使得语义匹配语法，而是修改语法使得它匹配概括范畴。这就需要添加一类新的语法，描述类型之间的映射。它可以用于包含子类型的系统，是前沿研究的课题 @comprehension-type-theory。
 
 === 范畴的依值类型语言
 
