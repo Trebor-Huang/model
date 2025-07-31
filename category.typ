@@ -235,8 +235,6 @@ $))
 
 (countermodel of Markov's principle)
 
-(optional: sheafification universe)
-
 === 自然模型的类型结构 <sec:natural-type-structure>
 
 Use internal language of presheaves to describe type structures
@@ -257,13 +255,21 @@ Use internal language of presheaves to describe type structures
 
 (also mention universes in sheaf topos)
 
-== 语法模型的泛性质
+== 语法与自由模型
 
 What are morphisms between models?
 
 mention sconing and gluing (dependent elimination)
 
 will use to prove canonicity etc later down the line
+
+/*
+类型论模型定义的重要特性是其中只要求等式。并非所有数学结构都可以这样定义。例如域是拥有四则运算的集合，其中除法的除数必须非零。因此在域的定义中就必须用到_不等式_。相对地，环则只拥有加法、减法与乘法，其中的结合律、分配律等等都是纯等式。这种数学结构称作#define[代数结构][algebraic structure]。群、环、向量空间都是代数结构，而域、全序、拓扑空间不是.#footnote[代数结构可以包含多个集合，而不一定只在一个集合上配备运算。这称作#define[多类][multi-sorted] 代数结构。类型论模型的另一个特别之处在于涉及的集合以元素为指标，例如 $"Tp"(Gamma)$ 对每个元素 $Gamma in "Ctx"$ 都有一个集合。这样的代数理论称作#define[广义代数理论][generalized algebraic theory]，或者 Cartmell 理论。]
+
+代数结构的一大特征是可以自由生成。换言之，给定一些元素，可以构造出_仅仅_满足代数结构本身要求的等式的结构。例如，一个元素 $x$ 在环的加法、减法、乘法下可以生成表达式 $x^2 + x - 2x$。这些表达式构成的环称作多项式环 $ZZ[x]$。具体来说，我们将给定的元素利用代数结构中的运算自由组合，将构造出的所有表达式商去需要满足的等式关系，得到的就是自由代数结构。
+
+当然，假如这个代数结构中有指定元素 (也就是零元运算，例如环公理要求乘法单位元 $1$)，那么不用给定元素，也能生成非平凡的代数结构。 (expand on this, syntax of groups vs free groups)
+*/
 
 == 模型的函子观点
 
