@@ -62,18 +62,18 @@
 ]<def:natural-model>
 这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。
 
-考虑模型中单元素类型结构的定义。它要求在每个 $"Tp"(Gamma)$ 中选出元素 $Unit_Gamma$。类似地，空类型结构也要求选出元素 $Empty_Gamma$。从某个集合 $X$ 中选出元素，用范畴语言表述就是选定映射 $1 -> X$，其中 $1$ 是单元素集合，即集合范畴的终对象。
+对于无参数的类型构造子，例如 $Empty$、$Unit$ 与 $Bool$，它们要求在每个 $"Tp"(Gamma)$ 中选出一个元素。从某个集合 $X$ 中选出元素，用范畴语言表述就是选定映射 $1 -> X$，其中 $1$ 是单元素集合，即集合范畴的终对象。
 
-我们考虑预层 $1$ 使得 $1(Gamma)$ 均为单元素集合。这是预层范畴中的终对象。这样，预层间的映射 $1 -> "Tp"$ 就在每个 $"Tp"(Gamma)$ 中选出了元素。因此，我们应当要求有两个映射 $Unit, Empty : 1 -> "Tp"$，满足某些条件。此时，注意预层映射的自然性正好是代换需要满足的等式 $Unit_Gamma sigma = Unit_Delta$ 与 $Empty_Gamma sigma = Empty_Delta$。因此使用范畴语言时，代换等式往往会自然地打包进各种构造中。
+我们考虑预层 $1$ 使得 $1(Gamma)$ 均为单元素集合。这是预层范畴中的终对象。这样，预层间的映射 $1 -> "Tp"$ 就在每个 $"Tp"(Gamma)$ 中选出了元素。因此，我们应当要求有映射 $Empty, Unit, Bool : 1 -> "Tp"$，满足某些条件。此时，注意预层映射的自然性正好是代换需要满足的等式，如 $Unit_Gamma sigma = Unit_Delta$。因此使用范畴语言时，代换等式往往会自然地打包进各种构造中。在 #[@sec:natural-type-structure]中还会进一步介绍如何用范畴语言处理其他类型结构。
 
-单元素类型还需要满足每个 $"Tm"(Gamma, Unit_Gamma)$ 恰有一个元素。在自然模型中，$"Tm"$ 被改为合并了各种类型的元素集的预层。因此要表述这个条件，应该考虑
+单元素类型还需要满足每个 $"Tm"(Gamma, Unit_Gamma)$ 恰有一个元素。在自然模型中，$"Tm"$ 是合并了各种类型的元素集的预层。因此要表述这个条件，应该考虑
 #eq($ U(Gamma) = {u mid(|) u in "Tm"(Gamma), typeof(u) = Unit_Gamma}. $)
 这构成一个预层。用范畴语言的说法，就是拉回
 #eq(diagram($
   U edge(->) edge("d", ->) & "Tm" edgeL("d", ->, typeof)\
   1 edgeR(->, Unit) & "Tp"
 $))
-我们要求 $U$ 是单元素预层，即 $U -> 1$ 是预层同构.（不过注意 $Empty$ 不能要求拉回是空预层，因为某些语境下空类型是有元素的，例如 $x : Empty tack x : Empty$.）在 #[@sec:natural-type-structure]中还会进一步介绍如何用范畴语言处理其他类型结构。
+我们要求 $U$ 是单元素预层，即 $U -> 1$ 是预层同构。一般而言，$A : X -> "Tp"$ 选出了一些类型，而它与 $typeof$ 的拉回 $U$ 就是这些类型上的元素。
 
 /*
 在预层范畴中的一切范畴构造都会附带代换操作。这样，范畴论的语言可以自动处理例如 $(A times B) sigma = A sigma times B sigma$ 的等式。我们完整叙述自然模型中乘积类型的定义为例。
@@ -211,7 +211,7 @@ $))
 }))
 此时，此图一定是 $p$-拉回方。因此离散纤维化都是纤维化。
 ]
-假如在概括范畴中令 $p : cal(E) -> cal(C)$ 是离散纤维化，就使得 $cal(E)$ 中只包含必须的态射，从而也消除了多余的自由度。
+假如在概括范畴中令 $p : cal(E) -> cal(C)$ 是离散纤维化，就使得 $cal(E)$ 中只包含必须的态射，从而也消除了多余的自由度。直观来说，这两种概括范畴应该都与自然模型等价。我们会在 #[@sec:coherence-problem]讨论此事。
 
 第三种办法则是反其道而行之，不去修改概括范畴使得语义匹配语法，而是修改语法使得它匹配概括范畴。这就需要添加一类新的语法，描述类型之间的映射。它可以用于包含子类型的系统，是前沿研究的课题 @comprehension-type-theory。
 
@@ -233,15 +233,23 @@ $))
   假如有集合 $X$，配有两个集合 $X_0$、$X_1$ 与双射 $X tilde.equiv X_0 times X_1$，再配有集合 $X_00$、$X_01$、$X_10$、$X_11$ 与双射 $X_0 tilde.equiv X_00 times X_01$ 和 $X_1 tilde.equiv X_10 times X_11$，以此类推，就称此结构为 *Cantor 层*。Cantor 层之间的态射由一族映射 $f_b : X_b -> Y_b$ 组成，使得与配备的双射都交换。
 ]
 
+(countermodel of Markov's principle)
+
 (optional: sheafification universe)
 
 === 自然模型的类型结构 <sec:natural-type-structure>
 
 Use internal language of presheaves to describe type structures
 
-== 融贯问题
+== 融贯问题 <sec:coherence-problem>
 
 #define[融贯问题][coherence problem]
+
+- display map categories: full subcategory $cal(E) -> cal(C)^->$
+- category with attributes: discrete fibration $cal(E) -> cal(C)$, equivalent to split full compcat
+- CwA (compcat) = CwF (families) = NatModel (typeof)
+
+...
 
 - Natural solution using coproducts of display maps
 - Hofmann's solution
