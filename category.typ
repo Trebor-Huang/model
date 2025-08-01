@@ -257,6 +257,10 @@ Use internal language of presheaves to describe type structures
 
 == 语法与自由模型
 
+- Syntax _is_ the specification of models
+- Statements about syntax can be interpreted as statements about free models
+- For type theory, initial models usually suffice
+
 What are morphisms between models?
 
 mention sconing and gluing (dependent elimination)
@@ -285,4 +289,4 @@ will use to prove canonicity etc later down the line
 
 == 变量的结构
 
-substructural models
+models for substructural type theory and modal type theory, i.e. theory that messes with contexts

@@ -305,7 +305,7 @@ $)
 #eq($
   iota alpha X = cases(
     alpha & (X = UU),
-    (...) quad & (X != UU)
+    (dots.c) quad & (X != UU)
   )
 $)
 其中对命题 $X = UU$ 是否成立利用排中律分类讨论，而省略号可以任填 $Bool^X$ 的元素，例如输出 $"false"$ 的常函数即可。这样，函数复合 $pi compose iota$ 就是恒等函数。

@@ -226,7 +226,7 @@ canvas({
 #columns(2)[
 #set par(justify: false)
 #context {
-  let final = translation-table.final().sorted(key : ((zh, en, key)) => key)
+  let final = translation-table.final().sorted(key : ((zh, en, key)) => lower(key))
   for (zh, en, _) in final [
     / #zh: #en
 

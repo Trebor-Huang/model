@@ -529,7 +529,7 @@ $)
 有了计算模型的定义，就可以着手定义哪些数学对象是可计算的。以下我们固定一个具体的偏组合代数 $AA$。
 #let realizes = math.scripts(sym.forces)
 #definition[
-  如果有集合 $X$ 与二元关系 $r realizes x$，表示 “程序 $r in AA$ 实现了元素 $x in X$”，使得每个元素都至少有一个程序实现，就称它为#define[汇编][assembly]。如果一个程序至多实现一个元素，就称之为#define[谦][modest] 集合。
+  如果有集合 $X$ 与二元关系 $r realizes x$，表示 “程序 $r in AA$ 实现了元素 $x in X$”，使得每个元素都至少有一个程序实现，就称它为#define[汇编][assembly]。如果一个程序至多实现一个元素，就称之为#define[谦集合][modest set]。
 ]
 在常见的计算模型中，都会有自然数的某种实现。例如 $lambda$ 演算中的 Church 自然数，在图灵机中用二进制纸带表达自然数，等等。这样就可以定义 $NN$ 上的汇编关系 $realizes_NN$。
 
