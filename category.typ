@@ -215,15 +215,21 @@ $))
 
 第三种办法则是反其道而行之，不去修改概括范畴使得语义匹配语法，而是修改语法使得它匹配概括范畴。这就需要添加一类新的语法，描述类型之间的映射。它可以用于包含子类型的系统，是前沿研究的课题 @comprehension-type-theory。
 
-=== 范畴的依值类型语言
+=== 范畴的依值类型语言 <sec:lccc-language>
 
 如果范畴 $cal(C)$ 有拉回与终对象 (即含有全体有限极限)，则令 $cal(E) = cal(C)^->$，$F : cal(E) -> cal(C)^->$ 为恒等函子，就可以得到概括范畴。换句话说，令全体态射都是展映射，概括范畴的定义就化简为含有限极限的范畴。类似地，各种类型结构在全体态射都是展映射时都有简洁的范畴语言表述。
 
 以下将会在此前提下介绍概括范畴中如何为 $Sigma$、$Pi$ 等类型提供语义。这些语义也能在一般的概括范畴中定义，但是后文不会用到。
 
-- $Sigma$: closed under composition, automatic
-- $Pi$: right adjoint with (automatic) Frobenius condition
+对于 $Sigma$ 类型，我们先考虑集合范畴中的直观。假如有映射 $Gamma -> Delta$ 与 $Theta -> Gamma$，分别表示两个集合族 $A_(x in Delta)$ 与 $B_(y in Gamma)$，那么 $Gamma tilde.equiv {(x, a) mid(|) x in Delta, a in A_x}$。这样，如果想取 $Sigma$ 类型 $Sigma A B$，那么对应的映射应当恰好是复合映射 $Theta -> Delta$，如@fig:sigma-compcat 所示。这样看，$Sigma$ 类型在展映射的语言中就对应映射的复合。
+#numbered-figure(caption: [(...)])[
+  (...)
+] <fig:sigma-compcat>
+
+(introduce slice categories as going into a context)
+
 - Extensional equality: pullback
+- $Pi$: right adjoint with (automatic) Frobenius condition
 
 - Examples of comprehension categories with Pi and Sigma types
   - LCCC
@@ -241,7 +247,11 @@ $))
 
 === 自然模型的类型结构 <sec:natural-type-structure>
 
-Use internal language of presheaves to describe type structures
+介绍局部积闭范畴与概括范畴，除了展示自然模型之外的另一种定义类型论模型的思路之外，另一个重要目的是为接下来的范畴论操作提供一种语言。
+
+换句话说，我们在自然模型的研究中需要用到一些范畴论构造。这些构造用范畴论表述比较复杂，但是我们往往可以在类型论（具体来说是带有 $Sigma$、$Pi$ 与外延相等的类型论）中写下一些表达式，再用 #[@sec:lccc-language]的办法解释为范畴中的构造，并且这正是我们想要表达的构造。
+
+(...)
 
 == 融贯问题 <sec:coherence-problem>
 
