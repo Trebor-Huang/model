@@ -190,7 +190,7 @@ $))
   #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴 $cal(E) -> cal(C)$，并且 $F$ 将拉回态射映到拉回态射.#footnote[我们无需要求 $cal(C)$ 有全部拉回，即 $cod : cal(C)^-> -> cal(C)$ 不一定是纤维范畴。不过如果加上这个条件，$F$ 就是纤维化范畴之间的保持结构的映射。] 同时，$cal(C)$ 有终对象表示空语境。
 ]
 
-将概括范畴与自然模型相比，事实上多出了额外的信息。概括范畴中 $cal(E)$ 的对象直观上是类型 $Gamma tack A istype$ 的语义解释，而这个范畴中的态射则是类型之间的某种态射。假设 $Gamma tack A istype$，$Delta tack B istype$。$F : cal(E) -> cal(C)^->$ 将态射 $A -> B$ 映射到某个代换 $(Gamma, A) -> (Delta, B)$。但是并非所有这样的代换都一定在 $F$ 的像里，并且 $cal(E)$ 中的多个态射可能映射到同一个代换。而自然模型中没有额外规定类型之间的态射。我们有三种办法解决此问题。
+注意我们尚未说明概括范畴是合理的类型论模型。探究此事，只需要将概括范畴与自然模型相比。但这就可以发现实际上概括范畴比自然模型多出了额外的信息。概括范畴中 $cal(E)$ 的对象直观上是类型 $Gamma tack A istype$ 的语义解释，而这个范畴中的态射则是类型之间的某种态射。假设 $Gamma tack A istype$，$Delta tack B istype$。$F : cal(E) -> cal(C)^->$ 将态射 $A -> B$ 映射到某个代换 $(Gamma, A) -> (Delta, B)$。但是并非所有这样的代换都一定在 $F$ 的像里，并且 $cal(E)$ 中的多个态射可能映射到同一个代换。而自然模型中没有额外规定类型之间的态射。我们有三种办法解决此问题。
 
 其一是令 $cal(E)$ 是 $cal(C)^->$ 的满子范畴，这样相当于要求 $A -> B$ 的映射与代换 $(Gamma, A) -> (Delta, B)$ 一一对应，使得这些额外的自由度被 $cal(C)$ 完全决定。这是让 $cal(E)$ 海纳百川，兼收并蓄。
 
@@ -217,9 +217,13 @@ $))
 
 === 范畴的依值类型语言
 
-(special type of comprehension categories: every arrow is a display map)
+如果范畴 $cal(C)$ 有拉回与终对象 (即含有全体有限极限)，则令 $cal(E) = cal(C)^->$，$F : cal(E) -> cal(C)^->$ 为恒等函子，就可以得到概括范畴。换句话说，令全体态射都是展映射，概括范畴的定义就化简为含有限极限的范畴。类似地，各种类型结构在全体态射都是展映射时都有简洁的范畴语言表述。
 
-- $Sigma, Pi$ and extensional equality type structures on comprehension categories
+以下将会在此前提下介绍概括范畴中如何为 $Sigma$、$Pi$ 等类型提供语义。这些语义也能在一般的概括范畴中定义，但是后文不会用到。
+
+- $Sigma$: closed under composition, automatic
+- $Pi$: right adjoint with (automatic) Frobenius condition
+- Extensional equality: pullback
 
 - Examples of comprehension categories with Pi and Sigma types
   - LCCC

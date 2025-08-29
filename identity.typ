@@ -37,6 +37,8 @@ $)
 
 由 K 原理推出 $"UIP"_A$，只需令 $P(x, q)$ 为相等类型 $q = refl(x)$，$r = refl(refl(z))$ 即可。反过来，在 $"UIP"_A$ 给出的等式 $p = refl(x)$ 上再运用 J 原理，即可推出 K 原理。其次，由 $"UIP"'_A$ 推出 $"UIP"_A$ 是显然的。由 $"UIP"_A$ 推出 $"UIP"'_A$ 则是先对 $p : x = y$ 用 J 原理，再直接应用 $"UIP"_A$。
 
+一般来说，K 原理还额外满足判值相等 $"K"_A (refl(z), P, r) = r$。(...) provable as propositional equality, also translates to judgmental equalities on UIP
+
 == 等式反映 <sec:reflection-consequences>
 等式反映说的是
 #eq($
