@@ -70,4 +70,21 @@ $)
 
 
 == 泛等公理 <sec:univalence-equivalences>
-- equivalent forms of univalence
+
+对于泛等公理的完整介绍，可以参阅 HoTT 书~@hott-book 或者任何同伦类型论的介绍。本附录仅记录一些相关的定义与性质。
+
+#definition[
+  给定两个类型 $A$ 与 $B$，其间的*等价*是函数 $f : A -> B$，配有左逆 $g : B -> A$ 使得 $g compose f = id$，与右逆 $h : B -> A$ 使得 $f compose h = id$。记全体等价构成的类型为 $A tilde.eq B$。
+] <def:equivalence>
+
+这里，我们不要求左逆与右逆相同，因为如果做此要求，相当于额外提供一条道路 $p : "Id"(B -> A, g, h)$，是额外的资料。但是如此定义等价之后，可以另外证明 $forall b bind g(b) = h(b)$。这样定义的好处是，给定某个函数 $f$，等价中其余的数据构成命题，即至多有一种方法将其补全为等价。 HoTT 书~@hott-book 中也有其它的等价定义。
+
+给定某个宇宙 $cal(U)$ 中两个类型的名字 $A, B : cal(U)$，如果有 $p : "Id"(cal(U))$，那么可以给出函数 $A -> B$ (将类型的名称 $A : cal(U)$ 与类型本身 $"El"(A) istype$ 混同)：利用 J 原理，只需给出一个函数 $A -> A$ 即可，而恒等函数 $id$ 满足条件。这个函数同时还总是等价，因此这就给出了映射 $(A = B) -> (A tilde.eq B)$。关于宇宙 $cal(U)$ 的*泛等公理*说的是这个映射本身是等价。
+
+注意泛等公理本身的叙述是要求这典范的映射是等价，而非单纯存在一个等价。不过这种更弱的版本实际上也足以推出泛等公理。
+#lemma[
+如果存在某个等价 $(A = B) tilde.eq (A tilde.eq B)$，那么泛等公理成立。
+]
+#proof[
+注意到 $sum_(B:cal(U)) A = B$ 可缩，因此由假设可以证明 $sum_(B:cal(U)) A tilde.eq B$ 也可缩，同时显然有恒等等价 $A tilde.eq A$。但是二元类型族一旦满足此条件，就必须典范地等价于相等类型 @hott-book[定理 5.8.4]。
+]
