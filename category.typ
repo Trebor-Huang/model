@@ -106,10 +106,11 @@ $))
 如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过我们可暂且先取任意的函子 $F : cal(E) -> cal(C)^->$，有需要时再讨论将此函子限定为子范畴含入映射的情况。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
 
 接下来，我们需要将代换操作翻译到展映射的语言中。考虑集合族 $A_x$ 与对应的展映射 $p : (Gamma, A) -> Gamma$。假如有映射 $sigma : Delta -> Gamma$，那么 $Delta$ 上对应的集合族是 $(A sigma)_x = A_(sigma(x))$，因此有
-#eq($ (Delta, A sigma) &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in (Gamma, A), p(y) = sigma(x)} $)
-其中最后一步是将集合族语言的 $A_(sigma(x))$ 转而利用展映射 $(Gamma, A) -> Gamma$ 表达得到的。最后这个集合在范畴论的语言中就是#translate[拉回][pullback]。换句话说，我们有拉回方
+#eq($ (Delta, A sigma) &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in (Gamma, A), p(y) = sigma(x)} $, top: -1em)
+其中最后一步是将集合族语言的 $A_(sigma(x))$ 转而利用展映射 $p : (Gamma, A) -> Gamma$ 表达得到的。最后这个集合在范畴论的语言中就是#translate[拉回][pullback]。换句话说，我们有拉回方
 #eq(diagram($
   (Delta, A sigma) edge(->) edge("d", ->)
+  pullback("dr")
   & (Gamma, A) edge("d", ->) \
   Delta edge(->, sigma) & Gamma
 $))
@@ -120,7 +121,7 @@ $))
   A sigma edge(->) edge("d", |->)
   & A edge("d", |->) \
   Delta edge(->, sigma) & Gamma
-$))
+$), top: -1em)
 其中上半部分在 $cal(E)$ 中，由上至下的映射是 $p = cod compose F : cal(E) -> cal(C)$。那么，我们只需先定义这种图表上的广义 “拉回”，再要求 $F$ 将每个这样的广义拉回映射到 $cal(C)^->$ 中真正的拉回方。
 
 #definition[

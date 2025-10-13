@@ -56,8 +56,8 @@
 #let numbered-figure = figure.with(kind: "numbered-figure", supplement: "图表", numbering: "1", gap: 1em)
 
 // Equations
-#let eq(content) = [\
-  #box(align(center, content), width: 1fr)\
+#let eq(content, top: 0pt, bottom: 0pt) = [\
+  #box(align(center, content), width: 1fr, inset: (top: top, bottom: bottom))\
 ] // TODO add parameter and manually tune some vertical spacing
 #let varnothing = sym.diameter
 #let cal(it) = text(font: "KaTeX_Caligraphic", it) // TODO spacing difference?
@@ -111,3 +111,17 @@
     math.attach(math.stretch(arrow, size: calc.max(lsup.width, lsub.width) + 0.75em), t: box($script(sup)$, inset: (bottom: -0.3em)), b: box($script(sub)$, inset: (top: -1.1em), baseline: 100%))
   }
 }
+#let corner = symbol(
+  "⌜",
+  ("ul", "⌜"),
+  ("ur", "⌝"),
+  ("ll", "⌞"),
+  ("lr", "⌟"),
+)
+#let corner-dict = (
+  "dr": corner.lr,
+  "dl": corner.ll,
+  "ul": corner.ul,
+  "ur": corner.ur
+)
+#let pullback(n) = edgeM("dr", " ", corner-dict.at(n), label-pos: 0%, label-size: 1em)
