@@ -203,14 +203,15 @@
       <choose>
         <if variable="URL">
           <group delimiter=". ">
-            <group delimiter=": ">
+            <text variable="URL"/>
+            <!-- <group delimiter=": ">
               <text term="available at" text-case="capitalize-first"/>
               <text variable="URL"/>
             </group>
             <group prefix="[" suffix="]" delimiter=": ">
               <text term="accessed" text-case="capitalize-first"/>
               <date variable="accessed" form="text"/>
-            </group>
+            </group> -->
           </group>
         </if>
       </choose>

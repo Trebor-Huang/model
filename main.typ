@@ -244,5 +244,6 @@ canvas({
     i + sym.zws
   }
 )
+#show "arithmétique": [arith-?mé-?tique]
 #bibliography("references.yaml", title: "参考文献", style: "ieee-alt.csl") // TODO style
 ]

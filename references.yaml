@@ -71,9 +71,9 @@ natural-model:
 
 girard-paradox:
   type: thesis
-  genre: Doctoral dissertation
+  note: Doctoral dissertation
   author: Girard, Jean-Yves
-  title: Interprétation fonctionnelle et élimination des coupures de l'arithmétique d'ordre supérieur
+  title: Interprétation fonctionnelle et élimination des coupures de l’arithmétique d’ordre supérieur
   date: 1972
   url: https://girard.perso.math.cnrs.fr/These.pdf
 
@@ -91,7 +91,7 @@ on-cubism:
 
 hurkens-paradox:
   type: article
-  title: A simplification of Girard's paradox
+  title: A simplification of Girard’s paradox
   author: Hurkens, Antonius J. C.
   date: 1995
   page-range: 266-278
@@ -251,4 +251,12 @@ comprehension-type-theory:
   date: 2025
   serial-number:
     doi: 10.48550/arXiv.2503.10868
+
+mtt-thesis:
+  type: thesis
+  note: Doctoral dissertation
+  title: Syntax and semantics of modal type theory
+  author: Gratzer, Daniel
+  date: 2023
+  url: https://www.danielgratzer.com/papers/phd-thesis.pdf
 

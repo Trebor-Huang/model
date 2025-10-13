@@ -37,7 +37,7 @@ $)
 
 由 K 原理推出 $"UIP"_A$，只需令 $P(x, q)$ 为相等类型 $q = refl(x)$，$r = refl(refl(z))$ 即可。反过来，在 $"UIP"_A$ 给出的等式 $p = refl(x)$ 上再运用 J 原理，即可推出 K 原理。其次，由 $"UIP"'_A$ 推出 $"UIP"_A$ 是显然的。由 $"UIP"_A$ 推出 $"UIP"'_A$ 则是先对 $p : x = y$ 用 J 原理，再直接应用 $"UIP"_A$。
 
-一般来说，K 原理还额外满足判值相等 $"K"_A (refl(z), P, r) = r$。(...) provable as propositional equality, also translates to judgmental equalities on UIP
+一般来说，K 原理还额外满足等式 $"K"_A (refl(z), P, r) = r$。假如我们已知 K 原理，但不一定满足此等式，那么先用上述办法推出 $"UIP"$，再推回 K 原理，得到的 K 原理的新证明就是满足此等式的。另一方面，如果 $"UIP"_A$ 满足判值相等 $"UIP"_A (x, refl(x)) = refl(refl(x))$，那么由它推出的 K 原理就满足判值相等 $"K"_A (refl(z), P, r) = r$。
 
 == 等式反映 <sec:reflection-consequences>
 等式反映说的是

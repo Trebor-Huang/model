@@ -264,12 +264,21 @@ $))
 
 == 语法与自由模型
 
+语法构成的模型， (...) 用于表述语法的性质 (举例)
+
+
+(...) #define[表达式模型][term model]，总是模型的范畴中的始对象，因此也称作#define[始模型][initial model] 或者#define[自由模型][free model]。
+
+=== 语法不等同于表达式模型
+
 - We can form the term model, but it cannot be syntax itself, because this needs a definition of model to make sense, which does not exist before models.
   - Syntax _is_ the specification of models
 - Statements about syntax can be interpreted as statements about free models
   - For most type theories, initial models usually suffice
   - Counterexample: simply typed lambda calculus with no base types. The models can have non-trivial structure, but the term model is empty.
   - Usual solution: add enough base type to prevent degeneration.
+
+=== 自由模型
 
 What are morphisms between models?
 
@@ -299,4 +308,4 @@ will use to prove canonicity etc later down the line
 
 == 变量的结构
 
-models for substructural type theory and modal type theory, i.e. theory that messes with contexts
+models for substructural type theory and modal type theory, i.e. theory that messes with contexts, see Gratzer @mtt-thesis.
