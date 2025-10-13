@@ -60,24 +60,20 @@
 #definition[
   依值类型论的*自然模型*包含一个范畴 $cal(C)$，其上两个预层 $"Tm"$ 与 $"Tp"$，还有二者之间的可表映射 $typeof : "Tm" -> "Tp"$。
 ]<def:natural-model>
-这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。例如对于每个类型构造子，都有相对的代换规则。无参数类型构造子有 $Bool sigma = Bool$ 与 $Unit sigma = Unit$，而如不交并类型则有 $(A + B) sigma = A sigma + B sigma$ 等。在范畴论的语言中，可以把类型构造子的参数打包为预层。如二元类型构造子的参数预层是 $X(Gamma) = {(A, B) mid(|) A, B in "Tp"(Gamma)}$，零元的参数预层则是 $X(Gamma) = 1$，均为单元素集。这也可以处理依值类型构造子，如 $Pi$ 类型的参数是 $X(Gamma) = {(A, B) mid(|) A in "Tp"(Gamma), B in "Tp"(Gamma, A)}$。此时，如果要求模型中给出预层之间的自然变换 $X -> "Tp"$，就相当于给出类型构造子，使得满足对应的代换规则。
+这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。例如对于每个类型构造子，都有相对的代换规则。无参数类型构造子有 $Bool sigma = Bool$ 与 $Unit sigma = Unit$，而如不交并类型则有 $(A + B) sigma = A sigma + B sigma$ 等。在范畴论的语言中，可以把类型构造子的参数打包为预层。如二元类型构造子的参数预层是 $X(Gamma) = {(A, B) mid(|) A, B in "Tp"(Gamma)}$，零元的参数预层则是 $X(Gamma) = 1$，均为单元素集。这也可以处理依值类型构造子，如 $Pi$ 类型的参数是 $X(Gamma) = {(A, B) mid(|) A in "Tp"(Gamma), B in "Tp"(Gamma, A)}$。此时，如果要求模型中给出预层之间的自然变换 $X -> "Tp"$，就相当于给出类型构造子，而其自然性就对应这些代换的等式。
 
-// 对于无参数的类型构造子，例如 $Empty$、$Unit$ 与 $Bool$，它们要求在每个 $"Tp"(Gamma)$ 中选出一个元素。从某个集合 $X$ 中选出元素，用范畴语言表述就是选定映射 $1 -> X$，其中 $1$ 是单元素集合，即集合范畴的终对象。
-
-// 我们考虑预层 $1$ 使得 $1(Gamma)$ 均为单元素集合。这是预层范畴中的终对象。这样，预层间的映射 $1 -> "Tp"$ 就在每个 $"Tp"(Gamma)$ 中选出了元素。因此，我们应当要求有映射 $Empty, Unit, Bool : 1 -> "Tp"$，满足某些条件。此时，注意预层映射的自然性正好是代换需要满足的等式，如 $Unit_Gamma sigma = Unit_Delta$。因此使用范畴语言时，代换等式往往会自然地打包进各种构造中。
-
-有了类型构造子，元素的构造子也可同样操作，将构造子的参数写成预层 $Y$。例如对于二元乘积类型，$X(Gamma) = {(A, B) mid(|) A, B in "Tp"(Gamma)}$，而 $Y(Gamma) = {(A,B,a,b) mid(|) a in "Tm"(Gamma, A), b in "Tm"(Gamma, B)}$。这样类型构造子是自然变换 $X -> "Ty"$，而元素构造子是自然变换 $Y -> "Tm"$。同时还有以下交换方
+有了类型构造子，元素的构造子也可同样操作，将参数写成预层 $Y$。例如对于二元乘积类型，$X(Gamma) = {(A, B) mid(|) A, B in "Tp"(Gamma)}$，而 $Y(Gamma) = {(A,B,a,b) mid(|) a in "Tm"(Gamma, A), b in "Tm"(Gamma, B)}$ (注意这里一并写出了它的类型参数)。这样类型构造子是自然变换 $X -> "Ty"$，而元素构造子是自然变换 $Y -> "Tm"$。同时还有以下交换方
 #eq(diagram($
   Y edge(->) edge("d", ->) & "Tm" edgeL("d", ->, typeof)\
   X edgeR(->) & "Tp"
 $))
-它要求每个构造子都有正确的类型，对应规则 $Gamma tack (a, b) : A times B$。对于不交并类型，则有 $Y(Gamma) = {(A, B, a) mid(|) a in "Tm"(Gamma, A)} union {(A, B, b) mid(|) b in "Tm"(Gamma, B)}$。
+它要求每个构造子都有正确的类型。对于不交并类型，则有 $Y(Gamma) = {(A, B, a) mid(|) a in "Tm"(Gamma, A)} union {(A, B, b) mid(|) b in "Tm"(Gamma, B)}$。这样我们就将类型构造子、元素构造子以及其在代换下的等式全部打包为范畴语言中的一个交换方。
 
-对于乘积类型来说，其消去子与 $beta$、$eta$ 规则本质在 (...)
+对于乘积类型而言，其消去子与 $beta$、$eta$ 规则还可以更进一步地用范畴语言叙述：只需要求这个交换方为拉回即可。这是因为类型构造子 $X -> "Tp"$ 与 $typeof : "Tm" -> "Tp"$ 的拉回预层是 $Y'(Gamma) = {(A, B, p) mid(|) p in "Tm"(Gamma, A times B)}$，恰好编码了这个类型的全体元素。乘积类型的消去子与 $beta$、$eta$ 等式说的是一切元素 $p$ 都可以唯一地表示为有序对 $p = (a, b)$。因此在范畴语言下说的就是 $Y$ 与 $Y'$ 同构，即 $Y$ 本身是拉回。
 
-更一般而言，对于带 $eta$ 规则的#translate[负极类型][negative type] 而言，我们可以完全描述每个类型的全体元素集合。 (...)
+更一般而言，对于带 $eta$ 规则的#translate[负极类型][negative type] 而言，我们可以完全描述每个类型的全体元素集合，如函数类型对应 $Y(Gamma) = {(A, B, f) mid(|) f in "Tm"((Gamma, A), B)}$，等等。因此构造子、消去子、$beta$ 与 $eta$ 等式就可以直接表述为有对应的拉回方。
 
-在 #[@sec:natural-type-structure]中还会进一步介绍如何用范畴语言处理其他类型结构。
+不过，以上说法还有两个不完美之处。一是 $X$ 与 $Y$ 两个预层还需要手工定义，因此还需要确认它们的确构成预层。二是没有介绍#translate[正极类型][positive type] 对应的消去子如何表述。这一点暂时留给读者作为练习。在 #[@sec:natural-type-structure]中还会进一步介绍如何用范畴语言处理类型结构。
 
 /*
 (... we really need to introduce internal language first, or don't boast about substitutions yet)
