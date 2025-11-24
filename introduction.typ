@@ -60,7 +60,7 @@
   而 $Pi$ 类型则是将 $product.co$ 换为 $product$。
 - 给定 $Gamma tack A istype$ 与两个元素 $Gamma tack s, t : A$，相等类型解释为
   #eq($ interpret("Id"(A, s, t))_x = cases(
-    {star} quad & interpret(s)_x = interpret(t)_x \
+    {star} quad & interpret(s)_x = interpret(t)_x ,
     varnothing  & interpret(s)_x != interpret(t)_x
   ) $)
 - 这些类型对应的元素，例如 $lambda$ 函数抽象、函数应用、有序对的配对与投影映射等等，读者可先行思考，稍后给出模型的定义后会再讨论。
@@ -178,11 +178,11 @@ $Sigma$ 类型的 $beta$ 与 $eta$ 相等，分别对应等式
 $)
 这意味着 $"pair"$ 实际上是个双射 $"Tm"(Gamma, Sigma A B) tilde.equiv product.co_(a in"Tm"(Gamma, A)) "Tm"(Gamma, B[id, a])$，其中从左到右的映射是 $p |-> ("proj"_1 (p), "proj"_2 (p))$，而从右到左的映射是 $(a, b) |-> "pair"(a, b)$。
 
-同样，除了这些等式还有代换需要满足的等式。对于类型本身有
+同样，除了这些等式还有代换需要满足的等式。若 $sigma : Delta -> Gamma$，则有
 #eq($
   (Sigma A B)sigma = Sigma (A sigma) (B sigma')
 $)
-其中 $sigma' = [sigma compose frak(p), frak(q)]$ 表示除了最后一个变量不变以外，对其他所有变量用 $sigma$ 代换。同样，对表达式也有等式
+这里，我们需要一个代换 $sigma' : (Delta, A sigma) -> (Gamma, A)$ 表示除了最后一个变量不变以外，对其他所有变量用 $sigma$ 代换。观察代换的规则可以得到 $sigma' = [sigma compose frak(p), frak(q)]$。同样，对表达式也有等式
 #eq($
   "pair"(a, b) sigma &= "pair"(a sigma, b sigma) \
   "proj"_1 (p) sigma &= "proj"_1 (p sigma) \
@@ -291,7 +291,7 @@ $)
     Gamma tack p : "Id"(A, t, t)
   )
 $)
-其中前者称作#define[等式反映][equality reflection]。换句话说，如果相等类型有元素，那么就有判值相等。有 J 消去子的情况下，$eta$ 等式等价于等式反映，并且它可以推出之前所有提到的一般不加入的 $eta$ 规则。另外，如果不加入 J 消去子，那么这两条规则合起来可以推出 J。在@sec:K-equivalences 中有证明。 Martin-Löf 类型论加上这些规则称作#define[外延类型论][extensional type theory]。
+其中前者称作#define[等式反映][equality reflection]。换句话说，如果相等类型有元素，那么就有判值相等。有 J 消去子的情况下，$eta$ 等式等价于等式反映，并且它可以推出之前提到的空类型与不交并的 $eta$ 规则。另外，如果不加入 J 消去子，那么这两条规则合起来可以推出 J。在@sec:K-equivalences 中有证明。 Martin-Löf 类型论加上这些规则称作#define[外延类型论][extensional type theory]。
 
 集合模型中，相等类型集合族的定义按照元素 $s_x, t_x$ 是否相等分类讨论。如果 $s_x = t_x$，那么 $"Id"(A,s,t)_x$ 就是单元素集合，反之则是空集。这样，等式反映的确是成立的，并且相等类型的所有元素都形如 $refl_A (t)$。这样的好处是我们不用验证复杂的 J 消去子，不过读者可以自己尝试。
 

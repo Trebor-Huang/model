@@ -83,7 +83,7 @@
 #let isne = math.op(text(fill: color.oklch(50%, 80%, 80deg), math.sans("ne")))
 #let isvar = math.op(text(fill: color.oklch(50%, 0%, 0deg), math.sans("var")))
 #let typeof = math.op("typeof")
-#let interpret(x) = math.lr(math.class("opening",sym.bracket.double) + x + math.class("closing",sym.bracket.double.r))
+#let interpret(x) = math.lr(math.class("opening",sym.bracket.stroked) + x + math.class("closing",sym.bracket.stroked.r))
 #let bind = math.class("punctuation", ".")
 #let Empty = math.bb("0")
 #let Unit = math.bb("1")
