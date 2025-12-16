@@ -112,7 +112,7 @@ canvas({
     content(
       (angle: i * 360deg/N, radius: 3.1),
       text(
-        size: 24pt, fill: luma(40%),
+        size: 24pt, fill: luma(45%),
         ($Sigma$, $tilde.equiv$, $Pi$, $cal(U)$).at(calc.rem(i, 4))
       ),
       angle: - 90deg + i * 360deg/N,

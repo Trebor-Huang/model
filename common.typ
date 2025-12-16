@@ -60,7 +60,7 @@
   #box(align(center, content), width: 1fr, inset: (top: top, bottom: bottom))\
 ] // TODO add parameter and manually tune some vertical spacing
 #let varnothing = sym.diameter
-#let cal(it) = text(font: "KaTeX_Caligraphic", it) // TODO spacing difference?
+#let cal(it) = text(font: "KaTeX_Caligraphic", fallback: false, it.text) // TODO spacing difference?
 
 // Inference rules
 #let rule(concl, ..prem) = if type(prem.at(0, default: none)) == array {

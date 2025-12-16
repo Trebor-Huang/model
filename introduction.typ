@@ -291,7 +291,11 @@ $)
     Gamma tack p : "Id"(A, t, t)
   )
 $)
-其中前者称作#define[等式反映][equality reflection]。换句话说，如果相等类型有元素，那么就有判值相等。有 J 消去子的情况下，$eta$ 等式等价于等式反映，并且它可以推出之前提到的空类型与不交并的 $eta$ 规则。另外，如果不加入 J 消去子，那么这两条规则合起来可以推出 J。在@sec:K-equivalences 中有证明。 Martin-Löf 类型论加上这些规则称作#define[外延类型论][extensional type theory]。
+其中前者称作#define[等式反映][equality reflection]。换句话说，如果相等类型有元素，那么就有判值相等。有 J 消去子的情况下，$eta$ 等式等价于等式反映，并且它可以推出之前提到的空类型与不交并的 $eta$ 规则。另外，如果不加入 J 消去子，那么这两条规则合起来可以推出 J。在@sec:K-equivalences 中有证明。 Martin-Löf 类型论加上这些规则称作#define[外延类型论][extensional type theory]。这两条规则在模型中可以表达成一个双射：
+#eq($
+  "Tm"(Gamma, "Id"(A, s, t)) tilde.equiv {star mid(|) s = t},
+$)
+其中右侧为单元素集合当且仅当 $s$ 与 $t$ 这两个 $"Tm"(Gamma, A)$ 的元素相等，否则为空集。从右往左的映射是 $refl$ 构造子，从左往右是等式反映; 两者复合得到恒等函数对应上面所说的推出 $p = refl_A (t)$ 的规则。
 
 集合模型中，相等类型集合族的定义按照元素 $s_x, t_x$ 是否相等分类讨论。如果 $s_x = t_x$，那么 $"Id"(A,s,t)_x$ 就是单元素集合，反之则是空集。这样，等式反映的确是成立的，并且相等类型的所有元素都形如 $refl_A (t)$。这样的好处是我们不用验证复杂的 J 消去子，不过读者可以自己尝试。
 
