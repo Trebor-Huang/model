@@ -259,18 +259,14 @@ Russell 悖论是集合论中最广为人知的悖论。它说明了并不是所
 
 上面的论证说明了，假如能构造集合 ${x mid(|) x in.not x}$，那么它就既是自己的元素，又不是自己的元素。要解决这个悖论，只需要修改集合论，将论证中的某一步消除即可。注意这不能靠_添加_公理解决，因为添加公理不会使原先成立的证明变得不成立，因此越添加公理，矛盾的可能性只会越大。ZFC 集合论就将构造任意集合 ${x mid(|) P(x)}$ 的办法删去，替换成数条更弱的构造集合的办法。
 
-如果类型论中有宇宙满足 $cal(U) : cal(U)$，那么也可以照搬 Russell 悖论。不过其中的构造比较精巧，因为需要定义递归类型，使得集合的元素是别的集合，即构成树状结构。具体来说，考虑
+如果类型论中有宇宙满足 $cal(U) : cal(U)$，那么也可以照搬 Russell 悖论。不过其中的构造比较精巧，因为需要定义递归类型，使得集合的元素是别的集合，即构成树状结构。具体来说，考虑类型 $VV$，有构造子
 #eq($
-  VV = product_(X:cal(U)) [product_(A:cal(U)) (A -> X) -> X] -> X.
+  "comp" : product_(A:cal(U)) (A -> VV) -> VV.
 $)
-这是 #[@sec:coc-usage-examples]中提到的非直谓编码的例子。只要给定一族集合 $f : A -> VV$，就能构造新的集合 ${f(a) mid(|) a : A} : VV$，定义为
-#eq($
-  lambda X bind lambda F bind F A (lambda a bind f a X F).
-$)
-其中，对集合 $R$ 的定义必须要用到 $Sigma$ 类型，即先定义 $Delta = sum_(x : VV) x in.not x$，再定义 $R = {pi_1 (r) mid(|) r : Delta}$。
+只要给定一族集合 $f : A -> VV$，就能构造新的集合 $"comp"(f) : VV$，直观上表示 ${f(a) mid(|) a : A}$。我们先定义 $Delta = sum_(x : VV) x in.not x$，再定义 $R = {pi_1 (r) mid(|) r : Delta}$。
 读者可以在证明助理中开启 $cal(U) : cal(U)$ 的功能 (例如在 Agda 中是 `--type-in-type`)，形式化该证明。
 
-Martin-Löf 在 1971 年提出了最早的 Martin-Löf 类型论，其中有 $cal(U) : cal(U)$ 的规则，看上去可以照搬 Russell 悖论导出矛盾。但是这个类型论不含 $Sigma$ 类型。论文中写作 $Sigma$ 的类型是用 $Pi$ 作非直谓编码的弱 $Sigma$ 类型。因此 Russell 悖论并不能直接套用。1972 年，Girard 才发现这个系统不自洽，见@sec:girard-paradox.//事实上，Martin-Löf在论文中证明了它是自洽的，但是由于证明的元理论本身满足 $VV in VV$，所以实际上元理论也有矛盾。
+Martin-Löf 在 1971 年提出了最早的 Martin-Löf 类型论，其中有 $cal(U) : cal(U)$ 的规则，看上去可以照搬 Russell 悖论导出矛盾。但是这个类型论不含 $Sigma$ 类型与归纳类型。论文中写作 $Sigma$ 的类型是用 $Pi$ 作非直谓编码的弱 $Sigma$ 类型。因此 Russell 悖论并不能直接套用。1972 年，Girard 才发现这个系统不自洽，见@sec:girard-paradox.//事实上，Martin-Löf在论文中证明了它是自洽的，但是由于证明的元理论本身满足 $VV in VV$，所以实际上元理论也有矛盾。
 
 在 Russell 悖论之前，在朴素集合论中就发现了一系列类似的矛盾，Russell 悖论只是其中最简洁的一个。例如 Cantor 最著名的定理说的是任何集合 $X$ 的元素个数都要严格比幂集 $cal(P)(X)$ 少。但是，如果有全体集合的集合 $VV$，它理应是元素数量最大的集合，因此 $abs(VV) < abs(cal(P)(VV))$ 不应该成立。这是 *Cantor 悖论*。事实上，将 Cantor 定理的证明展开化简之后，这条悖论就会化作 Russell 悖论。
 
