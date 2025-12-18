@@ -209,11 +209,7 @@ $), top: -1em)
 
 === 范畴的依值类型语言 <sec:lccc-language>
 
-(...) Start over by Seely, and _then_ connect to comprehension categories
-
-如果范畴 $cal(C)$ 有拉回与终对象 (即含有全体有限极限)，则令 $cal(E) = cal(C)^->$，$F : cal(E) -> cal(C)^->$ 为恒等函子，就可以得到概括范畴。换句话说，令全体态射都是展映射，概括范畴的定义就化简为含有限极限的范畴。类似地，各种类型结构在全体态射都是展映射时都有简洁的范畴语言表述。
-
-以下将会在此前提下介绍概括范畴中如何为 $Sigma$、$Pi$ 等类型提供语义。这些语义也能在一般的概括范畴中定义，但是后文不会用到。
+本节讨论如何将 $Sigma$、$Pi$ 以及外延相等类型解释到概括范畴中。不过，我们先考虑更简单的情况：如果范畴 $cal(C)$ 有拉回与终对象 (即含有全体有限极限)，则令 $cal(E) = cal(C)^->$，$F : cal(E) -> cal(C)^->$ 为恒等函子，就可以得到概括范畴。换句话说，令全体态射都是展映射，概括范畴的定义就化简为含有限极限的范畴。
 
 对于 $Sigma$ 类型，我们先考虑集合范畴中的直观。假如有映射 $Gamma -> Delta$ 与 $Theta -> Gamma$，分别表示两个集合族 $A_(x in Delta)$ 与 $B_(y in Gamma)$，那么 $Gamma tilde.equiv {(x, a) mid(|) x in Delta, a in A_x}$。这样，如果想取 $Sigma$ 类型 $Sigma A B$，那么对应的映射应当恰好是复合映射 $Theta -> Delta$，如@fig:sigma-compcat 所示。这样看，$Sigma$ 类型在展映射的语言中就对应映射的复合。
 #numbered-figure(caption: [(...)])[
