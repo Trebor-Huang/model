@@ -8,9 +8,7 @@
 
 另一方面，自 Lawvere 始有利用范畴结构研究逻辑的办法，称作范畴逻辑学。例如一阶逻辑中的量词 $exists$ 和 $forall$ 与伴随函子有密切的联系。这发展出了一套将各类范畴与逻辑相对应的理论。范畴的性质越好，能支撑的逻辑原理就越多。其中#translate[初等意象][elementary topos] 是性质优良的范畴，可以支撑构造主义高阶逻辑。既然类型论也有充当逻辑的功能，一个自然的问题就是这两者之间有什么关系。
 
-== 模型的定义
-
-=== 具族范畴与自然模型
+== 具族范畴与自然模型
 
 #let Fam = math.sans("Fam")
 
@@ -73,25 +71,9 @@ $))
 
 更一般而言，对于带 $eta$ 规则的#translate[负极类型][negative type] 而言，我们可以完全描述每个类型的全体元素集合，如函数类型对应 $Y(Gamma) = {(A, B, f) mid(|) f in "Tm"((Gamma, A), B)}$，等等。因此构造子、消去子、$beta$ 与 $eta$ 等式就可以直接表述为有对应的拉回方。
 
-不过，以上说法还有两个不完美之处。一是 $X$ 与 $Y$ 两个预层还需要手工定义，因此还需要确认它们的确构成预层。二是没有介绍#translate[正极类型][positive type] 对应的消去子如何表述。这一点暂时留给读者作为练习。在 #[@sec:natural-type-structure]中还会进一步介绍如何用范畴语言处理类型结构。
+不过，以上说法还有两个不完美之处。一是 $X$ 与 $Y$ 两个预层还需要手工定义，因此还需要确认它们的确构成预层。二是没有介绍#translate[正极类型][positive type] 对应的消去子如何表述。这一点暂时留给读者思考。在 #[@sec:natural-type-structure]中还会进一步介绍如何用范畴语言处理类型结构。
 
-/*
-(... we really need to introduce internal language first, or don't boast about substitutions yet)
-
-(maybe we can wait until after LCCC, emphasize dialectics)
-
-- start with binary product type
-  - Note that substitution equations are absorbed naturally
-- non-dependent function type
-  - discuss relation to HOAS
-- dependent sigma and pi type
-- internal language of presheaves
-- justify logical framework
-*/
-
-// Presheaf as discrete fibrations, formulation of representability (maybe we don't need this, or put in the appendix)
-
-=== 展映射与概括范畴
+== 基于展映射的模型的定义
 
 在模型的定义中，不难看出形如 $(Gamma, A) -> Gamma$ 的代换是有特殊地位的。在范畴语义中，这些态射也有许多优秀的性质。我们将其称作#define[展映射][display map]。这个概念在类型论以外也有重要应用。
 
@@ -100,13 +82,14 @@ $))
 研究展映射的一大动机是许多时候依值对象不好直接描述。例如光滑流形 $M$ 上的向量丛可以看作是 $M$ 上的 “依值向量空间”，为每个点 $x in M$ 赋予向量空间 $V_x$，使得 $x$ 在流形上运动时 $V_x$ 的变化是光滑的。但一个向量空间族何时光滑难以定义，因此在数学中往往转而考虑全空间 $E = product.co_(x in M) V_x$ 上的光滑结构与光滑映射 $E -> M$.
 //#footnote[另一种办法是通过定义 “$Pi$ 类型”，即从 $x in M$ 到 $V_x$ 的光滑函数，间接描述向量族的光滑结构。]
 同理，在数学中研究对象 $B$ 上的依值对象 $A_x$ 时，往往转而考虑全空间 $E$ 与映射 $p : E -> B$，间接研究依值对象。这种技术在代数几何中达到巅峰，以 Grothendieck 的#translate[相对视角][relative point of view] 为典型。例如希望表达每个 $A_x$ 都是紧空间，则说 $p$ 是紧合映射; 希望表达每个 $A_x$ 都是仿射空间，则说 $p$ 是仿射映射，等等。
+另一方面，展映射仍然是范畴中的箭头，因此如果通过刻画展映射间接描述依值类型，就可以用上范畴论中的许多工具。这又与 Bénabou 发展的纤维化范畴论不谋而合。
 
-另一方面，展映射仍然是范畴中的箭头，因此如果通过刻画展映射间接描述依值类型，就可以用上范畴论中的许多工具。这又与 Bénabou 发展的纤维化范畴论不谋而合。这一节，我们来考察另一种定义依值类型的模型的办法，称作概括范畴。
+(...)
 
-如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过我们可暂且先取任意的函子 $F : cal(E) -> cal(C)^->$，有需要时再讨论将此函子限定为子范畴含入映射的情况。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
+=== 外延类型论与局部积闭范畴
 
-接下来，我们需要将代换操作翻译到展映射的语言中。考虑集合族 $A_x$ 与对应的展映射 $p : (Gamma, A) -> Gamma$。假如有映射 $sigma : Delta -> Gamma$，那么 $Delta$ 上对应的集合族是 $(A sigma)_x = A_(sigma(x))$，因此有
-#eq($ (Delta, A sigma) &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in (Gamma, A), p(y) = sigma(x)} $, top: -1em)
+考虑集合族 $A_x$ 与对应的展映射 $p : (Gamma, A) -> Gamma$。假如有映射 $sigma : Delta -> Gamma$，那么 $Delta$ 上对应的集合族是 $(A sigma)_x = A_(sigma(x))$，因此有
+#eq($ (Delta, A sigma) &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in (Gamma, A), p(y) = sigma(x)} $)
 其中最后一步是将集合族语言的 $A_(sigma(x))$ 转而利用展映射 $p : (Gamma, A) -> Gamma$ 表达得到的。最后这个集合在范畴论的语言中就是#translate[拉回][pullback]。换句话说，我们有拉回方
 #eq(diagram($
   (Delta, A sigma) edge(->) edge("d", ->)
@@ -115,6 +98,42 @@ $))
   Delta edge(->, sigma) & Gamma
 $))
 那么，我们大致上就要要求展映射 $(Gamma, A) -> Gamma$ 可以沿着任何代换 $Delta -> Gamma$ 作拉回，并且得到的新映射 $(Delta, A sigma) -> Delta$ 仍然是展映射。
+
+(...)
+
+对于 $Sigma$ 类型，我们先考虑集合范畴中的直观。假如有映射 $Gamma -> Delta$ 与 $Theta -> Gamma$，分别表示两个集合族 $A_(x in Delta)$ 与 $B_(y in Gamma)$，那么 $Gamma tilde.equiv {(x, a) mid(|) x in Delta, a in A_x}$。这样，如果想取 $Sigma$ 类型 $Sigma A B$，那么对应的映射应当恰好是复合映射 $Theta -> Delta$，如@fig:sigma-compcat 所示。这样看，$Sigma$ 类型在展映射的语言中就对应映射的复合。
+#numbered-figure(caption: [(...)])[
+  (...)
+] <fig:sigma-compcat>
+
+(introduce slice categories as going into a context)
+
+- Extensional equality: pullback
+- $Pi$: right adjoint with (automatic) Frobenius condition
+
+- Examples of comprehension categories with Pi and Sigma types
+  - LCCC
+    - Note that it's very hard to define a CwF with an LCCC! More on this later
+    - Application of type theoretic language (exponentiable arrows closed under pullback)
+  - elementary toposes
+    - presheaf categories
+    - sheaves? maybe just over cantor space
+
+#definition[
+  假如有集合 $X$，配有两个集合 $X_0$、$X_1$ 与双射 $X tilde.equiv X_0 times X_1$，再配有集合 $X_00$、$X_01$、$X_10$、$X_11$ 与双射 $X_0 tilde.equiv X_00 times X_01$ 和 $X_1 tilde.equiv X_10 times X_11$，以此类推，就称此结构为 *Cantor 层*。Cantor 层之间的态射由一族映射 $f_b : X_b -> Y_b$ 组成，使得与配备的双射都交换。
+]
+
+(countermodel of Markov's principle)
+
+=== 概括范畴
+
+(...)
+
+这一节，我们来考察另一种定义依值类型的模型的办法，称作概括范畴。 (...) and CwA
+
+如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过我们可暂且先取任意的函子 $F : cal(E) -> cal(C)^->$，有需要时再讨论将此函子限定为子范畴含入映射的情况。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
+
+接下来，我们需要将代换操作翻译到展映射的语言中。(...)
 
 范畴语言中，展映射是某个对象 $A in cal(E)$，有函子将其映射到 $(Gamma, A) -> Gamma$。因此我们的实际情况是
 #eq(diagram($
@@ -184,7 +203,7 @@ $), top: -1em)
 
 注意我们尚未说明概括范畴是合理的类型论模型。探究此事，只需要将概括范畴与自然模型相比。但这就可以发现实际上概括范畴比自然模型多出了额外的信息。概括范畴中 $cal(E)$ 的对象直观上是类型 $Gamma tack A istype$ 的语义解释，而这个范畴中的态射则是类型之间的某种态射。假设 $Gamma tack A istype$，$Delta tack B istype$。$F : cal(E) -> cal(C)^->$ 将态射 $A -> B$ 映射到某个代换 $(Gamma, A) -> (Delta, B)$。但是并非所有这样的代换都一定在 $F$ 的像里，并且 $cal(E)$ 中的多个态射可能映射到同一个代换。而自然模型中没有额外规定类型之间的态射。我们有三种办法解决此问题。
 
-其一是令 $cal(E)$ 是 $cal(C)^->$ 的满子范畴，这样相当于要求 $A -> B$ 的映射与代换 $(Gamma, A) -> (Delta, B)$ 一一对应，使得这些额外的自由度被 $cal(C)$ 完全决定。这是让 $cal(E)$ 海纳百川，兼收并蓄。
+其一是令 $cal(E)$ 是 $cal(C)^->$ 的满子范畴，这样相当于要求 $A -> B$ 的映射与代换 $(Gamma, A) -> (Delta, B)$ 一一对应，使得这些额外的自由度被 $cal(C)$ 完全决定。这是让 $cal(E)$ 海纳百川，兼收并蓄。这样得到的数学对象称作#define[展映射范畴][display map category].
 
 其二是令 $cal(E)$ 只包含纤维化要求必须存在的映射。换句话说， $cal(E)$ 中的任何态射都出现在某个 $p$-拉回方中。这有更简洁的描述。
 #definition[
@@ -203,37 +222,11 @@ $), top: -1em)
 }))
 此时，此图一定是 $p$-拉回方。因此离散纤维化都是纤维化。
 ]
-假如在概括范畴中令 $p : cal(E) -> cal(C)$ 是离散纤维化，就使得 $cal(E)$ 中只包含必须的态射，从而也消除了多余的自由度。直观来说，这两种概括范畴应该都与自然模型等价。我们会在 #[@sec:coherence-problem]讨论此事。
+假如在概括范畴中令 $p : cal(E) -> cal(C)$ 是离散纤维化，就使得 $cal(E)$ 中只包含必须的态射，从而也消除了多余的自由度。这样得到的数学对象称作#translate[[??]][category with attributes]. 直观来说，这两种概括范畴应该都与自然模型等价。我们会在 #[@sec:coherence-problem]讨论此事。
 
 第三种办法则是反其道而行之，不去修改概括范畴使得语义匹配语法，而是修改语法使得它匹配概括范畴。这就需要添加一类新的语法，描述类型之间的映射。它可以用于包含子类型的系统，是前沿研究的课题 @comprehension-type-theory。
 
-=== 范畴的依值类型语言 <sec:lccc-language>
-
-本节讨论如何将 $Sigma$、$Pi$ 以及外延相等类型解释到概括范畴中。不过，我们先考虑更简单的情况：如果范畴 $cal(C)$ 有拉回与终对象 (即含有全体有限极限)，则令 $cal(E) = cal(C)^->$，$F : cal(E) -> cal(C)^->$ 为恒等函子，就可以得到概括范畴。换句话说，令全体态射都是展映射，概括范畴的定义就化简为含有限极限的范畴。
-
-对于 $Sigma$ 类型，我们先考虑集合范畴中的直观。假如有映射 $Gamma -> Delta$ 与 $Theta -> Gamma$，分别表示两个集合族 $A_(x in Delta)$ 与 $B_(y in Gamma)$，那么 $Gamma tilde.equiv {(x, a) mid(|) x in Delta, a in A_x}$。这样，如果想取 $Sigma$ 类型 $Sigma A B$，那么对应的映射应当恰好是复合映射 $Theta -> Delta$，如@fig:sigma-compcat 所示。这样看，$Sigma$ 类型在展映射的语言中就对应映射的复合。
-#numbered-figure(caption: [(...)])[
-  (...)
-] <fig:sigma-compcat>
-
-(introduce slice categories as going into a context)
-
-- Extensional equality: pullback
-- $Pi$: right adjoint with (automatic) Frobenius condition
-
-- Examples of comprehension categories with Pi and Sigma types
-  - LCCC
-    - Note that it's very hard to define a CwF with an LCCC! More on this later
-    - Application of type theoretic language (exponentiable arrows closed under pullback)
-  - elementary toposes
-    - presheaf categories
-    - sheaves? maybe just over cantor space
-
-#definition[
-  假如有集合 $X$，配有两个集合 $X_0$、$X_1$ 与双射 $X tilde.equiv X_0 times X_1$，再配有集合 $X_00$、$X_01$、$X_10$、$X_11$ 与双射 $X_0 tilde.equiv X_00 times X_01$ 和 $X_1 tilde.equiv X_10 times X_11$，以此类推，就称此结构为 *Cantor 层*。Cantor 层之间的态射由一族映射 $f_b : X_b -> Y_b$ 组成，使得与配备的双射都交换。
-]
-
-(countermodel of Markov's principle)
+(...) simplified and expanded definition of DMC and CwA
 
 == 融贯问题 <sec:coherence-problem>
 
