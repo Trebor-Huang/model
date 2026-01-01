@@ -84,9 +84,7 @@ $))
 同理，在数学中研究对象 $B$ 上的依值对象 $A_x$ 时，往往转而考虑全空间 $E$ 与映射 $p : E -> B$，间接研究依值对象。这种技术在代数几何中达到巅峰，以 Grothendieck 的#translate[相对视角][relative point of view] 为典型。例如希望表达每个 $A_x$ 都是紧空间，则说 $p$ 是紧合映射; 希望表达每个 $A_x$ 都是仿射空间，则说 $p$ 是仿射映射，等等。
 另一方面，展映射仍然是范畴中的箭头，因此如果通过刻画展映射间接描述依值类型，就可以用上范畴论中的许多工具。这又与 Bénabou 发展的纤维化范畴论不谋而合。
 
-(...)
-
-=== 外延类型论与局部积闭范畴
+本节中我们介绍从展映射视角定义的几种类型论模型的概念，并讨论它们之间的联系。从这个视角定义的模型与类型论的关联没有那么直接，但是能更好地与范畴论和同伦论中的概念联系起来。
 
 考虑集合族 $A_x$ 与对应的展映射 $p : (Gamma, A) -> Gamma$。假如有映射 $sigma : Delta -> Gamma$，那么 $Delta$ 上对应的集合族是 $(A sigma)_x = A_(sigma(x))$，因此有
 #eq($ (Delta, A sigma) &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in (Gamma, A), p(y) = sigma(x)} $)
@@ -99,16 +97,85 @@ $))
 $))
 那么，我们大致上就要要求展映射 $(Gamma, A) -> Gamma$ 可以沿着任何代换 $Delta -> Gamma$ 作拉回，并且得到的新映射 $(Delta, A sigma) -> Delta$ 仍然是展映射。
 
-(...)
+对于 $Sigma$ 类型，我们同样先考虑集合范畴中的直观。假如有展映射 $(Gamma, A) -> Gamma$ 与 $(Gamma, A, B) -> (Gamma, A)$，分别表示两个集合族 $A_(x in Gamma)$ 与 $B_(x in (Gamma, A))$，那么如果想取 $Sigma$ 类型 $Sigma A B$，那么对应的映射应当恰好是复合映射 $(Gamma, A, B) -> Gamma$，如@fig:sigma-compcat 所示。这样看，$Sigma$ 类型在展映射的语言中就对应映射的复合。#footnote[
+读者或许注意到，按照这个论证，$Sigma$ 类型应该只要求某个同构于复合映射的映射是展映射，而不要求复合映射本身就是展映射。我们暂时遵循范畴论的观点，不区分同构的事物，即认为同构于展映射的映射也必须是展映射。
+]
+#numbered-figure(caption: [$Sigma$ 类型示意], canvas({
+  import draw: *
+  rect((-1,0), (1,1), stroke: 0.5pt)
+  content((1.5,0.5), $Gamma$)
+  content((-0.5,0.4), $attach(bullet, bl:x)$)
+  content((0.5,0.5), $bullet_y$)
+  rect((-2,1.7), (0,2.7), stroke: 0.5pt)
+  line((-1,1.7), (-0.5,0.6), stroke:0.5pt)
+  content((-1.4,2.3), $bullet$)
+  content((-0.6,2.2), $bullet$)
+  content((0.45,2.25), $bullet$)
+  content((1,2.1), $bullet$)
+  content((1.6,2.3), $bullet$)
+  rect((0,1.7), (2,2.7), stroke: 0.5pt)
+  line((1,1.7), (0.5,0.7), stroke:0.5pt)
+  content((2.5,2.2), $A_y$)
+  content((-2.5,2.2), $A_x$)
+  rect((-2.5,3.5), (2.5, 4.7), stroke: 0.5pt)
+  line((-1.5, 3.5), (-1.5, 4.7), stroke: 0.5pt)
+  line((0.5, 3.5), (0.5, 4.7), stroke: 0.5pt)
+  line((1.5, 3.5), (1.5, 4.7), stroke: 0.5pt)
 
-对于 $Sigma$ 类型，我们先考虑集合范畴中的直观。假如有映射 $Gamma -> Delta$ 与 $Theta -> Gamma$，分别表示两个集合族 $A_(x in Delta)$ 与 $B_(y in Gamma)$，那么 $Gamma tilde.equiv {(x, a) mid(|) x in Delta, a in A_x}$。这样，如果想取 $Sigma$ 类型 $Sigma A B$，那么对应的映射应当恰好是复合映射 $Theta -> Delta$，如@fig:sigma-compcat 所示。这样看，$Sigma$ 类型在展映射的语言中就对应映射的复合。
-#numbered-figure(caption: [(...)])[
-  (...)
-] <fig:sigma-compcat>
+  line((-1.4,2.3), (-2,3.5), stroke:0.5pt)
+  line((-0.6,2.2), (-1,3.5), stroke:0.5pt)
+  line((0.45,2.25), (0,3.5), stroke:0.5pt)
+  line((1,2.1), (1,3.5), stroke:0.5pt)
+  line((1.6,2.3), (2,3.5), stroke:0.5pt)
+  for i in range(5) {
+    content((i - 2,4.1), $B_#(i+1)$)
+  }
+
+  rect((-2.5,3.5), (-0.5, 4.7), stroke: red+2pt)
+  content((-1.5, 5.1), text(fill: red.darken(50%), $(Sigma A B)_x$))
+})) <fig:sigma-compcat>
+
+接下来，我们考察外延类型论中的相等类型。假设有类型 $A$，对应展映射 $frak(p) : (Gamma, A) -> Gamma$。相等类型依赖于两个变量 $(Gamma, x : A, y : A)$，因此这里第二个变量的类型实际上需要经过代换 $A frak(p)$ 表示它不使用第一个变量 $x : A$。前面提到代换在展映射的语言下是拉回，因此有
+#eq(diagram($
+  (Gamma, A, A frak(p)) edge(->) edge("d", ->)
+  pullback("dr")
+  & (Gamma, A) edge("d", ->) \
+  (Gamma, A) edge(->, frak(p)) & Gamma
+$))
+在集合语言中，这对应集合 ${(x, a_1, a_2) mid(|) a_1, a_2 in A_x}$。
+
+在集合模型中，外延相等类型 $"Id"(x, y)$ 对应集合族
+#eq($
+  {star mid(|) x = y} =
+  cases(
+    {star} quad & x = y,
+    varnothing & x != y
+  )
+$)
+其中等号均为集合论意义的等号。换成展映射的语言，就是从 ${(x, a_1, a_2) mid(|) a_1 = a_2 in A_x}$ 到 ${(x, a_1, a_2) mid(|) a_1, a_2 in A_x}$ 的含入映射。注意到前者实际上就同构于 $(Gamma, A)$。因此，外延相等类型对应要求 $(Gamma, A) -> (Gamma, A, A frak(p))$ 这个对角映射是展映射。
+
+将 $(Gamma, A)$ 记作 $Delta$，则 $(Gamma, A, A frak(p))$ 是拉回 $Delta times_Gamma Delta$。在代数几何中，有许多条件是关于对角映射 $Delta -> Delta times_Gamma Delta$ 的，例如某映射拟分离当且仅当其对角映射拟紧，某映射分离当且仅当对角映射是闭嵌入，等等。这些条件可以看作是对某类型的相等类型作限制。
+
+(every morphism is display)
+
+#eq(diagram({
+  node((1, 0), [$Delta$])
+  node((1, -1), [$Delta times Gamma$])
+  node((1, -2), [$Gamma$])
+  pullback("dr")
+  node((2, -1), [$Delta^3$])
+  node((2, -2), [$Delta^2$])
+  edge((1, -1), (1, 0), "->")
+  edge((1, -2), (1, -1), "->")
+  edgeL((2, -2), (2, -1), [$(id, delta)$], "->")
+  edgeR((1, -1), (2, -1), [$(delta, f)$], "->")
+  edge((1, -2), (2, -2), "->")
+}))
 
 (introduce slice categories as going into a context)
 
-- Extensional equality: pullback
+(pullback is adjoint to composition)
+
 - $Pi$: right adjoint with (automatic) Frobenius condition
 
 - Examples of comprehension categories with Pi and Sigma types
