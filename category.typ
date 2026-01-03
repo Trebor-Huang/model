@@ -97,7 +97,7 @@ $))
 $))
 那么，我们大致上就要要求展映射 $(Gamma, A) -> Gamma$ 可以沿着任何代换 $Delta -> Gamma$ 作拉回，并且得到的新映射 $(Delta, A sigma) -> Delta$ 仍然是展映射。
 
-对于 $Sigma$ 类型，我们同样先考虑集合范畴中的直观。假如有展映射 $(Gamma, A) -> Gamma$ 与 $(Gamma, A, B) -> (Gamma, A)$，分别表示两个集合族 $A_(x in Gamma)$ 与 $B_(x in (Gamma, A))$，那么如果想取 $Sigma$ 类型 $Sigma A B$，那么对应的映射应当恰好是复合映射 $(Gamma, A, B) -> Gamma$，如@fig:sigma-compcat 所示。这样看，$Sigma$ 类型在展映射的语言中就对应映射的复合。#footnote[
+对于 $Sigma$ 类型，我们同样先考虑集合范畴中的直观。假如有展映射 $(Gamma, A) -> Gamma$ 与 $(Gamma, A, B) -> (Gamma, A)$，分别表示两个集合族 $A_(x in Gamma)$ 与 $B_(x in (Gamma, A))$，那么如果想取 $Sigma$ 类型 $Sigma A B$，那么对应的映射应当恰好是复合映射 $(Gamma, A, B) -> Gamma$，如@fig:sigma-compcat 所示。这样看，$Sigma$ 类型在展映射的语言中就对应映射的复合.#footnote[
 读者或许注意到，按照这个论证，$Sigma$ 类型应该只要求某个同构于复合映射的映射是展映射，而不要求复合映射本身就是展映射。我们暂时遵循范畴论的观点，不区分同构的事物，即认为同构于展映射的映射也必须是展映射。
 ]
 #numbered-figure(caption: [$Sigma$ 类型示意], canvas({
@@ -135,6 +135,29 @@ $))
   content((-1.5, 5.1), text(fill: red.darken(50%), $(Sigma A B)_x$))
 })) <fig:sigma-compcat>
 
+对于 $Pi$ 类型，在 #[@sec:model-definition]中提到 $Pi A B$ 满足 $"Tm"(Gamma, Pi A B)$ 与 $"Tm"((Gamma, A), B)$ 之间有自然双射。
+
+#eq(diagram(spacing: (1em, 3em), {
+  node((1, 0), [$(Gamma,A)$])
+  node((2, 0), [$Gamma$])
+  node((2, -1), [$(Gamma, Pi A B)$])
+  node((0, -1), [$(Gamma,A,B)$])
+  node((2, -2), [$Delta$])
+  node((1, -2), [$(Delta,sigma^*A)$])
+  pullback("dr")
+  edge((1, 0), (2, 0), "->")
+  edge((0, -1), (1, 0), "->")
+  edge((2, -1), (2, 0), "->")
+  edge((2, -2), (2, -1), [$[sigma,f]$], label-side: left, "->")
+  edge((1, -2), (1, 0), "->")
+  edge((1, -2), (2, -2), "->")
+  edge((1, -2), (0, -1), "-->")
+}))
+
+(introduce slice categories as going into a context)
+
+(pullback is adjoint to composition)
+
 接下来，我们考察外延类型论中的相等类型。假设有类型 $A$，对应展映射 $frak(p) : (Gamma, A) -> Gamma$。相等类型依赖于两个变量 $(Gamma, x : A, y : A)$，因此这里第二个变量的类型实际上需要经过代换 $A frak(p)$ 表示它不使用第一个变量 $x : A$。前面提到代换在展映射的语言下是拉回，因此有
 #eq(diagram($
   (Gamma, A, A frak(p)) edge(->) edge("d", ->)
@@ -156,8 +179,9 @@ $)
 
 将 $(Gamma, A)$ 记作 $Delta$，则 $(Gamma, A, A frak(p))$ 是拉回 $Delta times_Gamma Delta$。在代数几何中，有许多条件是关于对角映射 $Delta -> Delta times_Gamma Delta$ 的，例如某映射拟分离当且仅当其对角映射拟紧，某映射分离当且仅当对角映射是闭嵌入，等等。这些条件可以看作是对某类型的相等类型作限制。
 
-(every morphism is display)
+从纯语法的视角，我们已经知道类型论中添加了外延相等类型会对理论的性质产生极大影响。从语义的视角也不例外。以下我们假设范畴中每个对象 $Gamma$ 到终对象的映射都是展映射 —— 这是比较合理的要求，因为每个对象应当表示某个语境 $(x_1 : A_1, dots, x_n : A_n)$，因此是从空语境 $1$ 开始逐步搭建的。如果取一个大 $Sigma$ 类型，就能将 $Gamma$ 表示为空语境中的类型，即展映射 $Gamma -> 1$。
 
+在这个假设下，一旦有了外延相等类型，可以证明_所有的映射_都必须成为展映射。具体如图所示：
 #eq(diagram({
   node((1, 0), [$Delta$])
   node((1, -1), [$Delta times Gamma$])
@@ -167,16 +191,15 @@ $)
   node((2, -2), [$Delta^2$])
   edge((1, -1), (1, 0), "->")
   edge((1, -2), (1, -1), "->")
-  edgeL((2, -2), (2, -1), [$(id, delta)$], "->")
-  edgeR((1, -1), (2, -1), [$(delta, f)$], "->")
+  edgeL((2, -2), (2, -1), [$[id, delta]$], "->")
+  edgeR((1, -1), (2, -1), [$[delta, f]$], "->")
   edge((1, -2), (2, -2), "->")
 }))
+假设有映射 $f : Gamma -> Delta$。图中 $Delta times Gamma -> Delta$ 的投影映射是展映射，因为它是 $Gamma -> 1$ 沿着 $Delta -> 1$ 的拉回。其次，对角映射 $delta : Delta -> Delta^2$ 也是展映射，因为它代表了展映射 $Delta -> 1$ 上的相等类型。因此，图中 $Delta^2 -> Delta^3$ 也是展映射，从而沿着 $[delta, f]$ 拉回得到的也是展映射。最后左侧两个展映射复合也是展映射。通过追图可以得知这个复合恰好是 $f$，换句话说 $f$ 必须是展映射。
 
-(introduce slice categories as going into a context)
+从语法的视角，这是因为某个映射 $f : A -> B$ 可以利用 $Sigma$ 类型与外延相等写成 $B$ 上的依值类型 $P(x) = (a : A) times (f(a) = x)$。而此依值类型对应的展映射 $(x : B, y : P(x)) -> B$ 与 $A -> B$ 是同构的。注意到这里的同构是范畴意义上的同构，因此用到的相等关系是判值相等。如果将 $P$ 中的相等类型改为一般的内涵相等类型，则同构不成立。
 
-(pullback is adjoint to composition)
-
-- $Pi$: right adjoint with (automatic) Frobenius condition
+=== 局部积闭范畴的语言
 
 - Examples of comprehension categories with Pi and Sigma types
   - LCCC
@@ -200,14 +223,13 @@ $)
 
 如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过我们可暂且先取任意的函子 $F : cal(E) -> cal(C)^->$，有需要时再讨论将此函子限定为子范畴含入映射的情况。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
 
-接下来，我们需要将代换操作翻译到展映射的语言中。(...)
-
-范畴语言中，展映射是某个对象 $A in cal(E)$，有函子将其映射到 $(Gamma, A) -> Gamma$。因此我们的实际情况是
+前面我们大致提到，代换在展映射的语言中应当解释为拉回。
+范畴语言中是某个对象 $A in cal(E)$，用函子 $F$ 将其映射到 “真正的展映射” $(Gamma, A) -> Gamma$。因此我们的实际情况是
 #eq(diagram($
   A sigma edge(->) edge("d", |->)
   & A edge("d", |->) \
   Delta edge(->, sigma) & Gamma
-$), top: -1em)
+$))
 其中上半部分在 $cal(E)$ 中，由上至下的映射是 $p = cod compose F : cal(E) -> cal(C)$。那么，我们只需先定义这种图表上的广义 “拉回”，再要求 $F$ 将每个这样的广义拉回映射到 $cal(C)^->$ 中真正的拉回方。
 
 #definition[
