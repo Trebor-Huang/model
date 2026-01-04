@@ -84,7 +84,9 @@ $))
 同理，在数学中研究对象 $B$ 上的依值对象 $A_x$ 时，往往转而考虑全空间 $E$ 与映射 $p : E -> B$，间接研究依值对象。这种技术在代数几何中达到巅峰，以 Grothendieck 的#translate[相对视角][relative point of view] 为典型。例如希望表达每个 $A_x$ 都是紧空间，则说 $p$ 是紧合映射; 希望表达每个 $A_x$ 都是仿射空间，则说 $p$ 是仿射映射，等等。
 另一方面，展映射仍然是范畴中的箭头，因此如果通过刻画展映射间接描述依值类型，就可以用上范畴论中的许多工具。这又与 Bénabou 发展的纤维化范畴论不谋而合。
 
-本节中我们介绍从展映射视角定义的几种类型论模型的概念，并讨论它们之间的联系。从这个视角定义的模型与类型论的关联没有那么直接，但是能更好地与范畴论和同伦论中的概念联系起来。
+本节中我们介绍从展映射视角定义的几种类型论模型的概念，并讨论它们之间的联系。从这个视角定义的模型与类型论的关联没有那么直接，但是能更好地与范畴论和同伦论中的概念联系起来。在 #[@sec:coherence-problem]中我们会讨论这些模型与具族范畴的转化关系。
+
+=== 局部积闭范畴的语言
 
 考虑集合族 $A_x$ 与对应的展映射 $p : (Gamma, A) -> Gamma$。假如有映射 $sigma : Delta -> Gamma$，那么 $Delta$ 上对应的集合族是 $(A sigma)_x = A_(sigma(x))$，因此有
 #eq($ (Delta, A sigma) &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in (Gamma, A), p(y) = sigma(x)} $)
@@ -135,30 +137,7 @@ $))
   content((-1.5, 5.1), text(fill: red.darken(50%), $(Sigma A B)_x$))
 })) <fig:sigma-compcat>
 
-对于 $Pi$ 类型，在 #[@sec:model-definition]中提到 $Pi A B$ 满足 $"Tm"(Gamma, Pi A B)$ 与 $"Tm"((Gamma, A), B)$ 之间有自然双射。
-
-#eq(diagram(spacing: (1em, 3em), {
-  node((1, 0), [$(Gamma,A)$])
-  node((2, 0), [$Gamma$])
-  node((2, -1), [$(Gamma, Pi A B)$])
-  node((0, -1), [$(Gamma,A,B)$])
-  node((2, -2), [$Delta$])
-  node((1, -2), [$(Delta,sigma^*A)$])
-  pullback("dr")
-  edge((1, 0), (2, 0), "->")
-  edge((0, -1), (1, 0), "->")
-  edge((2, -1), (2, 0), "->")
-  edge((2, -2), (2, -1), [$[sigma,f]$], label-side: left, "->")
-  edge((1, -2), (1, 0), "->")
-  edge((1, -2), (2, -2), "->")
-  edge((1, -2), (0, -1), "-->")
-}))
-
-(introduce slice categories as going into a context)
-
-(pullback is adjoint to composition)
-
-接下来，我们考察外延类型论中的相等类型。假设有类型 $A$，对应展映射 $frak(p) : (Gamma, A) -> Gamma$。相等类型依赖于两个变量 $(Gamma, x : A, y : A)$，因此这里第二个变量的类型实际上需要经过代换 $A frak(p)$ 表示它不使用第一个变量 $x : A$。前面提到代换在展映射的语言下是拉回，因此有
+接下来，我们考察外延类型论中的相等类型。假设有语境 $Gamma$ 中的类型 $A$，对应展映射 $frak(p) : (Gamma, A) -> Gamma$。相等类型依赖于两个变量 $(Gamma, x : A, y : A)$，因此这里第二个变量的类型实际上需要经过代换 $A frak(p)$ 表示它不使用第一个变量 $x : A$。前面提到代换在展映射的语言下是拉回，因此有
 #eq(diagram($
   (Gamma, A, A frak(p)) edge(->) edge("d", ->)
   pullback("dr")
@@ -180,7 +159,6 @@ $)
 将 $(Gamma, A)$ 记作 $Delta$，则 $(Gamma, A, A frak(p))$ 是拉回 $Delta times_Gamma Delta$。在代数几何中，有许多条件是关于对角映射 $Delta -> Delta times_Gamma Delta$ 的，例如某映射拟分离当且仅当其对角映射拟紧，某映射分离当且仅当对角映射是闭嵌入，等等。这些条件可以看作是对某类型的相等类型作限制。
 
 从纯语法的视角，我们已经知道类型论中添加了外延相等类型会对理论的性质产生极大影响。从语义的视角也不例外。以下我们假设范畴中每个对象 $Gamma$ 到终对象的映射都是展映射 —— 这是比较合理的要求，因为每个对象应当表示某个语境 $(x_1 : A_1, dots, x_n : A_n)$，因此是从空语境 $1$ 开始逐步搭建的。如果取一个大 $Sigma$ 类型，就能将 $Gamma$ 表示为空语境中的类型，即展映射 $Gamma -> 1$。
-
 在这个假设下，一旦有了外延相等类型，可以证明_所有的映射_都必须成为展映射。具体如图所示：
 #eq(diagram({
   node((1, 0), [$Delta$])
@@ -199,7 +177,66 @@ $)
 
 从语法的视角，这是因为某个映射 $f : A -> B$ 可以利用 $Sigma$ 类型与外延相等写成 $B$ 上的依值类型 $P(x) = (a : A) times (f(a) = x)$。而此依值类型对应的展映射 $(x : B, y : P(x)) -> B$ 与 $A -> B$ 是同构的。注意到这里的同构是范畴意义上的同构，因此用到的相等关系是判值相等。如果将 $P$ 中的相等类型改为一般的内涵相等类型，则同构不成立。
 
-=== 局部积闭范畴的语言
+以上讨论可以用范畴论的观点进一步阐述。我们先考虑简单情况，假设所有映射都是展映射。某个语境 $Gamma$ 下的所有类型就是陪域为 $Gamma$ 的映射。用范畴论的语言，这就是#translate[俯范畴][overcategory] $cal(C)\/Gamma$。在俯范畴中的操作与原范畴中几乎相同，唯一的区别是一切都可以依赖 $Gamma$ 中的变量。这个范畴中从 $(Gamma, A) -> Gamma$ 到 $(Gamma, B) -> Gamma$ 的映射对应一个表达式 $Gamma, x:A tack t : B$，直观上也可以视作在 $Gamma$ 中的函数 $A -> B$。
+
+给定代换 $sigma : Delta -> Gamma$，我们可以对所有类型 $(Gamma, B) -> Gamma$ 作拉回。这构成函子
+#eq($ sigma^* : cal(C)\/Gamma -> cal(C)\/Delta. $)
+代换可以将依赖 $Gamma$ 的一切构造转化为依赖 $Delta$ 的构造，符合我们的期望。另一方面，如果将 $sigma$ 视作一个依值类型 $(Gamma, A) -> Gamma$，则 $Sigma$ 类型是一个反方向的函子
+#eq($ sigma_! : cal(C)\/(Gamma,A) -> cal(C)\/Gamma. $)
+也就是消耗语境中的一个变量的操作。
+
+在范畴论中，一旦遇到两个相反方向的函子，就应当立刻观察它们是否伴随。根据 $Sigma$ 类型的性质，在语境 $Gamma$ 下从 $Sigma A B$ 到 $X$ 的映射应当等同于语境 $(Gamma,x : A)$ 下从 $B(x)$ 到 $X$ 的映射，这里 $X$ 不依赖变量 $x : A$，因此需要经过弱化代换 $X sigma$。换句话说，存在双射
+#eq($ hom_(cal(C)\/Gamma) (sigma_! B, X) tilde.equiv hom_(cal(C)\/(Gamma,A)) (B, sigma^* X). $)
+其中 $sigma_! B$ 如上所述就是 $Sigma A B$ 的另一种写法。可以验证这个双射也是自然的，因此有伴随函子 $sigma_! tack.l sigma^*$。
+
+令人惊讶的是，$Pi$ 类型在这个框架下也有非常优雅的表述。注意 $Pi$ 类型和 $Sigma$ 类型一样，都应当是消除一个变量的函子 $cal(C)\/(Gamma,A) -> cal(C)\/Gamma$。而在语境 $Gamma$ 中要构造一族函数，即构造从 $X$ 到 $Pi A B$ 的映射，只需要在语境 $(Gamma, x:A)$ 中给出从 $X$ 到 $B(x)$ 的映射，即依赖于 $x$ 的一族表达式。我们在 #[@sec:model-definition]中已经看到类似的说法，即 $"Tm"(Gamma, Pi A B) tilde.equiv "Tm"((Gamma,A), B)$。这里我们有
+#eq($ hom_(cal(C)\/Gamma) (X, sigma_* B) tilde.equiv hom_(cal(C)\/(Gamma,A)) (sigma^* X, B). $)
+其中 $sigma_*$ 是 $Pi$ 类型对应的函子。因此有伴随函子 $sigma^* tack.l sigma_*$。这就说明 $Sigma$、代换、$Pi$ 三者构成伴随三函子
+#eq($ sigma_! tack.l sigma^* tack.l sigma_*. $)
+这就是 Seely~@seely-lccc 的观察：如果某个范畴具有这样三个伴随函子，则它可以作为带有 $Pi$ 与 $Sigma$ 类型的外延类型论的模型。事实上这个结论是有问题的，我们会在 #[@sec:coherence-problem]进一步讨论。在此之前，我们用图表的语言具体写出 $Pi$ 类型对应的泛性质。
+
+#definition[
+给定映射 $f : Y -> X$ 与 $g : Z -> Y$，其#define[前推][pushforward] 是对象 $Pi_f Z$ 与箭头 $f_* g : Pi_f Z -> X$，满足以下性质：
+#eq(diagram(spacing: (1em, 3em), {
+  node((1, -1), [$W$])
+  node((2, 0), [$Pi_f Z$])
+  node((1, 1), [$X$])
+  node((0, 1), [$Y$])
+  node((0, -1), [$Y times_X W$])
+  pullback("dr")
+  node((0, 0), [$Z$])
+  edge((1, -1), (2, 0), "-->")
+  edgeL((2, 0), (1, 1), "->", $f_* g$)
+  edgeR((1, -1), (1, 1), "->", $h$)
+  edge((0, 1), (1, 1), "->", $f$)
+  edge((0, -1), (1, -1), "->")
+  edge((0, 0), (0, 1), "->", $g$)
+  edge((0, -1), (0, 0), "->", $u$)
+}))
+对于任何箭头 $h : W -> X$ 与 $u : Y times_X W -> Z$，若 $u$ 与 $g$ 的复合等于投影映射 $Y times_X W -> Y$，则存在唯一的箭头 $W -> Pi_f Z$，使得其与 $f_* g$ 复合等于 $h : W -> X$。
+]
+改写为类型论的记号如下：
+#eq(diagram(spacing: (1em, 3em), {
+  node((1, -1), [$Delta$])
+  node((2, 0), [$(Gamma, Pi A B)$])
+  node((1, 1), [$Gamma$])
+  node((0, 1), [$(Gamma,A)$])
+  node((0, -1), [$(Delta, A sigma)$])
+  pullback("dr")
+  node((0, 0), [$(Gamma,A,B)$])
+  edge((1, -1), (2, 0), "-->")
+  edge((2, 0), (1, 1), "->")
+  edgeL((1, -1), (1, 1), "->", $tau$)
+  edge((0, 1), (1, 1), "->", $sigma$)
+  edge((0, -1), (1, -1), "->")
+  edge((0, 0), (0, 1), "->")
+  edge((0, -1), (0, 0), "->", $u$)
+}))
+换句话说，要给出代换 $Delta -> (Gamma, Pi A B)$，只需要给出 $tau : Delta -> Gamma$ 与一个依赖于 $A$ 的表达式 $u$。读者可以尝试证明前推与拉回的确构成伴随函子 $sigma^* tack.l sigma_*$。此事大体就是展开定义。
+
+Lawvere's quantifier adjoints
+
+Full statement of LCCC
 
 - Examples of comprehension categories with Pi and Sigma types
   - LCCC
@@ -215,11 +252,13 @@ $)
 
 (countermodel of Markov's principle)
 
+@clans-and-tribes
+
 === 概括范畴
 
-(...)
+(...) and CwA
 
-这一节，我们来考察另一种定义依值类型的模型的办法，称作概括范畴。 (...) and CwA
+这一节，我们来考察并非所有映射都是展映射的情况。
 
 如果要以展映射为基础定义类型论的模型，就要考虑态射范畴 $cal(C)^->$，即对象是 $cal(C)$ 中的态射，态射是 $cal(C)$ 中的交换方的范畴。我们的第一个想法是选择其子范畴 $cal(E) arrow.hook cal(C)^->$。不过我们可暂且先取任意的函子 $F : cal(E) -> cal(C)^->$，有需要时再讨论将此函子限定为子范畴含入映射的情况。这样，$cal(E)$ 就是全体语义类型的范畴，而 $cal(C)$ 是全体语义语境的范畴。我们有函子 $cal(E) -> cal(C)^(->)$ 将 $Gamma$ 上的依值类型 $A$ 映射到对应的展映射 $(Gamma, A) -> Gamma$。可以发现，$F$ 复合上函子 $cod : cal(C)^(->) -> cal(C)$ 得到的 $cal(E) -> cal(C)$ 就应该将每个类型映射到它所处的语境。
 
@@ -316,6 +355,8 @@ $))
 第三种办法则是反其道而行之，不去修改概括范畴使得语义匹配语法，而是修改语法使得它匹配概括范畴。这就需要添加一类新的语法，描述类型之间的映射。它可以用于包含子类型的系统，是前沿研究的课题 @comprehension-type-theory。
 
 (...) simplified and expanded definition of DMC and CwA
+
+=== 乱花渐欲迷人眼
 
 == 融贯问题 <sec:coherence-problem>
 

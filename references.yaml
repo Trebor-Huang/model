@@ -260,3 +260,24 @@ mtt-thesis:
   date: 2023
   url: https://www.danielgratzer.com/papers/phd-thesis.pdf
 
+clans-and-tribes:
+  type: misc
+  note: ArXiv preprint
+  title: Notes on Clans and Tribes
+  author: Joyal, Andre
+  date: 2017
+  serial-number:
+    doi: 10.48550/arXiv.1710.10238
+
+seely-lccc:
+  type: article
+  title: Locally cartesian closed categories and type theory
+  date: 1984
+  page-range: 33-48
+  author: Seely, R. A. G.
+  parent:
+    title: Mathematical Proceedings of the Cambridge Philosophical Society
+    volume: 95
+    issue: 1
+  serial-number:
+    doi: 10.1017/S0305004100061284
