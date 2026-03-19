@@ -695,11 +695,13 @@ Synthetic computability @synthetic-computability
   - However, we just want an _encoding_, i.e. a type that satisfies the universal property of it. This specifies $Sigma$ up to isomorphism, therefore we should find isomorphism invariant properties
   - Assembly $Y$ is *separable* if for unequal elements $y_1, y_2 in Y$, there exists a computable $phi : Y -> Bool$ such that $phi(y_1) = "false"$ and $phi(y_2) = "true"$. (Separable assemblies are modest.)
 
+== 操作语义与意义解释
 
-// == 操作语义与模型 ???
+#translate[意义解释][meaning explanation]，也称#translate[部分等价关系][partial equivalence relation] 模型。 (...)
 
-// - Define operational semantics on raw terms first, then fit a type system on it
-// - Relation to $Lambda$-realizability
+operational semantics
+
+relation with extensional type theory
 
 == 语法翻译
 
