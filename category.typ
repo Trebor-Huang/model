@@ -234,25 +234,24 @@ $)
 }))
 换句话说，要给出代换 $Delta -> (Gamma, Pi A B)$，只需要给出 $tau : Delta -> Gamma$ 与一个依赖于 $A$ 的表达式 $u$。读者可以尝试证明前推与拉回的确构成伴随函子 $sigma^* tack.l sigma_*$。此事大体就是展开定义。
 
-Lawvere's quantifier adjoints
+#definition[
+  某个范畴是#define[局部积闭范畴][locally cartesian closed category]，当且仅当对任何映射 $sigma : Gamma -> Delta$，复合函子 $sigma_! : cal(C)\/Gamma -> cal(C)\/Delta$ 都处在三伴随 $sigma_! tack.l sigma^* tack.l sigma_*$ 中。
+]
 
-Full statement of LCCC
+这样的三伴随在一阶逻辑中也有类似的表述。一阶逻辑中我们不讨论依值类型，而考虑谓词 $P(x,y,z)$，对应子集 $U arrow.hook X times Y times Z$。这里的 $(x,y,z)$ 类似类型论中的语境。这样，每个语境 $Gamma$ 中的谓词就对应其子集的偏序 $"Sub"(Gamma)$。每个代换对应映射 $sigma^* : "Sub"(Delta) -> "Sub"(Gamma)$。如果考虑投影映射 $sigma : Gamma times X -> Gamma$，则有三伴随 #eq($ exists tack.l sigma^* tack.l forall $)
+其中 $exists U = {a in Gamma mid(|) exists x in X bind (a,x) in U}$，类似地 $forall U = {a in Gamma mid(|) forall x in X bind (a,x) in U}$。这种情形抽象得来的结构称作一阶逻辑的#translate[超理论][hyperdoctrine]。
 
-- Examples of comprehension categories with Pi and Sigma types
-  - LCCC
-    - Note that it's very hard to define a CwF with an LCCC! More on this later
-    - Application of type theoretic language (exponentiable arrows closed under pullback)
-  - elementary toposes
-    - presheaf categories
-    - sheaves? maybe just over cantor space
+常见的局部积闭范畴的例子有集合范畴 $Set$。#[@ch:examples]中提到的不少支持外延相等类型的例子也都是局部积闭范畴。所有的#translate[意象][topos] 都是局部积闭范畴，而范畴论的研究中已经发展出一套丰富的描述和构造意象的理论。因此借助局部积闭范畴就可以得到许多类型论的模型。
 
 #definition[
   假如有集合 $X$，配有两个集合 $X_0$、$X_1$ 与双射 $X tilde.equiv X_0 times X_1$，再配有集合 $X_00$、$X_01$、$X_10$、$X_11$ 与双射 $X_0 tilde.equiv X_00 times X_01$ 和 $X_1 tilde.equiv X_10 times X_11$，以此类推，就称此结构为 *Cantor 层*。Cantor 层之间的态射由一族映射 $f_b : X_b -> Y_b$ 组成，使得与配备的双射都交换。
 ]
 
-(countermodel of Markov's principle)
+这个范畴其实是 Cantor 空间#footnote[实数中考虑三进制展开只有 0 与 2 的小数，其构成 $[0,1]$ 的子空间称作 *Cantor 空间*。]上的层范畴 $sans("Sh")("Cantor")$，是意象。因此我们立刻得到这是局部积闭范畴。事实上它可以作为 #[@sec:markov-principle]提到的 Марков 原理的反模型。
 
-@clans-and-tribes
+
+
+(...) @clans-and-tribes
 
 === 概括范畴
 
@@ -370,6 +369,7 @@ $))
 
 - Natural solution using coproducts of display maps
 - Hofmann's solution
+- Lumsdaine local universes and Bocquet's generalization @bocquet-strictification
 - Can be avoided using dedicated dependent structures
 
 (also mention universes in sheaf topos)
