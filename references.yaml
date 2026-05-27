@@ -281,3 +281,20 @@ seely-lccc:
     issue: 1
   serial-number:
     doi: 10.1017/S0305004100061284
+
+bocquet-strictification:
+  type: article
+  title: Strictification of Weakly Stable Type-Theoretic Structures Using Generic Contexts
+  author: Bocquet, Rafaël
+  date: 2022
+  page-range: 1-23
+  serial-number:
+    doi: 10.4230/LIPIcs.TYPES.2021.3
+  parent:
+    type: proceedings
+    title: 27th International Conference on Types for Proofs and Programs (TYPES 2021)
+    volume: 239
+    parent:
+      type: proceedings
+      title: Leibniz International Proceedings in Informatics (LIPIcs)
+

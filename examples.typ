@@ -661,7 +661,7 @@ $ forall x : NN bind exists y : A bind P(x, y) ==> exists f : NN -> A bind foral
 $ product_(x : NN) norm(P(x)) --> norm(product_(x : NN) P(x)) $
 
 #let markov = "Марков"
-==== #markov 原理
+==== #markov 原理 <sec:markov-principle>
 
 $ (not forall (x : NN) bind f(n) != "true") --> exists (x : NN) bind f(n) = "true" $
 
