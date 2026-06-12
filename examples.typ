@@ -681,21 +681,30 @@ Synthetic computability @synthetic-computability
 
 == 容器与多项式 <sec:polynomial>
 
-此节选读。#translate[容器][container] 模型，或称多项式模型，是函数外延性的另一个反模型。在编程中，容器是能装载一系列元素的数据结构。例如列表 $"List"(X)$ 可以装载零个或多个元素，有序对 $X times X$ 恰好可以装载两个，等等。
+此节选读。#define[容器][container] 模型，或称多项式模型，是函数外延性的另一个反模型。它有许多不同的理解方式。
 
-describing containers using set families (also called polynomials)
+在编程中，容器是能装载一系列元素的数据结构。例如列表 $"List"(X)$ 可以装载零个或多个元素，有序对 $X times X$ 恰好可以装载两个，等等。从数学的角度描述容器，可以考虑有序对 $(I, E)$，其中 $I$ 是个集合，表示容器可能的形状，而 $E_i$ 是个集合族，其中 $i in I$，表示形状为 $i$ 的情况可以装载多少元素。这样，列表就可以表述为 $I = NN$，而 $E_n$ 是恰有 $n$ 个元素的集合。
 
-alternative description as two-step games (proof and refutation)
+给定这样一个有序对，我们有足够的信息反推出容器本身。例如列表 $"List"(X)$ 可以看作 $product.co_(n in NN) X^n$，先选择列表长度，再给出足够数量的元素。同理，对任何一个有序对 $(I,E)$ 可以考虑 $F(X) = product.co_(i in I) X^(E_i)$，其中 $X^(E_i)$ 即函数集 $E_i -> X$。$F$ 构成函子 $Set -> Set$，并且形如代数学中的多项式，因此称作*多项式函子*。尚未了解范畴论的读者可以忽略讨论多项式函子的部分，不影响理解。
 
-dependent containers (motivate exponentials? see if yoneda suffices)
+另一方面，容器也可以理解为某种辩论，或者两步博弈的过程。$I$ 表示某个命题的论证，而 $E_i$ 表示对论证 $i$ 的反驳。如果将类型视作命题，那么某个命题为真应当对应存在某个无法反驳的论证 $i$，即 $E_i = emptyset$。这种对命题的理解与 Gödel 的#translate[辩证解释][Dialectica interpretation]#footnote[这里 “辩证” 指的是其发表在期刊《辩证》上，与内容无关。] 神似，读者可以参考 @dialectica 的讨论。
 
-type constructors
+为了便于阅读，我们将容器 $(I, E)$ 写作 $(I lt.tri E)$。而给定容器 $C = (I lt.tri E)$，定义 $C(X) = product.co_(i in I) X^(E_i)$ 为对应的多项式函子。
 
-例子：并非所有映射都是展映射
+容器之间的映射可以从程序的视角推导：如果有容器 $C = (I lt.tri E)$ 与 $C' = (I' lt.tri E')$，那么 $C -> C'$ 的映射应该给出函数 $f : I -> I'$，与反方向的函数族 $g : E'_(f(i)) -> E_i$。这样，给定某个形状 $i in I$ 的数据，我们可以输出形状为 $f(i) in I'$ 的数据。对于形状 $f(i)$ 中的某个槽位 $p in E'_(f(i))$，我们只需要指出某个原有的位置 $g(p) in E_i$，将这个位置上的元素搬运过去即可。这样就可得到 $C(X) -> C'(X)$ 的映射。
 
-elide detailed construction into @polynomial-agda
+我们也可以从函子的视角理解容器映射。不难证明上面给出的描述恰好是两个多项式函子之间的全体自然变换的集合。证明中我们需要用到集合范畴上的恒等函子到自身的自然变换只有一个 $id : "Id"_Set -> "Id"_Set$。这样看，容器与多项式函子的视角就是一致的。我们将上面的映射写作 $(f lt.tri g)$。
 
-relation to dialectica
+最后，也可以利用辩论的视角考虑。$C -> C'$ 表示命题 $C$ 比命题 $C'$ 更难论证。换言之，如果反方总可以辩赢 $C'$，那么这个映射使反方也可以辩赢 $C$。具体来说，给定正方的论证 $i in I$，反方可以翻译得到论证 $f(i) in I'$，驳之得 $p in E'_(f(i))$，再翻译 $g(p) in E_i$。的确，如果命题 $C$ 蕴含命题 $C'$，那么只要驳倒了 $C'$，自然就证伪了 $C$。
+
+照惯例，我们需要定义#emph[依值]容器的概念。给定容器 $Gamma = (I lt.tri E)$，依值容器是个集合族的有序对，写作 $A = (scr(I) lt.tri scr(E))$，其中 $scr(I)_i$ 是 $I$ 上的集合族，而 $scr(E)_(i, j)$ 下标为 $i in I$，$j in scr(I)_i$。可以定义依值容器的全空间 $integral A = (I' lt.tri E')$，其中
+#eq($ I' = product.co_(i in I) scr(I)_i quad E'_(i, j) = E_i union.sq scr(E)_(i,j). $)
+注意这里的 $scr(E)$ 依赖 $I$ 与 $scr(I)$，但不依赖 $E$。这是语境扩展的语义。
+
+我们在此省略各种类型的语义。读者可以参考 Kovács 的 Agda 形式化 @polynomial-agda。
+
+容器模型有几个主要特征。一是它构成函数外延性的反模型。二是它有时比具现模型 (@sec:realizability-model) 能提取出更多的可计算性质。例如某个双重否定命题若为真，在具现模型中可被任何程序实现，因此失去了可计算内涵，但在容器模型中仍然能提取出内容。这是#translate[证明挖掘][proof mining] 的核心想法。即使经典逻辑翻译为构造主义逻辑需要经过双重否定，也可以从经典证明中计算出非平凡的信息，例如分析学中一些定理的显式上下界等。
+
 
 == 操作语义与意义解释
 

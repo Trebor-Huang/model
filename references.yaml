@@ -298,3 +298,26 @@ bocquet-strictification:
       type: proceedings
       title: Leibniz International Proceedings in Informatics (LIPIcs)
 
+dialectica:
+  type: article
+  title: Dialectica models of type theory
+  author:
+  - Moss, Sean K.
+  - name: Glehn
+    given-name: Tamara
+    prefix: von
+  date: 2018
+  page-range: 739-748
+  serial-number:
+    doi: 10.1145/3209108.3209207
+    isbn: '9781450355834'
+  parent:
+    type: proceedings
+    title: Proceedings of the 33rd Annual ACM/IEEE Symposium on Logic in Computer Science
+    publisher:
+      name: Association for Computing Machinery
+      location: Oxford, United Kingdom
+    parent:
+      type: proceedings
+      title: LICS '18
+
