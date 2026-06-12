@@ -489,7 +489,7 @@ $)
 
 == 可计算性与模型 <sec:realizability-model>
 
-构造主义往往与可计算的事物联系在一起，因为构造主义中的原理都可以找到程序对应。这就是 Brouwer–Heyting–Колмогоров 解释。相反，排中律就难以找到类似的程序.#footnote[如果拓展我们对程序的定义，那么仍然可以找到#translate[计算续体][continuation] 等解释。但是 “一个程序要么停机要么不停机” 无论如何也不可能解释出可以判定停机性的程序，因此这样的拓展是有限度的。] 不过，BHK 解释并不是声称_所有_能找到程序对应的逻辑原理_都属于_构造主义。事实上，有一些逻辑原理虽然有程序对应，但我们一般不认为是纯粹构造的。
+构造主义往往与可计算的事物联系在一起，因为构造主义中的原理都可以找到程序对应。这大致就是 Brouwer–Heyting–Колмогоров 解释。相反，排中律就难以找到类似的程序.#footnote[如果拓展我们对程序的定义，那么仍然可以找到#translate[计算续体][continuation] 等解释。但是 “一个程序要么停机要么不停机” 无论如何也不可能解释出可以判定停机性的程序，因此这样的拓展是有限度的。] 不过，BHK 解释并不是声称_所有_能找到程序对应的逻辑原理_都属于_构造主义。事实上，有一些逻辑原理虽然有程序对应，但我们一般不认为是纯粹构造的。
 
 为了消除歧义，往往将完全构造性的原理称作#translate[中性数学][neutral mathematics]。例如可以认为 Martin-Löf 类型论属于中性数学。构造主义逻辑则可以视流派添加额外的公理。例如#translate[直觉主义][intuitionism] 是一种流派，承认可数选择公理等等。俄罗斯流派则致力研究所有能实现为程序的逻辑原理。
 
@@ -563,7 +563,7 @@ $)
 这说明实际上怎么选择空语境的程序实现都可以。我们选择全体程序比较方便。
 
 #definition[
-  给定汇编 $Gamma$，定义 $Gamma$ 上的*汇编族*为一族汇编 $A_x$，其中 $x in Gamma$。
+  给定汇编 $Gamma$，定义 $Gamma$ 上的*汇编族*为一族汇编 $A_x$，其中 $x in Gamma$。其*可计算元素*为映射 $f$，将 $x in Gamma$ 映射到 $f(x) in A_x$，并且有程序 $r$ 使得 $u realizes_Gamma x$ 蕴含 $r u realizes_(A_x) f(x)$。
 ]
 这个定义简单得令人惊讶。读者或许期望另有条件，要求存在某个程序 $r in AA$ 实现了这个汇编族。究其本质，是因为类型信息在程序中是完全擦除的，因此不需要也不能有额外的要求来定义某种 “可计算汇编族” 的概念。
 
@@ -637,23 +637,64 @@ $)
 以下几个命题均在具现模型中成立。换句话说，这些命题都有可计算解释，尽管它们在纯构造主义逻辑中无法证明 (也无法证伪)。在类型论中添加类似这些命题的公理，就可以作为可计算理论的综合语言使用。例如，可以在综合语言中证明 Rice 定理等等可计算理论的经典定理。这样，就能将可计算性理论中繁琐的编码隐藏在语言之下，展示出各种论证的核心思想。读者也可参考 Bauer~@synthetic-computability 的论文。
 
 ==== 可数选择
-
 在@sec:berardi-paradox 考虑了选择公理的各种形态。可数选择则是要选择的函数中定义域是 $NN$ 的情况。例如逻辑学中常见的
-#eq($ (forall x : NN bind exists y : A bind P(x, y)) ==> (exists f : NN -> A bind forall x : NN bind P(x, f(x))) $)
+#eq($ (forall x : NN bind exists y : A bind p(x, y)) ==> (exists f : NN -> A bind forall x : NN bind p(x, f(x))) $)
 或者类型论中常见的
-#eq($ (product_(x : NN) norm(P(x))) -> norm(product_(x : NN) P(x)). $)
+#eq($ (product_(x : NN) norm(A(x))) -> norm(product_(x : NN) A(x)). $)
+在集合层面，这是显然成立的，因此我们只需要验证它是可计算函数。
 
-为了验证其在具现模型中成立，考虑汇编 $Gamma$，$(Gamma dot NN)$ 上的汇编族 $P$ 与
+先考虑没有语境的简单情况。假设有 $NN$ 上的汇编族 $A(n)$，那么 $(n : NN) -> norm(A(n))$ 如果有元素，则每个 $A(n)$ 都非空，并且有程序 $r$ 使得每个自然数 $n$ (我们直接将自然数与对应的程序视作相同) 都存在某个 $a in A(n)$ 使得 $r n realizes_(A(n)) a$。我们用集合上的选择公理选出 $a_n in A(n)$，那么 $r$ 同时也实现了 $(n : NN) -> A(n)$ 的函数 $n |-> a_n$。由此，恒等程序就应当满足我们的需求.#footnote[注意一般我们还需要验证这个程序实现了集合上良定义的函数，但是由于进行了命题截断，$a_n$ 无论如何选择都是良定义的。]
 
-(... 选择公理不成立)
+以上论证为何不适用于一般的选择公理呢? 我们实际上使用了 $NN$ 的每个元素都只有一个程序实现的特点。我们知道排中律无法写成程序，而选择公理可以推出排中律，因此只要考虑这个证明中的构造即可发现选择公理为何无法写成程序。具体来说，考虑 $(NN times Bool)\/ class("normal", tilde)$，其中等价关系 $(n,b) tilde (n',b')$ 当且仅当 $n = n'$，并且要么 $b = b'$ 要么第 $n$ 个图灵机停机。@fig:choice-realize 画出了等价类。
+#figure(canvas({
+  import draw: *
+  for i in range(6) {
+    content((i*2.2,0), $(#i, "false")$)
+    content((i*2.2,1.5), $(#i, "true")$)
+    if i in (1,2,4) {
+      rect(
+        stroke: 0.5pt, radius: 0.3,
+        (i*2.2-0.9,-0.5), (i*2.2+0.9,2)
+      )
+      content((i*2.2, 2.35), [停机])
+    } else {
+      rect(
+        stroke: 0.5pt, radius: 0.3,
+        (i*2.2-0.9,-0.5), (i*2.2+0.9,0.55)
+      )
+      rect(
+        stroke: 0.5pt, radius: 0.3,
+        (i*2.2-0.9,1.05), (i*2.2+0.9,2)
+      )
+      content((i*2.2, 2.35), [不停机])
+    }
+  }
+}), caption: [等价类图示]) <fig:choice-realize>
+回忆 $P$ 是有序对的程序。令 $P n b$ 实现 $(n,b)$ 对应的等价类。这就构成了汇编，记作 $X$。再考虑其上的汇编族 $A(u)$ 为 $NN times Bool$ 中与 $u$ 同一个等价类的子集构成的汇编。恒等函数程序实现了 $(u : X) -> norm(A(u))$。因为如果 $r realizes_X u$，则 $r = P n b$ 并且 $u = [(n, b)]$，此时 $A(u)$ 要么是 ${(n, b)}$，要么是 ${(n, "true"), (n, "false")}$。无论如何，$r$ 的确实现了 $A(u)$ 的某个元素。
 
+然而，并没有程序可以实现 $norm((u:X) -> A(u))$，因为这需要实现某个集合上的函数 $f : (u:X) -> A(u)$。假如有这样的程序 $s$，那么 $s(P thin n thin "true")$ 与 $s(P thin n thin "false")$ 相等当且仅当第 $n$ 个图灵机停机，因此就可以判定停机问题了。这与前面的区别在于恒等程序并不保持 $X$ 上的等价关系，因此作为 $(u : X) -> A(u)$ 的函数不良定义。
+
+正如前面所说的，具现模型满足可数选择，是因为同一个自然数只有一个程序实现。退一步，如 $QQ$ 这样，尽管有多个实现，但是另有办法可以从这些实现里归约成典范的实现（即分数的约分）的情况也可满足条件。
+
+接下来我们证明一般情况。考虑汇编 $Gamma$，令 $A$ 为 $Gamma dot NN$ 下的汇编族，再令 $f$ 为 $Gamma$ 下 $Pi NN norm(A)$ 的元素。换言之，有程序 $r$ 使得对任何 $u realizes_Gamma x$ 以及自然数 $n$，存在 $a in A_((x,n))$ 使 $r u n realizes_(A_((x, n))) a$。这里的 $a$ 取决于 $x$, $u$ 与 $n$。由此我们可以用集合上的选择公理给出函数 $f_(x,u) (n)$。那么对于任何 $u realizes_Gamma x$ 都有 $r u realizes f_(x, u)$。因此恒等程序同样实现了完整的可数选择公理。读者不难将其升级为
+#eq($ product_(A : NN->cal(U)) (product_(x : NN) norm(A(x))) -> norm(product_(x : NN) A(x)) $)
+类型在空语境下的元素。
 
 #let markov = "Марков"
 ==== #markov 原理 <sec:markov-principle>
-
-$ (not forall (x : NN) bind f(n) != "true") --> exists (x : NN) bind f(n) = "true" $
-
-You can improve to $Sigma$ type by searching the minimal one
+这是由 Андрей А. Марков（与他父亲同名，他父亲是随机过程中 #markov 链的提出者）提出的逻辑原理。其内容是说某个程序如果不会不停机，那么它就一定停机。用更方便类型论的语言，则是任何函数 $f : NN -> Bool$ 都满足
+#eq($ (not forall (x : NN) bind f(n) != "true") -> exists (x : NN) bind f(n) = "true". $)
+(事实上可以将 $exists$ 改为 $Sigma$，因为如果存在 $f(n) = "true"$ 的解，就可以向下搜索最小的解.)
+直观上，我们可以直接考虑枚举搜索的算法：
+```py
+n = 0
+while True:
+    if f(n):
+        print("Found:", n)
+        exit()
+    n += 1
+```
+前提条件保证了这是正确的算法。这里我们其实用到了元语言中的排中律。换言之，尽管可计算的世界无论如何也不满足排中律，但是元语言是否满足排中律仍然会影响可计算世界的部分命题。
 
 ==== Church 原理
 
