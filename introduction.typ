@@ -10,29 +10,29 @@
 直观上说，对于大多数类型论而言，每个类型可以理解为集合，函数类型对应集合之间的函数构成的集合，乘积类型对应集合的 Descartes 乘积，等等。(同伦类型论不在此列.) 因此，我们理应能够构造出类型论的集合模型。
 依值类型论中，依值类型 $x : A tack B(x) istype$ 可以解释为集合族 ${B(x)}_(x in A)$，即为每个元素 $x in A$ 赋予一个集合 $B(x)$。
 
-#let dot(pos) = draw.circle(pos, stroke: none, fill: black, radius: 0.09)
+#let odot(pos) = draw.circle(pos, stroke: none, fill: black, radius: 0.09)
 #let family(A, B, x, Bx) = {
   import draw: *
   rect((-1.5,-0.6), (1.5, 0.6), radius: 0.65, stroke: 0.5pt)
-  dot((0,0))
-  dot((-0.8, 0))
+  odot((0,0))
+  odot((-0.8, 0))
   content((-1,-0.2), x)
-  dot((0.8, 0))
+  odot((0.8, 0))
   content((2, 0), A)
 
   rect((-0.5, 1), (0.5, 2.7), stroke: 0.5pt)
   line((0,0), (0, 1), stroke: 0.5pt)
-  dot((-0.1, 2.2))
-  dot((0.1, 1.8))
-  dot((0, 1.4))
+  odot((-0.1, 2.2))
+  odot((0.1, 1.8))
+  odot((0, 1.4))
   rect((-0.6, 1), (-1.65, 2.7), stroke: 0.5pt)
   line((-0.8, 0), (-1.12, 1), stroke: 0.5pt)
   content((-1.12, 3), Bx)
-  dot((-1, 2.1))
-  dot((-1.2, 1.5))
+  odot((-1, 2.1))
+  odot((-1.2, 1.5))
   rect((0.6, 1), (1.65, 2.7), stroke: 0.5pt)
   line((0.8, 0), (1.12, 1), stroke: 0.5pt)
-  dot((1.1, 1.8))
+  odot((1.1, 1.8))
   content((2.2, 1.8), B)
 }
 #numbered-figure(caption: [集合族])[
@@ -43,15 +43,15 @@
 #eq($ product.co_(x in A) B(x) = {(x, y) mid(|) x in A, y in B(x) }, $) 也就是图中的所有矩形合在一起得到的集合。
 相应地，$Pi$ 类型对应乘积 $product_(x in A) B(x)$。它的元素 $f$ 需要在每个 $B(x)$ 中选择元素。
 
-不过，上面的说法并不完整。在依值类型论中，_所有_的类型 $Gamma tack A istype$ 都是依值的，即依赖于 $Gamma$ 中的变量。这样看来，语境的解释才应该是集合，而类型解释为集合族。例如，空语境对应单元素类型，而语境扩展 $(Gamma, A)$ 可以解释为不交并 $product.co_(x in Gamma) A(x)$。
+不过，上面的说法并不完整。在依值类型论中，_所有_的类型 $Gamma tack A istype$ 都是依值的，即依赖于 $Gamma$ 中的变量。这样看来，语境的解释才应该是集合，而类型解释为集合族。例如，空语境对应单元素类型，而语境扩展 $(Gamma dot A)$ 可以解释为不交并 $product.co_(x in Gamma) A(x)$。
 另一方面，我们还需要区分语法与它们对应的解释。例如可以将 $Gamma$ 的解释记作 $interpret(Gamma)$。这样就能给出完整的集合模型：
 - 语境 $Gamma$ 解释为集合，记作 $interpret(Gamma)$。
 - 类型 $Gamma tack A istype$ 解释为集合族，记作 $interpret(A)_x$，其中 $x in interpret(Gamma)$。
 - 空语境解释为单元素集合，即 $interpret(()) = {star}$。需要注意的是，空语境不是空集。因为空语境的 “空” 表示没有变量，因此变量的取值就只有一种情况。这与零个集合的乘积是单元素集，或者幂 $n^0 = 1$ 的道理是一样的。
-- 语境扩展解释为不交并 $interpret((Gamma, A)) = product.co_(x in interpret(Gamma)) interpret(A)_x$。
+- 语境扩展解释为不交并 $interpret(Gamma dot A) = product.co_(x in interpret(Gamma)) interpret(A)_x$。
 - $Gamma tack t : A$ 解释为集合族 $interpret(A)$ 的元素族 $interpret(t)$。即对于每个 $x in interpret(Gamma)$ 都有 $interpret(t)_x in interpret(A)_x$。
 - 变量代换 $Gamma tack sigma : Delta$ 解释为集合之间的函数 $interpret(Gamma) -> interpret(Delta)$。
-- 从 $(Gamma, A)$ 到 $Gamma$ 的投影代换 $frak(p)$ 定义为 $(x, y) |-> x$，而变量 $Gamma, a:A tack a : A$ 解释为元素族 $interpret(a)_((x, y)) = y$。
+- 从 $Gamma dot A$ 到 $Gamma$ 的投影代换 $frak(p)$ 定义为 $(x, y) |-> x$，而变量 $Gamma, a:A tack a : A$ 解释为元素族 $interpret(a)_((x, y)) = y$。
 
 我们可以按照直观写出各种类型在集合模型中的解释。读者只需熟记任何类型都是依值于语境的，即可轻松得到正确的写法。这样，对于任何表达式，例如 $lambda (x : NN) bind x + 1$，都能在集合里找到对应的元素解释。
 - 单元素类型的解释为 $interpret(Unit)_x = {star}$，Boole 类型的解释为 $interpret(Bool)_x = {"true", "false"}$。这两者都不依赖参数 $x in interpret(Gamma)$。
@@ -87,8 +87,8 @@
   - 对于语义类型 $A in "Tp"(Gamma)$ 与代换 $sigma : Delta -> Gamma$，有语义代换运算 $A sigma in "Tp"(Delta)$ —— 注意代换的方向 —— 满足 $A id = A$ 与 $A (sigma compose tau) = (A sigma) tau$。 因此我们将连续代换不加括号地写作 $A sigma tau$。
   - 对语义元素 $a in "Tm"(Gamma, A)$ 与代换 $sigma : Delta -> Gamma$，有语义代换运算 $a sigma in "Tm"(Delta, A sigma)$，满足 $a id = a$ 与 $a (sigma compose tau) = (a sigma) tau$。
   - 有空语境 $()$，或者写作 $1$，使得任何语义语境 $Gamma$ 到 $1$ 都只有一个代换。
-  - 给定语义语境 $Gamma$ 与类型 $A in "Tp"(Gamma)$，有语境扩展运算 $(Gamma, A) in "Ctx"$，投影代换 $frak(p) : (Gamma, A) -> Gamma$ 与变量 $frak(q) in "Tm"((Gamma, A), A frak(p))$。
-  - 给定语义代换 $sigma : Gamma -> Delta$、语义类型 $A in "Tp"(Delta)$ 与语义元素 $a in "Tm"(Gamma, A sigma)$，有代换延拓运算 $[sigma, a] : Gamma -> (Delta, A)$，并且它是唯一满足 $frak(p) compose [sigma, a] = sigma$ 与 $frak(q) [sigma, a] = a$ 的代换。
+  - 给定语义语境 $Gamma$ 与类型 $A in "Tp"(Gamma)$，有语境扩展运算 $(Gamma dot A) in "Ctx"$，投影代换 $frak(p) : (Gamma dot A) -> Gamma$ 与变量 $frak(q) in "Tm"(Gamma dot A, A frak(p))$。
+  - 给定语义代换 $sigma : Gamma -> Delta$、语义类型 $A in "Tp"(Delta)$ 与语义元素 $a in "Tm"(Gamma, A sigma)$，有代换延拓运算 $[sigma, a] : Gamma -> (Delta dot A)$，并且它是唯一满足 $frak(p) compose [sigma, a] = sigma$ 与 $frak(q) [sigma, a] = a$ 的代换。
 ] <def:model>
 乍看之下模型的定义让人眼花缭乱，但读者浏览#[@ch:examples]中的例子后就会发现定义中大部分内容都会化作简单的概念，或者能显然给出，一般无需多虑。在#[@ch:category]中我们还会引入更多打包简化定义的办法。
 
@@ -101,12 +101,12 @@
     content((-3.8, -1.5), $Delta$)
     content((-0.6, -1.2), $sigma$)
 
-    dot((-2.6, -1.2))
+    odot((-2.6, -1.2))
     bezier((), (-0.8,0), (-2, -0.2), stroke: 0.5pt)
     content((-2.85, -1.0), $y$)
-    dot((-2.7, -1.8))
+    odot((-2.7, -1.8))
     bezier((), (0,0), (-1.4, -0.7), stroke: 0.5pt)
-    dot((-2, -1.9))
+    odot((-2, -1.9))
     bezier((), (0,0), (-0.5, -1), stroke: 0.5pt)
   })
 ] <fig:set-family-substitution>
@@ -145,7 +145,7 @@ $)
 在集合模型中，我们已经构造了集合族 $Unit_Gamma$，它为元素 $x in Gamma$ 赋予的集合是 ${star}$。其中 $star$ 是集合论中任意一个对象。而 $star_Gamma$ 对应显然的平凡元素族。
 
 ==== $Sigma$ 类型
-给定语义语境 $Gamma$，类型 $A in "Tp"(Gamma)$ 与 $B in "Tp"((Gamma, A))$，$Sigma$ 类型结构需要选定类型 $Sigma A B in "Tp"(Gamma)$。$Sigma$ 类型的构造子如下：
+给定语义语境 $Gamma$，类型 $A in "Tp"(Gamma)$ 与 $B in "Tp"(Gamma dot A)$，$Sigma$ 类型结构需要选定类型 $Sigma A B in "Tp"(Gamma)$。$Sigma$ 类型的构造子如下：
 #eq($
   rule(
     Gamma tack (a, b) : Sigma A B,
@@ -153,7 +153,7 @@ $)
     Gamma tack b : B[id, a]
   )
 $)
-注意使用了代换 $[id, a] : Gamma -> (Gamma, A)$ 使得类型正确，表示语境中的其他变量不改变，而将最后一个变量换为 $a$。用具名变量的语言，就是 $B[x\/a]$。在模型中，这就对应一个二元运算 $"pair"(a,b)$，将 $a in "Tm"(Gamma, A)$ 与 $b in "Tm"(Gamma, B[id, a])$ 映射到 $"Tm"(Gamma, Sigma A B)$。
+注意使用了代换 $[id, a] : Gamma -> (Gamma dot A)$ 使得类型正确，表示语境中的其他变量不改变，而将最后一个变量换为 $a$。用具名变量的语言，就是 $B[x\/a]$。在模型中，这就对应一个二元运算 $"pair"(a,b)$，将 $a in "Tm"(Gamma, A)$ 与 $b in "Tm"(Gamma, B[id, a])$ 映射到 $"Tm"(Gamma, Sigma A B)$。
 
 $Sigma$ 类型的消去子是投影操作：
 #eq($
@@ -168,7 +168,7 @@ $Sigma$ 类型的消去子是投影操作：
 $)
 注意我们不认为 $pi_1$ 是能单独出现的函数，而必须形如 $pi_1 (p)$ 才符合语法。要构造函数 $Sigma A B -> A$，需要写成 $lambda p bind pi_1 (p)$。否则，函数类型和 $Sigma$ 类型就相耦合，破坏了各个功能之间的独立性。投影在模型中的对应就是两个映射 $"proj"_1$ 与 $"proj"_2$，分别把语义元素 $p in "Tm"(Gamma, Sigma A B)$ 映射到 $"Tm"(Gamma, A)$ 与 $"Tm"(Gamma, B[id, "proj"_1 (p)])$。
 
-在集合模型中，给定集合族 $B : "Tp"((Gamma, A))$ 与元素族 $a in "Tm"(Gamma, A)$，$B'=B[id, a]$ 是 $Gamma$ 上的集合族，定义为 $B'_x = B_((x, a_x))$。请读者构造集合模型中的 $"pair"$ 与 $"proj"_i$ 函数。
+在集合模型中，给定集合族 $B : "Tp"(Gamma dot A)$ 与元素族 $a in "Tm"(Gamma, A)$，$B'=B[id, a]$ 是 $Gamma$ 上的集合族，定义为 $B'_x = B_((x, a_x))$。请读者构造集合模型中的 $"pair"$ 与 $"proj"_i$ 函数。
 
 $Sigma$ 类型的 $beta$ 与 $eta$ 相等，分别对应等式
 #eq($
@@ -182,7 +182,7 @@ $)
 #eq($
   (Sigma A B)sigma = Sigma (A sigma) (B sigma')
 $)
-这里，我们需要一个代换 $sigma' : (Delta, A sigma) -> (Gamma, A)$ 表示除了最后一个变量不变以外，对其他所有变量用 $sigma$ 代换。观察代换的规则可以得到 $sigma' = [sigma compose frak(p), frak(q)]$。同样，对表达式也有等式
+这里，我们需要一个代换 $sigma' : (Delta dot A sigma) -> (Gamma dot A)$ 表示除了最后一个变量不变以外，对其他所有变量用 $sigma$ 代换。观察代换的规则可以得到 $sigma' = [sigma compose frak(p), frak(q)]$。同样，对表达式也有等式
 #eq($
   "pair"(a, b) sigma &= "pair"(a sigma, b sigma) \
   "proj"_1 (p) sigma &= "proj"_1 (p sigma) \
@@ -202,7 +202,7 @@ $)
     Gamma tack t : A
   )
 $)
-这两条规则分别对应一元运算 $"lam" : "Tm"((Gamma, A), B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B[id, t])$。代换需要满足 $"lam"(t) sigma = "lam"(t sigma')$ 与 $"app"(f, t) sigma = "app"(f sigma, t sigma)$。同样， $sigma' = [sigma compose frak(p), frak(q)]$ 表示最后一个变量不变，而其他变量按 $sigma$ 代换。
+这两条规则分别对应一元运算 $"lam" : "Tm"(Gamma dot A, B) -> "Tm"(Gamma, Pi A B)$ 与二元运算 $"app"$，将 $f in "Tm"(Gamma, Pi A B)$ 与 $t : "Tm"(Gamma, A)$ 映射到 $"app"(f, t) in "Tm"(Gamma, B[id, t])$。代换需要满足 $"lam"(t) sigma = "lam"(t sigma')$ 与 $"app"(f, t) sigma = "app"(f sigma, t sigma)$。同样， $sigma' = [sigma compose frak(p), frak(q)]$ 表示最后一个变量不变，而其他变量按 $sigma$ 代换。
 $beta$ 与 $eta$ 等式分别是
 #eq($
   "app"("lam"(t), s) &= t[id, s] \

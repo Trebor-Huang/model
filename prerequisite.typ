@@ -5,7 +5,7 @@
 
 阅读本文，读者自然需要对依值类型论有基础的了解。对初学者，这里推荐阅读 Angiuli 与 Gratzer 的教材~@type-theory-book，与经典教材相比更具现代视角。同样，如果读者希望阅读同伦类型论相关的章节，就需要对同伦类型论有了解。
 
-本文不会花费过多笔墨讨论变量的处理。我们在公式中一般直接使用具名变量，但是 $lambda x. x$ 与 $lambda y. y$ 直接视作等同，不加额外说明。对于#translate[语境][context] 而言，如果希望强调其不依赖变量名的属性，可能将 $(Gamma, x:A)$ 写作 $(Gamma, A)$。为了方便书写，我们也将 $Sigma$ 类型写成 $(x : A) times B(x)$，与非依值的 $A times B$ 对应。同理 $Pi$ 类型写成 $(x : A) -> B(x)$。在无变量名的写法中则作 $Sigma A B$ 与 $Pi A B$。
+本文不会花费过多笔墨讨论变量的处理。我们在公式中一般直接使用具名变量，但是 $lambda x. x$ 与 $lambda y. y$ 直接视作等同，不加额外说明。对于#translate[语境][context] 而言，如果希望强调其不依赖变量名的属性，可能将 $(Gamma, x:A)$ 写作 $(Gamma dot A)$。为了方便书写，我们也将 $Sigma$ 类型写成 $(x : A) times B(x)$，与非依值的 $A times B$ 对应。同理 $Pi$ 类型写成 $(x : A) -> B(x)$。在无变量名的写法中则作 $Sigma A B$ 与 $Pi A B$。
 
 依值类型论的定义中，往往先定义不考虑类型的表达式集合，称作#translate[原始表达式][raw term]，再定义类型规则剔除类型不合的表达式，并给出#translate[判值相等][judgmental equality] 关系。这样可以得到一系列集合
 #eq($"Ctx" quad "Tp"(Gamma) quad "Tm"(Gamma, A)$)
@@ -33,7 +33,7 @@ $)
 
 代换的方向对初学者或许有些反直觉。例如假设 $Delta = (x : NN, y : NN)$ 与 $Gamma = (z : NN)$，那么 $sigma = [x \/ 3, y \/ f(z)]$ 乍看应当是从 $Delta$ 到 $Gamma$ 的代换。不过，如果 $Delta = (x : A)$ 与 $Gamma = (y : B)$ 都只有一个类型，那么代换 $sigma = [x \/ t]$ 就与从 $B$ 到 $A$ 的函数一一对应。因此我们将代换的方向写作 $Gamma -> Delta$，或者仿照元素的写法 $Gamma tack sigma : Delta$。
 
-给定 $Gamma -> Delta$ 的代换 $sigma$，我们可以在 $Delta$ 中添加一个变量 $(Delta, x : A)$，那么代换也需要增加对新变量的代换结果，我们写作 $[sigma, x\/t]$。在不使用变量名的写法中，则写作 $[sigma, t] : Gamma -> (Delta, A)$。我们把空语境写作 $()$，空代换写作 $[]$。
+给定 $Gamma -> Delta$ 的代换 $sigma$，我们可以在 $Delta$ 中添加一个变量 $(Delta, x : A)$，那么代换也需要增加对新变量的代换结果，我们写作 $[sigma, x\/t]$。在不使用变量名的写法中，则写作 $[sigma, t] : Gamma -> (Delta dot A)$。我们把空语境写作 $()$，空代换写作 $[]$。
 
 在类型论的规则中，语境和代换有两种解释方式。通常的介绍中，会认为代换是从当前变量集到表达式的映射。
 代换在表达式上的操作是在表达式上递归定义的，例如
@@ -56,7 +56,7 @@ $)
 这两种解释办法定义得到语法本质上是等价的，并且都自然地对应一种模型的定义。前者为每一种长度的语境都各自赋予一类对象，而后者将所有的语境放在一起。但是，数学实际中遇到的对象往往不会具有这样明确的长度结构。例如在集合中，$A times varnothing = varnothing$，因此没有办法区分一个空集究竟是几个集合的乘积。我们故而采用第二种观点，而将第一种观点下的相关定义称作#define[语境性][contextual] 的。不过，这两者实际上大同小异，只是细节处理上后者会更加优雅。
 
 为供读者参考，在@fig:substitution 中列出了第二种观点下需要添加的相关规则。其中并无难解之处，无非分为四组：代换之间的运算、代换作用于类型的性质、代换作用于元素的性质，最后还有语境扩展与代换的相互作用。读者也可参考 Angiuli 与 Gratzer 的教材~@type-theory-book。
-其中，$frak(p)$ 是从语境扩展 $(Gamma, A)$ 到 $Gamma$ 的代换，抛弃最后一个分量。同时应当有变量表达式 #eq($ Gamma, x : A tack x : A. $)但是 $A$ 是在语境 $Gamma$ 中的类型，所以严格来说需要经过 $frak(p)$ 代换之后才能在 $(Gamma, x : A)$ 语境下使用。在不使用变量名时，将元素表达式 $Gamma, x : A tack x : A$ 写作 $frak(q) in "Tm"((Gamma, A), A frak(p))$。这样，语境中从右向左的第 $n$ 个变量就应该写作 $frak(q) frak(p)^(n-1)$，与 de Bruijn 指标的写法类似。
+其中，$frak(p)$ 是从语境扩展 $(Gamma dot A)$ 到 $Gamma$ 的代换，抛弃最后一个分量。同时应当有变量表达式 #eq($ Gamma, x : A tack x : A. $)但是 $A$ 是在语境 $Gamma$ 中的类型，所以严格来说需要经过 $frak(p)$ 代换之后才能在 $(Gamma, x : A)$ 语境下使用。在不使用变量名时，将元素表达式 $Gamma, x : A tack x : A$ 写作 $frak(q) in "Tm"((Gamma dot A), A frak(p))$。这样，语境中从右向左的第 $n$ 个变量就应该写作 $frak(q) frak(p)^(n-1)$，与 de Bruijn 指标的写法类似。
 
 #numbered-figure(
   placement: auto,
@@ -118,17 +118,17 @@ $)
     )$,
     // Context extension
     $rule(
-      Gamma tack [sigma, t] : (Delta, A), 
+      Gamma tack [sigma, t] : Delta dot A, 
       Gamma tack sigma : Delta,
       Delta tack A istype,
       Gamma tack t : A sigma
     )$,
     $rule(
-      Gamma\, A tack frak(p) : Gamma,
+      Gamma dot A tack frak(p) : Gamma,
       Gamma tack A istype
     )$,
     $rule(
-      Gamma\, A tack frak(q) : A frak(p),
+      Gamma dot A tack frak(q) : A frak(p),
       Gamma tack A istype
     )$,
     // beta
@@ -146,9 +146,9 @@ $)
     )$,
     // eta
     $rule(
-      Gamma tack sigma = [frak(p) compose sigma, frak(q) sigma] : (Delta, A),
+      Gamma tack sigma = [frak(p) compose sigma, frak(q) sigma] : Delta dot A,
       Delta tack A istype,
-      Gamma tack sigma : (Delta, A),
+      Gamma tack sigma : Delta dot A,
     )$
   )
 )<fig:substitution>
@@ -314,7 +314,7 @@ $)
 #eq($
   rule(Gamma tack [] : () isnf) quad
   rule(
-    Gamma tack [sigma, t] : (Delta, A) isnf,
+    Gamma tack [sigma, t] : (Delta dot A) isnf,
     Gamma tack sigma : Delta isnf,
     Gamma tack t : A sigma isnf
   ).
