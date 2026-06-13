@@ -519,7 +519,7 @@ $)
 
 #let LLambda = h(0pt) + box(rotate(180deg)[$VV$]) + h(0pt)
 
-另一个例子是 $lambda$ 演算。考虑 $beta$ 等价意义下的表达式集合 $LLambda$，二元运算就是函数应用。这样组合完备性显然成立，例如 $k x y = x$ 可以直接由 $lambda x y bind x$ 表达。值得注意的是，这个二元运算是全运算，因为不停机的表达式也是集合 $LLambda$ 中的元素。如果我们只考虑#define[既约][reduced] 表达式 $LLambda'$，即无法 $beta$ 归约的表达式，那么二元运算就会变成偏运算。
+另一个例子是 $lambda$ 演算。考虑 $beta$ 等价意义下的表达式集合 $LLambda$，二元运算就是函数应用。这样组合完备性显然成立，例如 $k x y = x$ 可以直接由 $lambda x y bind x$ 表达。值得注意的是，这个二元运算是全运算，因为不停机的表达式也是集合 $LLambda$ 中的元素。//如果我们只考虑#define[既约][reduced] 表达式 $LLambda'$，即无法 $beta$ 归约的表达式，那么二元运算就会变成偏运算。
 
 有了计算模型的定义，就可以着手定义哪些数学对象是可计算的。以下我们固定一个具体的偏组合代数 $AA$。
 #let realizes = math.scripts(sym.forces)
@@ -669,7 +669,7 @@ $)
       content((i*2.2, 2.35), [不停机])
     }
   }
-}), caption: [等价类图示]) <fig:choice-realize>
+}), caption: [等价类图示], placement: auto) <fig:choice-realize>
 回忆 $P$ 是有序对的程序。令 $P n b$ 实现 $(n,b)$ 对应的等价类。这就构成了汇编，记作 $X$。再考虑其上的汇编族 $A(u)$ 为 $NN times Bool$ 中与 $u$ 同一个等价类的子集构成的汇编。恒等函数程序实现了 $(u : X) -> norm(A(u))$。因为如果 $r realizes_X u$，则 $r = P n b$ 并且 $u = [(n, b)]$，此时 $A(u)$ 要么是 ${(n, b)}$，要么是 ${(n, "true"), (n, "false")}$。无论如何，$r$ 的确实现了 $A(u)$ 的某个元素。
 
 然而，并没有程序可以实现 $norm((u:X) -> A(u))$，因为这需要实现某个集合上的函数 $f : (u:X) -> A(u)$。假如有这样的程序 $s$，那么 $s(P thin n thin "true")$ 与 $s(P thin n thin "false")$ 相等当且仅当第 $n$ 个图灵机停机，因此就可以判定停机问题了。这与前面的区别在于恒等程序并不保持 $X$ 上的等价关系，因此作为 $(u : X) -> A(u)$ 的函数不良定义。
@@ -698,7 +698,9 @@ while True:
 
 ==== Church 原理
 
-surjection $NN -> NN^NN$
+Church 原理（勿与 Church--Turing 论题混淆）说的是#emph[任何函数] $NN -> NN$ 都可计算。换句话说，给定可计算函数的 Gödel 编码 $phi_n : NN harpoon NN$，任何全函数 $f : NN -> NN$ 都存在 $n$ 使得 $f = phi_n$。#footnote[文献中 Church 原理可能是更强的 $(forall x bind exists y bind A(x,y)) ==> (exists n bind forall x bind A(x, phi_n (x)))$，不要求 $y$ 的唯一性。] 在构造主义逻辑中，这并不与 Cantor 对角论证矛盾。需要注意的是，我们不能要求有函数 $"code" : (NN->NN) -> NN$ 为每个函数给出可计算的 Gödel 编码，因为这就给出了判定两个函数是否相等的办法。
+
+不难发现具现模型中 Church 原理是成立的，因为任何函数都有程序实现，将其转化为 Gödel 编码即可。
 
 Halting problem and Rice's theorem
 
