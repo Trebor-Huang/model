@@ -321,3 +321,12 @@ dialectica:
       type: proceedings
       title: LICS '18
 
+polynomial-model:
+  type: thesis
+  title: Polynomials and models of type theory
+  author: Von Glehn, Tamara
+  date: 2015
+  school: University of Cambridge
+  note: PhD thesis
+  serial-number:
+    doi: 10.17863/CAM.16245
