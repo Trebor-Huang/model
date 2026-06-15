@@ -306,7 +306,7 @@ $)
 
 集合模型中，根据 #[@sec:set-theory]中的讨论，我们利用强不可达基数的理论。具体来说，我们之前将 $"Tp"(Gamma)$ 定义为 $Gamma -> H_kappa$ 的集合族，其中 $kappa$ 是某个强不可达基数。如果要在此构造宇宙，则需要找到另一个强不可达基数 $lambda < kappa$，此时有 $H_lambda in H_kappa$，因此可以定义 $Gamma$ 下的集合族 $cal(U)_x = H_lambda$，不依赖 $x$。运算 $"El"_cal(U)$ 的定义域是 $H_lambda$ 的元素族，也就是为每个 $x in  Gamma$ 选择 $A_x in H_lambda$。它的值域则是 $H_kappa$ 的元素族，所以可以直接定义 $"El"_cal(U) (A) = A$。
 
-对于 Coquand 层级， $Gamma tack A istype$ 被拆分成多个版本 $Gamma tack A istype_kappa$，其中 $kappa$ 取遍所有层级。对应地，具有 Coquand 层级的类型论的模型就应该将 $"Tp"(Gamma)$ 改为 $"Tp"_kappa (Gamma)$，$"Tm"(Gamma, A)$ 改为 $"Tm"_kappa (Gamma, A)$.#footnote[如果每个 $"Tp"_kappa (Gamma)$ 没有交集，那么元素集合不需要标注 $kappa$ 也可以，标注出来更加清晰。]//$kappa <= lambda$ 的层级累积性可以表述为函数 $iota : "Tp"_kappa (Gamma) -> "Tp"_lambda (Gamma)$，使得等式 $"Tm"_kappa (Gamma, A) = "Tm"_lambda (Gamma, iota(A))$ 与 $iota(A)sigma = iota(A sigma)$ 成立。注意前者是两个集合之间的等式。
+对于 Coquand 层级， $Gamma tack A istype$ 被拆分成多个版本 $Gamma tack A istype_kappa$，其中 $kappa$ 取遍所有层级。对应地，具有 Coquand 层级的类型论的模型就应该将 $"Tp"(Gamma)$ 改为 $"Tp"_kappa (Gamma)$，$"Tm"(Gamma, A)$ 改为 $"Tm"_kappa (Gamma, A)$.//#footnote[如果每个 $"Tp"_kappa (Gamma)$ 没有交集，那么元素集合不需要标注 $kappa$ 也可以，标注出来更加清晰。]$kappa <= lambda$ 的层级累积性可以表述为函数 $iota : "Tp"_kappa (Gamma) -> "Tp"_lambda (Gamma)$，使得等式 $"Tm"_kappa (Gamma, A) = "Tm"_lambda (Gamma, iota(A))$ 与 $iota(A)sigma = iota(A sigma)$ 成立。注意前者是两个集合之间的等式。
 有了 Coquand 层级，Coquand 宇宙则非常简单，有
 #eq($
   "El"_kappa &: "Tm"_kappa (Gamma, cal(U)_kappa) -> "Tp"_kappa (Gamma) \
