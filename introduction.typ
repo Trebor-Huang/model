@@ -315,6 +315,10 @@ $)
 并且两者互为逆映射，满足 $"El"_kappa (A)sigma = "El"_kappa (A sigma)$ 与 $ceil(A)_kappa sigma = ceil(A sigma)_kappa$。
 在集合模型中，可以取强不可达基数 $kappa$，并令 $"Tp"_kappa (Gamma)$ 为取值在 $H_kappa$ 中的集合族。这样， $"El"_kappa (A) = A$ 就是双射。
 
+=== 类型论模型的基本定理
+
+#define[可靠性][soundness] (four judgments)
+
 == 相容性与独立性
 
 在数理逻辑中，模型的一大用途是说明某个命题无法在公理系统中证明或者证伪。如果类型论 $TT$ 中，某个类型 $A$ (视作命题) 没有元素，就说此命题#define[不可证][unprovable]。特别地，如果空类型没有元素，就说这个类型论是#define[自洽][consistent] 的。倘若类型论 $TT$ 添加了公理 $A$ 后仍然自洽，就说它们是#define[相容][consistent] 的。
