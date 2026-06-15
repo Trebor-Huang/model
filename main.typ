@@ -45,7 +45,8 @@
 #set text(size: 20pt)
 Trebor\ #v(1em)
 #set text(size: 14pt)
-#datetime.today().display("[year]年[month padding:none]月[day padding:none]日")
+#datetime.today().display("[year]年[month padding:none]月[day padding:none]日")\
+Typst 版本：#sys.version
 #v(1.5fr)
 
 #let realignment = place(

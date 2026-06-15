@@ -16,11 +16,6 @@ jobs:
           wget https://github.com/adobe-fonts/source-han-serif/releases/download/2.002R/09_SourceHanSerifSC.zip
           unzip 09_SourceHanSerifSC.zip
           mv OTF/SimplifiedChinese/* fonts
-
-          wget https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Caligraphic-Regular.ttf
-          mv KaTeX_Caligraphic-Regular.ttf fonts
-          wget https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/fonts/KaTeX_Caligraphic-Bold.ttf
-          mv KaTeX_Caligraphic-Bold.ttf fonts
       - run: typst compile main.typ model.pdf --font-path ./fonts/
       - uses: actions/upload-artifact@v7
         with:

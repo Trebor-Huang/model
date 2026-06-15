@@ -151,7 +151,7 @@ $))
   {star mid(|) x = y} =
   cases(
     {star} quad & x = y,
-    varnothing & x != y
+    nothing & x != y
   )
 $)
 其中等号均为集合论意义的等号。换成展映射的语言，就是从 ${(x, a_1, a_2) mid(|) a_1 = a_2 in A_x}$ 到 ${(x, a_1, a_2) mid(|) a_1, a_2 in A_x}$ 的含入映射。注意到前者实际上就同构于 $Gamma dot A$。因此，外延相等类型对应要求 $Gamma dot A -> (Gamma dot A) dot A frak(p)$ 这个对角映射是展映射。

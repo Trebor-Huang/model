@@ -1,5 +1,5 @@
-#import "@preview/cetz:0.3.4": canvas, draw
-#import "@preview/fletcher:0.5.7" as fletcher: diagram, node, edge
+#import "@preview/cetz:0.5.2": canvas, draw
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 #let diagram = diagram.with(label-size: 0.85em, label-sep: 0.15em)
 #let edgeL = edge.with(label-side: left)
 #let edgeR = edge.with(label-side: right)
@@ -28,7 +28,7 @@
 #let define(zh, en, key:none) = [*#zh* #text(fill: luma(40%))[(#en)]#add-entry(zh,en,key)]
 
 // Defintions
-#import "@preview/ctheorems:1.1.3": *
+#import "@preview/ctheorems:1.1.3": *  // todo replace
 #let thmstyle = thmplain.with(
   separator: [*.* ],
   titlefmt: strong,
@@ -58,13 +58,12 @@
 // Equations
 #let eq(content, top: 0pt, bottom: 0pt) = [\
   #box(align(center, content), width: 1fr, inset: (top: top, bottom: bottom))\
-] // TODO add parameter and manually tune some vertical spacing
-#let varnothing = sym.diameter
-#let cal(it) = text(font: "KaTeX_Caligraphic", fallback: false, it.text) // TODO spacing difference?
+] // TODO manually tune some vertical spacing
 
 // Inference rules
 #let rule(concl, ..prem) = if type(prem.at(0, default: none)) == array {
     math.frac(box(
+      inset: (bottom: 0.25em),
       prem.pos()
       .map(it => math.equation(it.intersperse(math.quad).join()))
       .intersperse("\n").join()
@@ -75,7 +74,6 @@
   }
 #let partir(..rules) = for rule in rules.pos() {
   box(math.equation(rule, block: true), inset: (left: 1em, right: 1em))
-  // TODO box inherit baseline
 }
 // Other type theoretic stuff
 #let istype = math.op(math.sans("type"))

@@ -61,7 +61,7 @@
 - 给定 $Gamma tack A istype$ 与两个元素 $Gamma tack s, t : A$，相等类型解释为
   #eq($ interpret("Id"(A, s, t))_x = cases(
     {star} quad & interpret(s)_x = interpret(t)_x ,
-    varnothing  & interpret(s)_x != interpret(t)_x
+    nothing  & interpret(s)_x != interpret(t)_x
   ) $)
 - 这些类型对应的元素，例如 $lambda$ 函数抽象、函数应用、有序对的配对与投影映射等等，读者可先行思考，稍后给出模型的定义后会再讨论。
 
@@ -222,7 +222,7 @@ $)
 严格来说，应该允许 $A$ 依赖于一个空类型的变量，才是完整的依值消去子。不过由于空类型可以推出一切，这并没有太大区别。在语义中，我们需要为每个 $A$ 配备运算 #eq($ "abort"_A : "Tm"(Gamma, Empty) -> "Tm"(Gamma, A), $) 满足 $"abort"_A (p) sigma = "abort"_(A sigma) (p sigma)$。
 由于没有构造子，空类型没有 $beta$ 等式。
 
-在集合模型中，空类型的解释是空集合族。 如果 $Gamma$ 非空，那么 $"Tm"(Gamma, Empty)$ 就是空集，否则它恰好有一个元素。这是因为定义域为空的函数集 $varnothing -> X$，或者零个集合的乘积 $product_(p in varnothing) X_p$，都恰好有一个元素。无论是哪种情况，都不难看出 $"abort"_A$ 只有唯一一种构造方式，因此也总是满足代换的等式。
+在集合模型中，空类型的解释是空集合族。 如果 $Gamma$ 非空，那么 $"Tm"(Gamma, Empty)$ 就是空集，否则它恰好有一个元素。这是因为定义域为空的函数集 $nothing -> X$，或者零个集合的乘积 $product_(p in nothing) X_p$，都恰好有一个元素。无论是哪种情况，都不难看出 $"abort"_A$ 只有唯一一种构造方式，因此也总是满足代换的等式。
 
 空类型一般也没有 $eta$ 等式。假如有的话，它应该形如这样：
 #eq($

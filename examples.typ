@@ -208,9 +208,9 @@ $)
 
 === 模型定义
 
-我们任取单元素集 ${star}$ (例如集合论中往往取 $star = varnothing$，即 ${star} = {varnothing}$)。将语境解释为 $varnothing$ 与 ${star}$。代换则是集合之间的函数。恰好有三个代换，分别是 $varnothing -> varnothing$、$varnothing -> {star}$ 与 ${star} -> {star}$。给定语境 $Gamma$，类型的解释是 $Gamma$ 上的集合族 $A_x$，要求每个 $A_x$ 要么是 $varnothing$ 要么是 ${star}$。
+我们任取单元素集 ${star}$ (例如集合论中往往取 $star = nothing$，即 ${star} = {nothing}$)。将语境解释为 $nothing$ 与 ${star}$。代换则是集合之间的函数。恰好有三个代换，分别是 $nothing -> nothing$、$nothing -> {star}$ 与 ${star} -> {star}$。给定语境 $Gamma$，类型的解释是 $Gamma$ 上的集合族 $A_x$，要求每个 $A_x$ 要么是 $nothing$ 要么是 ${star}$。
 
-此时，语境扩展也可以分类讨论定义。当 $Gamma = varnothing$ 时定义 $(Gamma dot A) = varnothing$; 当 $Gamma = {star}$ 时令 $(Gamma dot A) = A_star$ 即可。注意这里与集合模型不同：集合模型中 $(Gamma dot A)$ 的解释是 ${(x, a) mid(|) x in Gamma, a in A_x}$，如果套用到这里就得到集合 ${(star, star)}$。但是我们希望语境的解释只能是 $varnothing$ 与 ${star}$，不能是 ${(star, star)}$，因此这里需要手动修改。
+此时，语境扩展也可以分类讨论定义。当 $Gamma = nothing$ 时定义 $(Gamma dot A) = nothing$; 当 $Gamma = {star}$ 时令 $(Gamma dot A) = A_star$ 即可。注意这里与集合模型不同：集合模型中 $(Gamma dot A)$ 的解释是 ${(x, a) mid(|) x in Gamma, a in A_x}$，如果套用到这里就得到集合 ${(star, star)}$。但是我们希望语境的解释只能是 $nothing$ 与 ${star}$，不能是 ${(star, star)}$，因此这里需要手动修改。
 
 此模型显然包含单元素类型与空类型，证明与集合模型相同。不难看出，它也对 $Sigma$ 与 $Pi$ 类型封闭。相等类型的解释也与集合模型相同。
 
@@ -650,7 +650,7 @@ $)
 先考虑没有语境的简单情况。假设有 $NN$ 上的汇编族 $A(n)$，那么 $(n : NN) -> norm(A(n))$ 如果有元素，则每个 $A(n)$ 都非空，并且有程序 $r$ 使得每个自然数 $n$ (我们直接将自然数与对应的程序视作相同) 都存在某个 $a in A(n)$ 使得 $r n realizes_(A(n)) a$。我们用集合上的选择公理选出 $a_n in A(n)$，那么 $r$ 同时也实现了 $(n : NN) -> A(n)$ 的函数 $n |-> a_n$。由此，恒等程序就应当满足我们的需求.#footnote[注意一般我们还需要验证这个程序实现了集合上良定义的函数，但是由于进行了命题截断，$a_n$ 无论如何选择都是良定义的。]
 
 以上论证为何不适用于一般的选择公理呢? 我们实际上使用了 $NN$ 的每个元素都只有一个程序实现的特点。我们知道排中律无法写成程序，而选择公理可以推出排中律，因此只要考虑这个证明中的构造即可发现选择公理为何无法写成程序。具体来说，考虑 $(NN times Bool)\/ class("normal", tilde)$，其中等价关系 $(n,b) tilde (n',b')$ 当且仅当 $n = n'$，并且要么 $b = b'$ 要么第 $n$ 个图灵机停机。@fig:choice-realize 画出了等价类。
-#figure(canvas({
+#numbered-figure(canvas({
   import draw: *
   for i in range(6) {
     content((i*2.2,0), $(#i, "false")$)
@@ -740,15 +740,15 @@ Synthetic computability @synthetic-computability
 
 另一方面，容器也可以理解为某种辩论，或者两步博弈的过程。$I$ 表示某个命题的论证，而 $E_i$ 表示对论证 $i$ 的反驳。如果将类型视作命题，那么某个命题为真应当对应存在某个无法反驳的论证 $i$，即 $E_i = emptyset$。这种对命题的理解与 Gödel 的#translate[辩证解释][Dialectica interpretation]#footnote[这里 “辩证” 指的是其发表在期刊《辩证》上，与内容无关。] 神似，读者可以参考 @dialectica 的讨论。
 
-为了便于阅读，我们将容器 $(I, E)$ 写作 $(I lt.tri E)$。而给定容器 $C = (I lt.tri E)$，定义 $C(X) = product.co_(i in I) X^(E_i)$ 为对应的多项式函子。
+为了便于阅读，我们将容器 $(I, E)$ 写作 $(I lt.closed E)$。而给定容器 $C = (I lt.closed E)$，定义 $C(X) = product.co_(i in I) X^(E_i)$ 为对应的多项式函子。
 
-容器之间的映射可以从程序的视角推导：如果有容器 $C = (I lt.tri E)$ 与 $C' = (I' lt.tri E')$，那么 $C -> C'$ 的映射应该给出函数 $f : I -> I'$，与反方向的函数族 $g : E'_(f(i)) -> E_i$。这样，给定某个形状 $i in I$ 的数据，我们可以输出形状为 $f(i) in I'$ 的数据。对于形状 $f(i)$ 中的某个槽位 $p in E'_(f(i))$，我们只需要指出某个原有的位置 $g(p) in E_i$，将这个位置上的元素搬运过去即可。这样就可得到 $C(X) -> C'(X)$ 的映射。
+容器之间的映射可以从程序的视角推导：如果有容器 $C = (I lt.closed E)$ 与 $C' = (I' lt.closed E')$，那么 $C -> C'$ 的映射应该给出函数 $f : I -> I'$，与反方向的函数族 $g : E'_(f(i)) -> E_i$。这样，给定某个形状 $i in I$ 的数据，我们可以输出形状为 $f(i) in I'$ 的数据。对于形状 $f(i)$ 中的某个槽位 $p in E'_(f(i))$，我们只需要指出某个原有的位置 $g(p) in E_i$，将这个位置上的元素搬运过去即可。这样就可得到 $C(X) -> C'(X)$ 的映射。
 
-我们也可以从函子的视角理解容器映射。不难证明上面给出的描述恰好是两个多项式函子之间的全体自然变换的集合。证明中我们需要用到集合范畴上的恒等函子到自身的自然变换只有一个 $id : "Id"_Set -> "Id"_Set$。这样看，容器与多项式函子的视角就是一致的。我们将上面的映射写作 $(f lt.tri g)$。
+我们也可以从函子的视角理解容器映射。不难证明上面给出的描述恰好是两个多项式函子之间的全体自然变换的集合。证明中我们需要用到集合范畴上的恒等函子到自身的自然变换只有一个 $id : "Id"_Set -> "Id"_Set$。这样看，容器与多项式函子的视角就是一致的。我们将上面的映射写作 $(f lt.closed g)$。
 
 最后，也可以利用辩论的视角考虑。$C -> C'$ 表示命题 $C$ 比命题 $C'$ 更难论证。换言之，如果反方总可以辩赢 $C'$，那么这个映射使反方也可以辩赢 $C$。具体来说，给定正方的论证 $i in I$，反方可以翻译得到论证 $f(i) in I'$，驳之得 $p in E'_(f(i))$，再翻译 $g(p) in E_i$。的确，如果命题 $C$ 蕴含命题 $C'$，那么只要驳倒了 $C'$，自然就证伪了 $C$。
 
-照惯例，我们需要定义#emph[依值]容器的概念。给定容器 $Gamma = (I lt.tri E)$，依值容器是个集合族的有序对，写作 $A = (scr(I) lt.tri scr(E))$，其中 $scr(I)_i$ 是 $I$ 上的集合族，而 $scr(E)_(i, j)$ 下标为 $i in I$，$j in scr(I)_i$。可以定义依值容器的全空间 $integral A = (I' lt.tri E')$，其中
+照惯例，我们需要定义#emph[依值]容器的概念。给定容器 $Gamma = (I lt.closed E)$，依值容器是个集合族的有序对，写作 $A = (scr(I) lt.closed scr(E))$，其中 $scr(I)_i$ 是 $I$ 上的集合族，而 $scr(E)_(i, j)$ 下标为 $i in I$，$j in scr(I)_i$。可以定义依值容器的全空间 $integral A = (I' lt.closed E')$，其中
 #eq($ I' = product.co_(i in I) scr(I)_i quad E'_(i, j) = E_i union.sq scr(E)_(i,j). $)
 注意这里的 $scr(E)$ 依赖 $I$ 与 $scr(I)$，但不依赖 $E$。这是语境扩展的语义。直观上，要论证 $(Gamma dot A)$，需要同时给出二者的论证，而要反驳只需要反驳其一即可。这就是为什么 $E'_(i,j)$ 是不交并。这个构造由 von Glehn~@polynomial-model 提出。
 
