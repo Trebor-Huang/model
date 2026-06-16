@@ -16,7 +16,7 @@
 
 元素 $"Tm"(Gamma, A)$ 也有类似的代换操作，但是它还取决于类型 $A$，因此不能直接写作预层。这有多种解决办法。
 - 可以将同一个语境下的所有元素合并在一起，得到 #eq($ "Tm"(Gamma) = product.co_(A in"Tp"(Gamma)) "Tm"(Gamma, A). $) 这在代换下就构成预层。有自然变换 $typeof : "Tm" -> "Tp"$ 取出元素的类型。这样三个对象 $("Tp", "Tm", typeof)$ 就完全记录了所需的信息。
-- 可以将元素与类型合在一起，得到集合族。每个类型 $A in "Tp"(Gamma)$ 都附带一个集合 $"Tm"(Gamma, A)$，这就构成 $"Tp"(Gamma)$ 上的集合族。准确来说，定义范畴 $Fam$ 的对象是集合族，而 $A_(x in X)$ 到 $B_(y in Y)$ 的箭头由函数 $f : X -> Y$ 与 $F_x : A_x -> B_(f(x))$ 组成。这样，$"Tm"$ 与 $"Tp"$ 的数据就能组合为一个函子 $cal(C)^"op" -> Fam$。
+- 可以将元素与类型合在一起，得到集合族。每个类型 $A in "Tp"(Gamma)$ 都附带一个集合 $"Tm"(Gamma, A)$，这就构成 $"Tp"(Gamma)$ 上的集合族。准确来说，定义范畴 $Fam$ 的对象是集合族，而 $A_(x in X)$ 到 $B_(y in Y)$ 的箭头由函数 $f : X -> Y$ 与 $F_x : A_x -> B_(f(x))$ 组成。这样，$"Tm"$ 与 $"Tp"$ 的数据就能组合为一个函子 $cal(C)^"op" -> Fam$。这种方案得到的定义称作#translate[具族范畴][category with families]。
 - 可以让语境与类型合起来构成新的范畴。具体来说，定义范畴 $integral_cal(C)"Tp"$ 的对象为有序对 $(Gamma; A)$，临时用分号以示区分。从 $(Gamma; A)$ 到 $(Delta; B)$ 的箭头是代换 $sigma : Gamma -> Delta$，满足 $B sigma = A$。这样 $"Tm"$ 就可以视作 $\(integral_cal(C)"Tp"\)^"op" -> Set$ 的预层。
   注意有序对之间的箭头 $(Gamma; A) -> (Delta; B)$ 与语境扩展之间的代换 $(Gamma dot A) -> (Delta dot B)$ 不同，因为后者还包含一个元素 $Gamma, A tack B sigma$，但是我们还没定义元素 $"Tm"$，所以不能这么办。
 
@@ -249,10 +249,6 @@ $)
 
 这个范畴其实是 Cantor 空间#footnote[实数中考虑三进制展开只有 0 与 2 的小数，其构成 $[0,1]$ 的子空间称作 *Cantor 空间*。]上的层范畴 $sans("Sh")("Cantor")$，是意象。因此我们立刻得到这是局部积闭范畴。事实上它可以作为 #[@sec:markov-principle]提到的 Марков 原理的反模型。
 
-
-
-(...) @clans-and-tribes
-
 === 概括范畴
 
 这一节，我们来考察并非所有映射都是展映射的情况。
@@ -323,17 +319,16 @@ $))
 ]
 
 #definition[
-  #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴 $cal(E) -> cal(C)$，并且 $F$ 将拉回态射映到拉回态射.#footnote[我们无需要求 $cal(C)$ 有全部拉回，即 $cod : cal(C)^-> -> cal(C)$ 不一定是纤维范畴。不过如果加上这个条件，$F$ 就是纤维化范畴之间的保持结构的映射。] 同时，$cal(C)$ 有终对象表示空语境。
+  #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴 $cal(E) -> cal(C)$，并且 $F$ 将拉回态射映到拉回态射.#footnote[$cod : cal(C)^-> -> cal(C)$ 不一定是纤维范畴。如果加上这个条件，$F$ 就是纤维化范畴之间保持结构的映射。] 同时，$cal(C)$ 有终对象表示空语境。
 ]
 
-注意我们尚未说明概括范畴是合理的类型论模型。(...) soundness
-探究此事，只需要将概括范畴与自然模型相比。但这就可以发现实际上概括范畴比自然模型多出了额外的信息。概括范畴中 $cal(E)$ 的对象直观上是类型 $Gamma tack A istype$ 的语义解释，而这个范畴中的态射则是类型之间的某种态射。假设 $Gamma tack A istype$，$Delta tack B istype$。$F : cal(E) -> cal(C)^->$ 将态射 $A -> B$ 映射到某个代换 $(Gamma dot A) -> (Delta dot B)$。但是并非所有这样的代换都一定在 $F$ 的像里，并且 $cal(E)$ 中的多个态射可能映射到同一个代换。而自然模型中没有额外规定类型之间的态射。我们有三种办法解决此问题。
+将概括范畴与自然模型相比，可以发现概括范畴比自然模型多出了额外的信息。概括范畴中 $cal(E)$ 的对象直观上是类型 $Gamma tack A istype$ 的语义解释，而这个范畴中的态射则是类型之间的某种态射：假设 $Gamma tack A istype$，$Delta tack B istype$。$F : cal(E) -> cal(C)^->$ 将态射 $A -> B$ 映射到某个代换 $(Gamma dot A) -> (Delta dot B)$。但是并非所有这样的代换都在 $F$ 的像里，并且 $cal(E)$ 中的多个态射可能映射到同一个代换。自然模型中没有对应的概念。我们有三种办法解决此问题。
 
-其一是令 $cal(E)$ 是 $cal(C)^->$ 的满子范畴，这样相当于要求 $A -> B$ 的映射与代换 $(Gamma dot A) -> (Delta dot B)$ 一一对应，使得这些额外的自由度被 $cal(C)$ 完全决定。这是让 $cal(E)$ 海纳百川，兼收并蓄。这样得到的数学对象称作#define[展映射范畴][display map category].
+其一是令 $cal(E)$ 是 $cal(C)^->$ 的满子范畴，这样相当于要求 $A -> B$ 的映射与代换 $(Gamma dot A) -> (Delta dot B)$ 一一对应，使得这些额外的自由度被 $cal(C)$ 完全决定。这是让 $cal(E)$ 海纳百川，兼收并蓄。这样得到的数学对象称作#translate[展映射范畴][display map category].
 
 其二是令 $cal(E)$ 只包含纤维化要求必须存在的映射。换句话说， $cal(E)$ 中的任何态射都出现在某个 $p$-拉回方中。这有更简洁的描述。
 #definition[
-考虑函子 $p : cal(E) -> cal(C)$。给定 $cal(C)$ 中的态射 $sigma : Delta -> Gamma$ 与 $A in cal(E)$，使得 $p(A) = Gamma$，如果总是存在唯一的 $f : B -> A$ 使得 $p(f) = sigma$，就说 $p$ 是#define[离散纤维化][discrete fibration]。
+考虑函子 $p : cal(E) -> cal(C)$。给定 $cal(C)$ 中的态射 $sigma : Delta -> Gamma$ 与 $A in cal(E)$，使得 $p(A) = Gamma$，如果总存在唯一的 $f : B -> A$ 使得 $p(f) = sigma$，就说 $p$ 是*离散纤维化*。
 #eq(diagram({
   node((0,0), $B$, name: <B>)
   node((1,0), $A$, name: <A>)
@@ -341,18 +336,40 @@ $))
 
   node((0,1), $Delta$, name: <Delta>)
   node((1,1), $Gamma$, name: <Gamma>)
-  edgeR(<Delta>, "->", <Gamma>, $sigma$)
+  edge(<Delta>, "->", <Gamma>, $sigma$)
 
   edge(<B>, "|->", <Delta>)
   edge(<A>, "|->", <Gamma>)
-}))
+}), top: -0.4em)
 此时，此图一定是 $p$-拉回方。因此离散纤维化都是纤维化。
 ]
 假如在概括范畴中令 $p : cal(E) -> cal(C)$ 是离散纤维化，就使得 $cal(E)$ 中只包含必须的态射，从而也消除了多余的自由度。这样得到的数学对象称作#translate[具集范畴][category with attributes]. 直观来说，这两种概括范畴应该都与自然模型等价。我们会在 #[@sec:coherence-problem]讨论此事。
 
 第三种办法则是反其道而行之，不去修改概括范畴使得语义匹配语法，而是修改语法使得它匹配概括范畴。这就需要添加一类新的语法，描述类型之间的映射。它可以用于包含子类型的系统，是前沿研究的课题 @comprehension-type-theory。
 
-(...) simplified and expanded definition of DMC and CwA
+#definition[
+  *具集范畴*由以下资料组成：一个范畴 $cal(C)$ 与预层 $"Ty" : cal(C)^"op" -> Set$，使得对任何 $Gamma in cal(C)$ 与 $A in "Ty"(Gamma)$，都有对象 $(Gamma dot A) in cal(C)$ 与箭头 $frak(p)_A : (Gamma dot A) -> Gamma$。对任何箭头 $sigma : Gamma -> Delta$ 与元素 $A in "Ty"(A)$，都有箭头 $frak(q)_(A, sigma)$ 构成拉回方
+  #eq(diagram({
+    node((0,0), $Gamma dot A sigma$, name: <B>)
+    pullback("dr")
+    node((1,0), $Delta dot A$, name: <A>)
+    edge(<B>, "->", <A>, $frak(q)_(A, sigma)$)
+
+    node((0,1), $Gamma$, name: <Gamma>)
+    node((1,1), $Delta$, name: <Delta>)
+    edge(<Gamma>, "->", <Delta>, $sigma$)
+
+    edge(<B>, "->", <Gamma>)
+    edge(<A>, "->", <Delta>)
+  }))
+  并且 $cal(C)$ 有终对象 $1$。
+]
+
+#definition[
+  *展映射范畴*由以下资料组成：一个范畴 $cal(C)$ 与一些映射 (称作*展映射*)，使得展映射沿着任何映射的拉回都存在，并且仍然是展映射，并且 $cal(C)$ 有终对象 $1$。
+]
+
+以上是具集范畴与展映射范畴本身的定义。擅长范畴论的读者可以尝试证明这些定义的确等价于上文中从概括范畴出发的定义。这里，展映射范畴的定义非常具有纯范畴论的风格。事实上，如果我们按照范畴论保持同构不变性的惯例令，展映射复合同构仍然是展映射，再依次加上 $Sigma$ 与内涵相等类型对应的类型结构，得到的就分别是 Joyal 在范畴类型论~@clans-and-tribes 中提出的 clan 与 tribe 的概念，试译为 “族” 与 “宗”。
 
 === 乱花渐欲迷人眼
 
@@ -365,6 +382,8 @@ $))
 初次阅读时，读者不必纠缠不同定义之间的细节，笼统认为它们都大致等价即可。
 
 == 融贯问题 <sec:coherence-problem>
+
+我们尚未说明概括范畴等等定义了合理的类型论模型。要说明模型的某种定义是合理的，只需证明可靠性定理（@thm:soundness）的对应变体。我们也可以尝试证明这些定义与自然模型的等价性。
 
 #define[融贯问题][coherence problem]
 
