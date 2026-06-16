@@ -728,16 +728,17 @@ Synthetic computability @synthetic-computability
 
 最后，也可以利用辩论的视角考虑。$C -> C'$ 表示命题 $C$ 比命题 $C'$ 更难论证。换言之，如果反方总可以辩赢 $C'$，那么这个映射使反方也可以辩赢 $C$。具体来说，给定正方的论证 $i in I$，反方可以翻译得到论证 $f(i) in I'$，驳之得 $p in E'_(f(i))$，再翻译 $g(p) in E_i$。的确，如果命题 $C$ 蕴含命题 $C'$，那么只要驳倒了 $C'$，自然就证伪了 $C$。
 
-(...) non-dependent constructions
+先考虑不依值情况的直觉。对于乘积 (命题的合取)，从辩论的视角来说，如果要论证两个命题都成立，需要分别给出论证 $(x, y)$。但要驳倒这个命题，只需要驳倒 $x$ 或 $y$ 即可。因此对 $I$ 取乘积，而对 $E$ 取不交并。
 
-照惯例，我们需要定义#emph[依值]容器的概念。给定容器 $Gamma = (I lt.closed E)$，依值容器是个集合族的有序对，写作 $A = (scr(I) lt.closed scr(E))$，其中 $scr(I)_i$ 是 $I$ 上的集合族，而 $scr(E)_(i, j)$ 下标为 $i in I$，$j in scr(I)_i$。可以定义依值容器的全空间 $integral A = (I' lt.closed E')$，其中
+照惯例，我们需要定义依值容器的概念。给定容器 $Gamma = (I lt.closed E)$，依值容器是个集合族的有序对，写作 $A = (scr(I) lt.closed scr(E))$，其中 $scr(I)_i$ 是 $I$ 上的集合族，而 $scr(E)_(i, j)$ 下标为 $i in I$，$j in scr(I)_i$。可以定义依值容器的全空间 $integral A = (I' lt.closed E')$，其中
 #eq($ I' = product.co_(i in I) scr(I)_i quad E'_(i, j) = E_i union.sq scr(E)_(i,j). $)
-注意这里的 $scr(E)$ 依赖 $I$ 与 $scr(I)$，但不依赖 $E$。这是语境扩展的语义。直观上，要论证 $(Gamma dot A)$，需要同时给出二者的论证，而要反驳只需要反驳其一即可。这就是为什么 $E'_(i,j)$ 是不交并。这个构造由 von Glehn~@polynomial-model 提出。
+注意这里的 $scr(E)$ 依赖 $I$ 与 $scr(I)$，但不依赖 $E$。这是语境扩展的语义。这个构造由 von Glehn~@polynomial-model 提出。
 
 我们在此省略各种类型的语义。读者可以参考 Kovács 的 Agda 形式化 @polynomial-agda。
 
 容器模型有几个主要特征。一是它构成函数外延性的反模型。二是它有时比具现模型 (@sec:realizability-model) 能提取出更多的可计算性质。例如某个双重否定命题若为真，在具现模型中可被任何程序实现，因此失去了可计算内涵，但在容器模型中仍然能提取出内容。这是#translate[证明挖掘][proof mining] 的核心想法。即使经典逻辑翻译为构造主义逻辑需要经过双重否定，也可以从经典证明中计算出非平凡的信息，例如分析学中一些定理的显式上下界等。
 
+不止可以对集合构造容器模型。实际上对任何依值类型论的模型 $scr(M)$，都可以在其上构造容器模型 $"Poly"(scr(M))$。Cavallo 与 Höfer @univalence-without-funext 用这个构造考察了泛等公理与函数外延性的关系。
 
 == 操作语义与意义解释
 

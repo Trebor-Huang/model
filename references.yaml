@@ -330,3 +330,15 @@ polynomial-model:
   note: PhD thesis
   serial-number:
     doi: 10.17863/CAM.16245
+
+univalence-without-funext:
+  type: misc
+  note: ArXiv preprint
+  title: Univalence without function extensionality
+  author:
+  - Cavallo, Evan
+  - Höfer, Jonas
+  date: 2026
+  serial-number:
+    doi: 10.48550/arXiv.2605.00812
+
