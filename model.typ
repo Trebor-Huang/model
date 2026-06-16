@@ -22,6 +22,8 @@ Sattler's model structure criteria?
 
 == 单纯集模型
 
+groupoid model already models univalence
+
 Воеводский (Voevodsky), paper by Chris Kapulkin and Peter LeFanu Lumsdaine @simplicial-model
 
 Introduce fibrant types
