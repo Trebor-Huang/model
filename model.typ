@@ -26,11 +26,13 @@ Sattler's model structure criteria?
 
 Introduce fibrant types
 
+syntax is also an infinity groupoid
+
 == 立方模型
 
 Explain why simplicial model is not constructive
 
-BCH model
+BCH model (no HITs: consider the interval type $II$ with eliminator $"elim"_P (a_0, a_1, p, i)$. If $p$ is an expression involving the variable $i : II$, then $"ap"_("path") (i bind "elim"_P (a_0, a_1, p, i))$ requires a diagonal in the semantics. Ordinary duplication of variables should be handled by presheaves but this one can't?)
 
 Internal language and cartesian models
 
@@ -46,3 +48,5 @@ $==>$ equivariant cubical model etc
 idea of using HoTT/2LTT to synthetically define infinity-models
 
 mention that Set model doesn't work inside HoTT because Set is not a hSet
+
+recent work: groupoid syntax is a set, etc

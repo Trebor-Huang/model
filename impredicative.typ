@@ -43,7 +43,7 @@ $)
 #eq($
   NN = forall X bind (X -> X) -> (X -> X).
 $)
-这样自然数 $n$ 可以编码为输入 $f : X -> X$，输出将 $f$ 复合 $n$ 次得到 $f^(compose n)$ 的函数。这种技巧可以将复杂的抽象 —— 例如函数式编程的透镜 —— 转化为函数上的操作，进而允许编译器做更好的优化。但是这样的类型在数学上看意义就不太显然，我们在 #[@sec:impredicative-universe]会详细讨论其中一个解释办法。
+这样自然数 $n$ 可以编码为输入 $f : X -> X$，输出将 $f$ 复合 $n$ 次得到 $f^(compose n)$ 的函数。这种技巧可以将复杂的抽象 —— 例如函数式编程的透镜 —— 转化为函数上的操作，进而允许编译器做更好的优化。但是这样的类型在数学上看意义就不太显然，我们在 #[@sec:impredicative-model]会详细讨论其中一个解释办法。
 
 另外需要提及的是，有一些类型系统，如 F 系统等，习惯包含一种可以取遍全体类型的 “大 $Pi$ 类型”，可以写作 $product_(A istype) P(A)$.#footnote[也可以按照 F 系统的习惯写作 $forall$，但是这与逻辑中的 $forall$ 并不相同。后者等同于满足 $P(x)$ 都是命题的 $Pi$ 类型 $Pi x bind P(x)$，与定义域无关。] 这意味着需要有另一种语境扩展 $(Gamma, A istype)$，能引入类型变量，例如有 $A istype tack lambda x bind x : A -> A$。为了与一般的类型论相比较，我们可以利用宇宙将这种系统等价改写成不含类型变量的类型论。只需要引入宇宙 $cal(U)$ 包含原系统的所有类型，并将原先的 $A istype$ 改做 $A : cal(U)$ 即可。注意类型构造子的改写，例如乘积类型
 #eq($
@@ -136,7 +136,7 @@ $)
 #eq($
   (x : A) times P(x) = (C : *) -> ((x : A) -> P(x) -> C) -> C.
 $)
-注意这里限制了 $C$ 只能处于非直谓宇宙 $*$ 中，并且 $Sigma$ 类型也在 $*$ 里。如果 $A = *$，那么与 F 系统中的 $forall$ 类推，也将这种弱 $Sigma$ 类型称作 $exists$ 类型。事实上，如果加入非直谓强 $exists$ 类型 $(exists X bind P(X)) : *$，并且具备投影函数 $(exists X bind P(X)) -> *$，那么系统就有矛盾 @impredicative-sigma。这说明非直谓宇宙是无法编码这种类型的。但是，这并不排除可以编码 $A$ 与 $B$ 都在 $*$ 宇宙中的 $Sigma$ 类型 $(x : A) times B(x)$。我们将在 #[@sec:impredicative-universe]证明也这是不可能的。
+注意这里限制了 $C$ 只能处于非直谓宇宙 $*$ 中，并且 $Sigma$ 类型也在 $*$ 里。如果 $A = *$，那么与 F 系统中的 $forall$ 类推，也将这种弱 $Sigma$ 类型称作 $exists$ 类型。事实上，如果加入非直谓强 $exists$ 类型 $(exists X bind P(X)) : *$，并且具备投影函数 $(exists X bind P(X)) -> *$，那么系统就有矛盾 @impredicative-sigma。这说明非直谓宇宙是无法编码这种类型的。但是，这并不排除可以编码 $A$ 与 $B$ 都在 $*$ 宇宙中的 $Sigma$ 类型 $(x : A) times B(x)$。我们将在 #[@sec:impredicative-sigma]证明也这是不可能的。
 
 与 $Sigma$ 类型类似，归纳类型的非直谓编码也只能构造弱版本。这对一般编程而言足矣，但要作为逻辑系统，就必须要有完整的归纳法。假设读者已熟悉归纳类型的大致原理，下文只将探讨这些类型与非直谓宇宙的交互。
 
@@ -358,3 +358,24 @@ $)
 ]
 
 // (mention Diaconescu's theorem)
+
+== 非直谓宇宙的模型 <sec:impredicative-model>
+
+- Mention proof irrelevant model of Prop (but the main treatment is in the appendix), it's tricky.
+  - Realizability model has that too
+
+- Proof relevant model of Prop, allowing large elimination
+  - Mention $Lambda$-sets here or below?
+  - Note that squash-type inductives still can't have large induction, otherwise there's Russell's paradox (mention in appendix? probably no need)
+
+(...) Polystructures and the unprovability of natural number induction
+
+=== 非直谓 $Sigma$ 类型 <sec:impredicative-sigma>
+- Alternative model proves independence of strong Sigma types within Prop @independence-results-coc
+  - $A = NN$ (general recursive functions) for simplicity, maybe rephrase?
+  - Let $X$ be *extra modest* if there exists a subset $A' subset.eq A$ such that programs represent an element iff they are defined on $A'$, and they represent the same element iff the actions on $A'$ are equal. $"Prop"$ can be defined as the universe of extra modest sets. Closed under impredicative Pi types.
+  - Let $T$ be the extra modest set of total recursive functions
+  - Let $X_t$ be a family with underlying set $NN$, $r "realizes" n$ iff $r(2k) = t(k)$ and [($r(1) = n$ and $t$ is not all zero) OR ($t$ is constant zero and $r(3) = n$)]. $r(k)$ be undefined for other $k$.
+  - $Sigma T X$ is not extra modest over the empty context, so the universe doesn't contain a code for it, if we fix the construction of $Sigma$ and the definition of El.
+  - However, we just want an _encoding_, i.e. a type that satisfies the universal property of it. This specifies $Sigma$ up to isomorphism, therefore we should find isomorphism invariant properties
+  - Assembly $Y$ is *separable* if for unequal elements $y_1, y_2 in Y$, there exists a computable $phi : Y -> Bool$ such that $phi(y_1) = "false"$ and $phi(y_2) = "true"$. (Separable assemblies are modest.)

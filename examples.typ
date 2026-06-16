@@ -19,7 +19,7 @@
 #let terminal-graph = box(diagram({
   node((0,0), fill: black, radius: 0.2em, outset: 0.3em, name: <n0>)
   edge(<n0>, "->", <n0>, bend: 130deg, loop-angle: 180deg)
-}), height: 0em, inset: (top: -0.88em))
+}), height: 0em, inset: (top: -0.88em), baseline: bottom)
 
 我们将语境解释为有向图，而代换解释为同态。有些反直觉的是，空语境是有一个点与一个自环的图 #terminal-graph，
 而不是单点图 $bullet$。这是因为空语境需要满足 $Gamma -> ()$ 恰好有一个代换，所以需要一个自环，否则 $Gamma$ 中的边无法映射到 $()$ 中。
@@ -634,7 +634,7 @@ $)
 
 在集合模型中，可以将命题截断解释为商集：定义集合族 $A_x$ 每个集合上的等价关系 $tilde$ 满足 $a tilde a'$ 恒成立。定义 $norm(A)_x = A_x \/ class("normal", tilde)$ 即可。此时 $abs(a)$ 即可解释为商集中的等价类 $abs(a)_x = [a_x]$。同样，在具现模型中也可以如此定义，并且令 $r realizes_norm(A)_x u$ 当且仅当存在等价类 $u$ 中的元素 $a$ 使得 $r realizes_A_x a$。
 
-最后，还有一种将数学上的命题翻译至类型论的办法，即考虑一个非直谓宇宙 $"Prop"$，并在各种类型的消去子上作限制。读者可以参考@appendix:impredicative 中的介绍。#[@sec:impredicative-universe]会考察具现模型中非直谓宇宙的语义。
+最后，还有一种将数学上的命题翻译至类型论的办法，即考虑一个非直谓宇宙 $"Prop"$，并在各种类型的消去子上作限制。读者可以参考@appendix:impredicative 中的介绍。#[@sec:impredicative-model]会考察具现模型中非直谓宇宙的语义。
 
 === 可计算的逻辑原理
 
@@ -710,26 +710,6 @@ Halting problem and Rice's theorem
 
 Synthetic computability @synthetic-computability
 
-=== 非直谓宇宙 <sec:impredicative-universe>
-
-阅读本节需要对非直谓宇宙的定义有所了解。由于通行的术语稍显混乱，建议读者先通读#[@appendix:impredicative] 中对非直谓宇宙的介绍。
-
-- Mention proof irrelevant model of Prop (but the main treatment is in the appendix), it's tricky.
-  - Realizability model has that too
-
-- Proof relevant model of Prop, allowing large elimination
-  - Mention $Lambda$-sets here or below?
-  - Note that squash-type inductives still can't have large induction, otherwise there's Russell's paradox (mention in appendix? probably no need)
-
-- Alternative model proves independence of strong Sigma types within Prop @independence-results-coc
-  - $A = NN$ (general recursive functions) for simplicity, maybe rephrase?
-  - Let $X$ be *extra modest* if there exists a subset $A' subset.eq A$ such that programs represent an element iff they are defined on $A'$, and they represent the same element iff the actions on $A'$ are equal. $"Prop"$ can be defined as the universe of extra modest sets. Closed under impredicative Pi types.
-  - Let $T$ be the extra modest set of total recursive functions
-  - Let $X_t$ be a family with underlying set $NN$, $r realizes n$ iff $r(2k) = t(k)$ and [($r(1) = n$ and $t$ is not all zero) OR ($t$ is constant zero and $r(3) = n$)]. $r(k)$ be undefined for other $k$.
-  - $Sigma T X$ is not extra modest over the empty context, so the universe doesn't contain a code for it, if we fix the construction of $Sigma$ and the definition of El.
-  - However, we just want an _encoding_, i.e. a type that satisfies the universal property of it. This specifies $Sigma$ up to isomorphism, therefore we should find isomorphism invariant properties
-  - Assembly $Y$ is *separable* if for unequal elements $y_1, y_2 in Y$, there exists a computable $phi : Y -> Bool$ such that $phi(y_1) = "false"$ and $phi(y_2) = "true"$. (Separable assemblies are modest.)
-
 == 容器与多项式 <sec:polynomial>
 
 此节选读。#define[容器][container] 模型，或称多项式模型，是函数外延性的另一个反模型。它有许多不同的理解方式。
@@ -747,6 +727,8 @@ Synthetic computability @synthetic-computability
 我们也可以从函子的视角理解容器映射。不难证明上面给出的描述恰好是两个多项式函子之间的全体自然变换的集合。证明中我们需要用到集合范畴上的恒等函子到自身的自然变换只有一个 $id : "Id"_Set -> "Id"_Set$。这样看，容器与多项式函子的视角就是一致的。我们将上面的映射写作 $(f lt.closed g)$。
 
 最后，也可以利用辩论的视角考虑。$C -> C'$ 表示命题 $C$ 比命题 $C'$ 更难论证。换言之，如果反方总可以辩赢 $C'$，那么这个映射使反方也可以辩赢 $C$。具体来说，给定正方的论证 $i in I$，反方可以翻译得到论证 $f(i) in I'$，驳之得 $p in E'_(f(i))$，再翻译 $g(p) in E_i$。的确，如果命题 $C$ 蕴含命题 $C'$，那么只要驳倒了 $C'$，自然就证伪了 $C$。
+
+(...) non-dependent constructions
 
 照惯例，我们需要定义#emph[依值]容器的概念。给定容器 $Gamma = (I lt.closed E)$，依值容器是个集合族的有序对，写作 $A = (scr(I) lt.closed scr(E))$，其中 $scr(I)_i$ 是 $I$ 上的集合族，而 $scr(E)_(i, j)$ 下标为 $i in I$，$j in scr(I)_i$。可以定义依值容器的全空间 $integral A = (I' lt.closed E')$，其中
 #eq($ I' = product.co_(i in I) scr(I)_i quad E'_(i, j) = E_i union.sq scr(E)_(i,j). $)
