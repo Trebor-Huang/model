@@ -43,48 +43,20 @@
 #set text(size: 36pt)
 *依值类型论的模型*\
 #set text(size: 20pt)
-Trebor\ #v(1em)
+_Trebor_\ #v(1em)
 #set text(size: 14pt)
 #datetime.today().display("[year]年[month padding:none]月[day padding:none]日")\
 Typst 版本：#sys.version
 #v(1.5fr)
 
-#let realignment = place(
-  bottom+center
-)[
-#set text(size: 1.5em)
-#diagram(node-outset: 0.2em, {
-  let scale = 80%
-  node((1,1.5), $"Tp"$, name: <Tp>)
-  node((1,0), $"Tm"$, name: <Tm>)
-  edgeL(<Tm>, "->", <Tp>, $pi$, mark-scale: scale)
-
-  node((0,2), $Gamma$, name: <Gamma>)
-  node((0,0.5), $Delta$, name: <Delta>)
-  edgeM(<Delta>, "->", <Gamma>, box($f$, inset: 0.2em), label-pos: 40%, mark-scale: scale)
-
-  node((-1,1.5), $tilde(Gamma)$, name: <Gamma1>)
-  node((-1,0), $tilde(Delta)$, name: <Delta1>)
-  edgeR(<Delta1>, "->", <Gamma1>, $i^* f$, mark-scale: scale)
-
-  edgeR(<Gamma1>, ">->", <Gamma>, $i$, mark-scale: scale)
-  edge(<Gamma>, "-->", <Tp>, mark-scale: scale)
-  edge(<Gamma1>, "->", <Tp>, mark-scale: scale)
-
-  edge(<Delta1>, ">->", <Delta>, mark-scale: scale)
-  edge(<Delta>, "-->", <Tm>, mark-scale: scale)
-  edge(<Delta1>, "->", <Tm>, mark-scale: scale)
-})
-]
-
-#let magic = place(
+#place(
   bottom + center,
 canvas({
   import draw: *
   set-style(stroke: (thickness: 2mm, cap: "round", join: "round", paint: luma(50%)))
 
-  circle((0,0), radius: 2.75)
-  let top-height = 1.6
+  circle((0,0), radius: 2.8, stroke: 1.9mm)
+  let top-height = 1.55
   let bottom-height = -top-height - 0.1
   let stem-pos = -0.73
   let bowl-width = 1.05
@@ -113,16 +85,14 @@ canvas({
     content(
       (angle: i * 360deg/N, radius: 3.1),
       text(
-        size: 24pt, fill: luma(45%),
-        ($Sigma$, $tilde.equiv$, $Pi$, $cal(U)$).at(calc.rem(i, 4))
+        size: 24pt, fill: luma(50%),
+        ($Sigma$, $tilde.equiv$, $Pi$, $NN$).at(calc.rem(i, 4))
       ),
       angle: - 90deg + i * 360deg/N,
       anchor: "south"
     )
   }
 }))
-
-#magic
 ]
 
 
