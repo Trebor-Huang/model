@@ -342,3 +342,11 @@ univalence-without-funext:
   serial-number:
     doi: 10.48550/arXiv.2605.00812
 
+container-model:
+  type: misc
+  title: A container model of type theory
+  author:
+  - Altenkirch, Thorsten
+  - Kaposi, Ambrus
+  date: 2021
+  note: Talk at TYPES 2021.
