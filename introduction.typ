@@ -322,8 +322,8 @@ $)
   #let ev = sym.bracket.stroked
   给定类型论的模型 $scr(M) = ("Ctx"_scr(M), "hom"_scr(M), "Tp"_scr(M), "Tm"_scr(M))$，
   - 对每个语法语境 $Gamma$ 都有对应的语义语境 $ev(Gamma) in "Ctx"_scr(M)$，
-  - 每个语法类型 $Gamma tack A istype$ 都有语义类型 $ev(A) in "Tp"_scr(M) (ev(Gamma))$，
-  - 每个语法元素 $Gamma tack t : A$ 都有语义元素 $ev(t) in "Tm"_scr(M) (ev(Gamma), ev(A))$，
+  - 每个语法类型 $Gamma tack A istype$ 都有语义类型 $ev(A) in "Tp"_scr(M) (ev(Gamma))$，并且判值相等的语法类型对应的语义类型相等#footnote[我们将类型与表达式的集合商去了判值相等，所以可以认为这是隐含的条件，下同。]，
+  - 每个语法元素 $Gamma tack t : A$ 都有语义元素 $ev(t) in "Tm"_scr(M) (ev(Gamma), ev(A))$，并且判值相等的语法元素对应相等的语义元素，
   - 每个语法代换 $Gamma tack sigma : Delta$ 都有语义代换 $ev(sigma) in hom_scr(M)(ev(Gamma), ev(Delta))$，
   - 语法代换的复合满足 $ev(sigma_1 compose sigma_2) = ev(sigma_1) compose ev(sigma_2)$，恒等代换 $ev(id_Gamma) = id_(ev(Gamma))$，
   - 语法代换作用于类型与元素满足 $ev(A sigma) = ev(A) ev(sigma)$，$ev(a sigma) = ev(a) ev(sigma)$，
