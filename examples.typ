@@ -684,6 +684,16 @@ $)
 #eq($ product_(A : NN->cal(U)) (product_(x : NN) norm(A(x))) -> norm(product_(x : NN) A(x)) $)
 类型在空语境下的元素。
 
+==== Church 原理
+
+Church 原理（勿与 Church--Turing 论题混淆）说的是#emph[任何函数] $NN -> NN$ 都可计算。换句话说，给定可计算函数的 Gödel 编码 $phi_n : NN harpoon NN$，任何全函数 $f : NN -> NN$ 都存在 $n$ 使得 $f = phi_n$。#footnote[文献中 Church 原理可能是更强的 $(forall x bind exists y bind A(x,y)) ==> (exists n bind forall x bind A(x, phi_n (x)))$，不要求 $y$ 的唯一性。] 在构造主义逻辑中，这并不与 Cantor 对角论证矛盾。需要注意的是，我们不能要求有函数 $"code" : (NN->NN) -> NN$ 为每个函数给出可计算的 Gödel 编码，因为这就给出了判定两个函数是否相等的办法。
+
+不难发现具现模型中 Church 原理是成立的，因为任何函数都有程序实现，将其转化为 Gödel 编码即可。
+
+Halting problem and Rice's theorem
+
+Synthetic computability @synthetic-computability
+
 #let markov = "Марков"
 ==== #markov 原理 <sec:markov-principle>
 这是由 Андрей А. Марков（与他父亲同名，他父亲是随机过程中 #markov 链的提出者）提出的逻辑原理。其内容是说某个程序如果不会不停机，那么它就一定停机。用更方便类型论的语言，则是任何函数 $f : NN -> Bool$ 都满足
@@ -699,16 +709,6 @@ while True:
     n += 1
 ```
 前提条件保证了这个算法一定不会不停机，因此它停机。这里我们其实用到了元语言中的排中律。换言之，尽管可计算的世界无论如何也不满足排中律，但是元语言是否满足排中律仍然会影响可计算世界的部分命题。
-
-==== Church 原理
-
-Church 原理（勿与 Church--Turing 论题混淆）说的是#emph[任何函数] $NN -> NN$ 都可计算。换句话说，给定可计算函数的 Gödel 编码 $phi_n : NN harpoon NN$，任何全函数 $f : NN -> NN$ 都存在 $n$ 使得 $f = phi_n$。#footnote[文献中 Church 原理可能是更强的 $(forall x bind exists y bind A(x,y)) ==> (exists n bind forall x bind A(x, phi_n (x)))$，不要求 $y$ 的唯一性。] 在构造主义逻辑中，这并不与 Cantor 对角论证矛盾。需要注意的是，我们不能要求有函数 $"code" : (NN->NN) -> NN$ 为每个函数给出可计算的 Gödel 编码，因为这就给出了判定两个函数是否相等的办法。
-
-不难发现具现模型中 Church 原理是成立的，因为任何函数都有程序实现，将其转化为 Gödel 编码即可。
-
-Halting problem and Rice's theorem
-
-Synthetic computability @synthetic-computability
 
 == 容器与多项式 <sec:polynomial>
 
@@ -748,11 +748,19 @@ $)
 
 == 操作语义与意义解释
 
+编程语言中最简单，也是人们最熟悉的语义，是#translate[操作语义][operational semantics]，即通过某种方法规定每个程序的运行过程与结果。其中常见的有小步语义与大步语义。前者定义每个程序每一步运行的规则，例如规定 $(1 + 1) times 2$ 计算一步得到 $2 times 2$，再得 $4$。后者则递归地定义求值规则，如规定若 $p$、$q$ 求值结果为 $2$，则 $p times q$ 求值结果为 $4$。
+
+既然这个概念也称作 “语义”，我们不禁要问，带有类型的编程语言的操作语义是否构成本书中所讨论的模型? 答案是肯定的。
+
 #translate[意义解释][meaning explanation]，也称#translate[部分等价关系][partial equivalence relation] 模型。 (...)
 
 operational semantics
 
-relation with extensional type theory
+relation with extensional type theory, nuprl
+
+https://www.cs.cornell.edu/courses/cs6862/2011sp/4-21-2011%20Harper-JSC92.pdf
+
+emphasize on a priori untypedness. compare with assemblies/modest sets
 
 == 语法翻译
 
