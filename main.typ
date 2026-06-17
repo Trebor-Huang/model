@@ -44,7 +44,7 @@
 *依值类型论的模型*\
 #set text(size: 20pt)
 _Trebor_\ #v(1em)
-#set text(size: 14pt)
+#set text(size: 12pt)
 #datetime.today().display("[year]年[month padding:none]月[day padding:none]日")\
 Typst 版本：#sys.version
 #v(1.5fr)
