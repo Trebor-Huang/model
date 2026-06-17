@@ -685,8 +685,7 @@ $)
 类型在空语境下的元素。
 
 ==== Church 原理
-
-Church 原理（勿与 Church--Turing 论题混淆）说的是#emph[任何函数] $NN -> NN$ 都可计算。换句话说，给定可计算函数的 Gödel 编码 $phi_n : NN harpoon NN$，任何全函数 $f : NN -> NN$ 都存在 $n$ 使得 $f = phi_n$。#footnote[文献中 Church 原理可能是更强的 $(forall x bind exists y bind A(x,y)) ==> (exists n bind forall x bind A(x, phi_n (x)))$，不要求 $y$ 的唯一性。] 在构造主义逻辑中，这并不与 Cantor 对角论证矛盾。需要注意的是，我们不能要求有函数 $"code" : (NN->NN) -> NN$ 为每个函数给出可计算的 Gödel 编码，因为这就给出了判定两个函数是否相等的办法。
+Church 原理（勿与 Church--Turing 论题混淆）说的是#emph[任何函数] $NN -> NN$ 都可计算。换句话说，给定可计算函数的 Gödel 编码 $phi_n : NN harpoon NN$，任何全函数 $f : NN -> NN$ 都存在 $n$ 使得 $f = phi_n$.#footnote[文献中 Church 原理可能是更强的 $(forall x bind exists y bind A(x,y)) ==> (exists n bind forall x bind A(x, phi_n (x)))$，不要求 $y$ 的唯一性。] 在构造主义逻辑中，这并不与 Cantor 对角论证矛盾。需要注意的是，我们不能要求有函数 $"code" : (NN->NN) -> NN$ 为每个函数给出可计算的 Gödel 编码，因为这就给出了判定两个函数是否相等的办法。
 
 不难发现具现模型中 Church 原理是成立的，因为任何函数都有程序实现，将其转化为 Gödel 编码即可。
 
