@@ -46,7 +46,6 @@
 _Trebor_\ #v(1em)
 #set text(size: 12pt)
 #datetime.today().display("[year]年[month padding:none]月[day padding:none]日")\
-Typst 版本：#sys.version
 #v(1.5fr)
 
 #place(
@@ -55,7 +54,7 @@ canvas({
   import draw: *
   set-style(stroke: (thickness: 2mm, cap: "round", join: "round", paint: luma(50%)))
 
-  circle((0,0), radius: 2.8, stroke: 1.9mm)
+  circle((0,0), radius: 2.8, stroke: 1.8mm)
   let top-height = 1.55
   let bottom-height = -top-height - 0.1
   let stem-pos = -0.73
@@ -85,7 +84,7 @@ canvas({
     content(
       (angle: i * 360deg/N, radius: 3.1),
       text(
-        size: 24pt, fill: luma(50%),
+        size: 24pt, fill: luma(45%),
         ($Sigma$, $tilde.equiv$, $Pi$, $NN$).at(calc.rem(i, 4))
       ),
       angle: - 90deg + i * 360deg/N,
