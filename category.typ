@@ -52,7 +52,7 @@
 - 预层范畴中需要保证拉回的存在性。这不难。回忆预层是到集合范畴的函子，而它们的拉回就是逐点按照集合的拉回计算的。集合间两个函数 $f$ 与 $g$ 的拉回可以由公式 ${(x, y) mid(|) f(x) = g(y)}$ 定义。
 - 语境扩展的泛性质中，图表左上角的 $Delta$ 只能取语境，而不能取任意预层，因此定义成预层范畴中的拉回就是更强的要求。不过，从米田引理可以推出这两个条件实际上是等价的。
 - 我们还需要保证 $frak(p)$ 是个代换，但是米田引理保证两个可表预层之间的自然变换 $yo(Gamma dot A) -> yo(Gamma)$ 与原范畴中的箭头 $(Gamma dot A) -> Gamma$ 一一对应，因此不成问题。
-- 严格来说，我们不应该要求拉回可表，而是要具体选出表示对象 $Gamma dot A$ 与自然同构。以后的讨论有时为了方便会混淆这两者。
+- 严格来说，我们不仅要求拉回可表，而是要具体选出表示对象 $Gamma dot A$ 与其自然同构。
 
 我们总结以上的讨论，可以将模型的概念用范畴语言重新表述。模型的这种形式称作#translate[自然模型][natural model]。这个定义由 Steve Awodey~@natural-model 提出，不过 Marcelo Fiore 也独立观察到此事。
 #definition[
@@ -348,12 +348,12 @@ $))
 第三种办法则是反其道而行之，不去修改概括范畴使得语义匹配语法，而是修改语法使得它匹配概括范畴。这就需要添加一类新的语法，描述类型之间的映射。它可以用于包含子类型的系统，是前沿研究的课题 @comprehension-type-theory。
 
 #definition[
-  *具集范畴*由以下资料组成：一个范畴 $cal(C)$ 与预层 $"Ty" : cal(C)^"op" -> Set$，使得对任何 $Gamma in cal(C)$ 与 $A in "Ty"(Gamma)$，都有对象 $(Gamma dot A) in cal(C)$ 与箭头 $frak(p)_A : (Gamma dot A) -> Gamma$。对任何箭头 $sigma : Gamma -> Delta$ 与元素 $A in "Ty"(A)$，都有箭头 $frak(q)_(A, sigma)$ 构成拉回方
+  *具集范畴*由以下资料组成：一个范畴 $cal(C)$ 与预层 $"Ty" : cal(C)^"op" -> Set$，使得对任何 $Gamma in cal(C)$ 与 $A in "Ty"(Gamma)$，都有对象 $(Gamma dot A) in cal(C)$ 与箭头 $frak(p)_A : (Gamma dot A) -> Gamma$。对任何箭头 $sigma : Gamma -> Delta$ 与元素 $A in "Ty"(A)$，都有箭头 $bold(q)_(A, sigma)$ 构成拉回方
   #eq(diagram({
     node((0,0), $Gamma dot A sigma$, name: <B>)
     pullback("dr")
     node((1,0), $Delta dot A$, name: <A>)
-    edge(<B>, "->", <A>, $frak(q)_(A, sigma)$)
+    edge(<B>, "->", <A>, $bold(q)_(A, sigma)$)
 
     node((0,1), $Gamma$, name: <Gamma>)
     node((1,1), $Delta$, name: <Delta>)
@@ -362,14 +362,14 @@ $))
     edge(<B>, "->", <Gamma>)
     edge(<A>, "->", <Delta>)
   }))
-  并且 $cal(C)$ 有终对象 $1$。
-]
+  使 $bold(q)_(A, id) = id_(Gamma dot A)$，$bold(q)_(A, sigma compose tau) = bold(q)_(A, sigma) compose bold(q)_(A sigma, tau)$，并且 $cal(C)$ 有终对象 $1$。
+] <def:cwa>
 
 #definition[
   *展映射范畴*由以下资料组成：一个范畴 $cal(C)$ 与一些映射 (称作*展映射*)，使得展映射沿着任何映射的拉回都存在，并且仍然是展映射，并且 $cal(C)$ 有终对象 $1$。
-]
+] <def:display-map-category>
 
-以上是具集范畴与展映射范畴本身的定义。擅长范畴论的读者可以尝试证明这些定义的确等价于上文中从概括范畴出发的定义。这里，展映射范畴的定义非常具有纯范畴论的风格。事实上，如果我们按照范畴论保持同构不变性的惯例令，展映射复合同构仍然是展映射，再依次加上 $Sigma$ 与内涵相等类型对应的类型结构，得到的就分别是 Joyal 在范畴类型论~@clans-and-tribes 中提出的#translate[clan][宗] 与#translate[tribe][门] 的概念 (暂译)。
+擅长范畴论的读者可以尝试证明这些定义的确等价于前文以概括范畴为基础的定义。这里，展映射范畴的定义非常具有纯范畴论的风格。事实上，如果我们按照范畴论保持同构不变性的惯例，令展映射复合同构仍然是展映射，再依次加上 $Sigma$ 与内涵相等类型对应的类型结构，得到的就分别是 Joyal 在范畴类型论~@clans-and-tribes 中提出的#translate[宗][clan] 与#translate[门][tribe] 的概念 (暂译)。
 
 === 乱花渐欲迷人眼
 
@@ -377,18 +377,46 @@ $))
 
 当代的研究中，大部分情况使用的都是具族范畴或者与之等价的概念，包括具集范畴与自然模型 (见 @sec:coherence-problem)。有时候会添加语境性的要求，即范畴中所有对象都可以唯一分解为从空语境出发的有限个语境扩展。某种意义下，这是从类型论语法的视角出发唯一 “正确” 的定义。
 
-少数偏向范畴论视角的研究或者较老的文章会采用别的定义。这是因为局部积闭范畴与概括范畴等等比较适合直接套用范畴论的已有构造。对于同伦类型论而言，同伦论中的模型范畴#footnote[这里的 “模型” 是同伦论术语，与语义中的模型无关。]非常适合与概括范畴或者具集范畴结合。不过反过来，例如多项式模型 (@sec:polynomial) 就更适合用具族范畴。#[@sec:coherence-problem]会考察如何将这些不同的定义互相转换。
+少数偏向范畴论视角的研究或者较老的文章会采用别的定义。这是因为局部积闭范畴与概括范畴等等比较适合直接套用范畴论的已有构造。对于同伦类型论而言，同伦论中的模型范畴#footnote[这里的 “模型” 是同伦论术语，与语义学中的模型无关。]非常适合与概括范畴或者具集范畴结合。不过反过来，例如多项式模型 (@sec:polynomial) 就更适合用具族范畴。#[@sec:coherence-problem]会考察如何将这些不同的定义互相转换。
 
 初次阅读时，读者不必纠缠不同定义之间的细节，笼统认为它们都大致等价即可。
 
 == 融贯问题 <sec:coherence-problem>
 
-我们尚未说明概括范畴等等定义了合理的类型论模型。要说明模型的某种定义是合理的，只需证明可靠性定理（@thm:soundness）的对应变体。我们也可以尝试证明这些定义与自然模型的等价性。
+我们尚未说明概括范畴等等定义了合理的类型论模型。要说明模型的某种定义是合理的，只需证明可靠性定理（@thm:soundness）的对应变体，或者尝试证明这些定义与模型（@def:model）的等价性。
+
+#theorem[
+  给定具集范畴（@def:cwa）$cal(C)$，可以给出以该范畴作为语境范畴的模型。
+] <thm:cwa-coh>
+#proof[
+  只需再定义 $"Tm"(Gamma, A)$ 并证明 $(Gamma dot A)$ 是语境扩展。我们令 #eq($ "Tm"(Gamma, A) = {f : Gamma -> (Gamma dot A) mid(|) frak(p)_A compose f = id_Gamma}. $) 定义 $frak(q)$ 为如图所示的箭头。这里省略 $frak(p)$ 的下标。
+  #eq(diagram({
+    node((0,0), $Gamma dot A dot A frak(p)$, name: <Sq>)
+    pullback("dr")
+    node((1,0), $Gamma dot A$, name: <A>)
+    edge(<Sq>, "->", <A>, $bold(q)_(A, frak(p))$)
+
+    node((0,1), $Gamma dot A$, name: <GammaA>)
+    node((1,1), $Gamma$, name: <Gamma>)
+    edge(<GammaA>, "->", <Gamma>, $frak(p)$)
+
+    edgeL(<Sq>, "->", <GammaA>, $frak(p)$)
+    edge(<A>, "->", <Gamma>)
+
+    node((-1,-1), $Gamma dot A$, name: <Dom>)
+    edgeM(<Dom>, "-->", <Sq>, $frak(q)$)
+    edge(<Dom>, "->", <A>, bend: 15deg, $id$)
+    edge(<Dom>, "->", <GammaA>, bend: -20deg, $id$)
+  }))
+  其存在性是由拉回的性质保证的。由于左侧的三角形交换，可知 $frak(p) compose frak(q) = id$，因此 $frak(q)$ 属于 $"Tm"(Gamma dot A, A frak(p))$。最后，映射的扩展 $[sigma, a]$ 可以靠此拉回的追图得到。
+]
+
+还可以进一步给出模型与具集范畴的互相转换，并证明来回转换之后得到的与原先的东西同构。这就说明具集范畴是与模型的概念完全等价的。
+
+然而，对于展映射范畴、概括范畴或者局部积闭范畴而言，仿照@thm:cwa-coh 构造对应的模型时会遇到困难。 (...) 我们希望证明局部积闭范畴的概念等价于带 $Sigma$、$Pi$ 与外延相等类型的模型。
 
 #define[融贯问题][coherence problem]
 
-- display map categories: full subcategory $cal(E) -> cal(C)^->$
-- category with attributes: discrete fibration $cal(E) -> cal(C)$, equivalent to split full compcat
 - CwA (compcat) = CwF (families) = NatModel (typeof)
 
 ...
@@ -400,7 +428,7 @@ $))
 
 (also mention universes in sheaf topos)
 
-=== 自然模型的类型结构 <sec:natural-type-structure>
+== 自然模型的类型结构 <sec:natural-type-structure>
 
 // 介绍局部积闭范畴与概括范畴，除了展示自然模型之外的另一种定义类型论模型的思路之外，另一个重要目的是为接下来的范畴论操作提供一种语言。
 
