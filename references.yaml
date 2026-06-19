@@ -350,3 +350,53 @@ container-model:
   - Kaposi, Ambrus
   date: 2021
   note: Talk at TYPES 2021.
+
+hofmann-coherence:
+  type: article
+  title: On the Interpretation of Type Theory in Locally Cartesian Closed Categories
+  author: Hofmann, Martin
+  date: 1994
+  page-range: 427-441
+  parent:
+    type: proceedings
+    title: Selected Papers from the 8th International Workshop on Computer Science Logic
+    publisher:
+      name: Springer-Verlag
+      location: Berlin, Heidelberg
+    parent:
+      type: proceedings
+      title: CSL '94
+
+curien-coherence:
+  type: article
+  title: Substitution up to isomorphism
+  author: Curien, Pierre-Louis
+  date: 1993-09
+  page-range: 51-85
+  serial-number:
+    issn: 0169-2968
+  parent:
+    type: periodical
+    title: Fundamenta Informaticae
+    publisher:
+      name: IOS Press
+      location: NLD
+    issue: 1–2
+    volume: 19
+
+clairambault:
+  type: article
+  title: The Biequivalence of Locally Cartesian Closed Categories and Martin-Löf Type Theories
+  author:
+  - Clairambault, Pierre
+  - Dybjer, Peter
+  date: 2014-04
+  serial-number:
+    doi: 10.1017/s0960129513000881
+  parent:
+    type: periodical
+    title: Mathematical Structures in Computer Science
+    publisher: Cambridge University Press (CUP)
+    issue: 6
+    volume: 24
+

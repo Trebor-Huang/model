@@ -154,9 +154,9 @@ $))
     nothing & x != y
   )
 $)
-其中等号均为集合论意义的等号。换成展映射的语言，就是从 ${(x, a_1, a_2) mid(|) a_1 = a_2 in A_x}$ 到 ${(x, a_1, a_2) mid(|) a_1, a_2 in A_x}$ 的含入映射。注意到前者实际上就同构于 $Gamma dot A$。因此，外延相等类型对应要求 $Gamma dot A -> (Gamma dot A) dot A frak(p)$ 这个对角映射是展映射。
+其中等号均为集合论意义的等号。换成展映射的语言，就是从 ${(x, a_1, a_2) mid(|) a_1 = a_2 in A_x}$ 到 ${(x, a_1, a_2) mid(|) a_1, a_2 in A_x}$ 的含入映射。注意到前者实际上就同构于 $Gamma dot A$。因此，外延相等类型对应要求 $Gamma dot A -> Gamma dot A dot A frak(p)$ 这个对角映射是展映射。
 
-将 $(Gamma dot A)$ 记作 $Delta$，则 $(Gamma dot A) dot A frak(p)$ 是拉回 $Delta times_Gamma Delta$。在代数几何中，有许多条件是关于对角映射 $Delta -> Delta times_Gamma Delta$ 的，例如某映射拟分离当且仅当其对角映射拟紧，某映射分离当且仅当对角映射是闭嵌入，等等。这些条件可以看作是对某类型的相等类型作限制。
+将 $(Gamma dot A)$ 记作 $Delta$，则 $Gamma dot A dot A frak(p)$ 是拉回 $Delta times_Gamma Delta$。在代数几何中，有许多条件是关于对角映射 $Delta -> Delta times_Gamma Delta$ 的，例如某映射拟分离当且仅当其对角映射拟紧，某映射分离当且仅当对角映射是闭嵌入，等等。这些条件可以看作是对某类型的相等类型作限制。
 
 从纯语法的视角，我们已经知道类型论中添加了外延相等类型会对理论的性质产生极大影响。从语义的视角也不例外。以下我们假设范畴中每个对象 $Gamma$ 到终对象的映射都是展映射 —— 这是比较合理的要求，因为每个对象应当表示某个语境 $(x_1 : A_1, dots, x_n : A_n)$，因此是从空语境 $1$ 开始逐步搭建的。如果取一个大 $Sigma$ 类型，就能将 $Gamma$ 表示为空语境中的类型，即展映射 $Gamma -> 1$。
 在这个假设下，一旦有了外延相等类型，可以证明_所有的映射_都必须成为展映射。具体如图所示：
@@ -236,7 +236,7 @@ $)
 
 #definition[
   某个范畴是#define[局部积闭范畴][locally cartesian closed category]，当且仅当对任何映射 $sigma : Gamma -> Delta$，复合函子 $sigma_! : cal(C)\/Gamma -> cal(C)\/Delta$ 都处在三伴随 $sigma_! tack.l sigma^* tack.l sigma_*$ 中。
-]
+] <def:lccc>
 
 这样的三伴随在一阶逻辑中也有类似的表述。一阶逻辑中我们不讨论依值类型，而考虑谓词 $P(x,y,z)$，对应子集 $U arrow.hook X times Y times Z$。这里的 $(x,y,z)$ 类似类型论中的语境。这样，每个语境 $Gamma$ 中的谓词就对应其子集的偏序 $"Sub"(Gamma)$。每个代换对应映射 $sigma^* : "Sub"(Delta) -> "Sub"(Gamma)$。如果考虑投影映射 $sigma : Gamma times X -> Gamma$，则有三伴随 #eq($ exists tack.l sigma^* tack.l forall $)
 其中 $exists U = {a in Gamma mid(|) exists x in X bind (a,x) in U}$，类似地 $forall U = {a in Gamma mid(|) forall x in X bind (a,x) in U}$。这种情形抽象得来的结构称作一阶逻辑的#translate[超理论][hyperdoctrine]。
@@ -320,7 +320,7 @@ $))
 
 #definition[
   #define[概括范畴][comprehension category] 包含一个范畴 $cal(C)$ 表示语境，一个范畴 $cal(E)$ 表示类型，有函子 $F : cal(E) -> cal(C)^->$，使得与 $cod : cal(C)^-> -> cal(C)$ 复合之后可以得到纤维范畴 $cal(E) -> cal(C)$，并且 $F$ 将拉回态射映到拉回态射.#footnote[$cod : cal(C)^-> -> cal(C)$ 不一定是纤维范畴。如果加上这个条件，$F$ 就是纤维化范畴之间保持结构的映射。] 同时，$cal(C)$ 有终对象表示空语境。
-]
+] <def:comprehension-category>
 
 将概括范畴与自然模型相比，可以发现概括范畴比自然模型多出了额外的信息。概括范畴中 $cal(E)$ 的对象直观上是类型 $Gamma tack A istype$ 的语义解释，而这个范畴中的态射则是类型之间的某种态射：假设 $Gamma tack A istype$，$Delta tack B istype$。$F : cal(E) -> cal(C)^->$ 将态射 $A -> B$ 映射到某个代换 $(Gamma dot A) -> (Delta dot B)$。但是并非所有这样的代换都在 $F$ 的像里，并且 $cal(E)$ 中的多个态射可能映射到同一个代换。自然模型中没有对应的概念。我们有三种办法解决此问题。
 
@@ -413,17 +413,43 @@ $))
 
 还可以进一步给出模型与具集范畴的互相转换，并证明来回转换之后得到的与原先的东西同构。这就说明具集范畴是与模型的概念完全等价的。
 
-然而，对于展映射范畴、概括范畴或者局部积闭范畴而言，仿照@thm:cwa-coh 构造对应的模型时会遇到困难。 (...) 我们希望证明局部积闭范畴的概念等价于带 $Sigma$、$Pi$ 与外延相等类型的模型。
+然而，对于展映射范畴、概括范畴或者局部积闭范畴而言，仿照@thm:cwa-coh 构造对应的模型时会遇到困难。例如，我们希望证明局部积闭范畴的概念等价于带 $Sigma$、$Pi$ 与外延相等类型的模型，或者至少可以从前者构造后者。某个语境 $Gamma$ 上的类型，在局部积闭范畴中对应值域是 $Gamma$ 的映射。假如我们定义 $"Ty"(Gamma) = {f mid(|) cod f = Gamma}$，暂不考虑这是集合还是真类的问题，下一步就是定义代换在 $"Ty"$ 上的操作。
 
-#define[融贯问题][coherence problem]
+局部积闭范畴中，给定代换 $sigma : Delta -> Gamma$ 与类型 $Gamma' -> Gamma$，类型的代换对应拉回。这可以给出映射 $sigma^* : "Ty"(Gamma) -> "Ty"(Delta)$。我们还需要证明 $"Ty"$ 的函子性，即 $(sigma compose tau)^* = tau^* compose sigma^*$。由范畴的基本理论可以知道，连续取两次拉回，同构于沿着其复合取拉回。然而，这仅仅证明了同构性，但模型的定义要求相等。由于范畴论的语言只精确到唯一同构意义下的唯一性，我们还需要设法选出拉回，使得它在严格相等的意义下满足函子性。
 
-- CwA (compcat) = CwF (families) = NatModel (typeof)
+这类问题就是#define[融贯问题][coherence problem]。前文提到 Seely~@seely-lccc 提出了局部积闭范畴与外延类型论的关系。但是他的证明没有处理融贯问题，是有漏洞的。Curien~@curien-coherence 首先尝试解决了这个问题。他的做法是从语法出发，将原先的规则
+#eq($ rule(
+  Gamma tack t : B,
+  Gamma tack t : A,
+  Gamma tack A = B istype
+) $)
+修改为显式的
+#eq($ rule(
+  Gamma tack "convert"_(A, B)(t) : B,
+  Gamma tack t : A,
+  Gamma tack A = B istype
+) $)
+再通过归约证明这与原本的类型论等价。另一方面 Hofmann~@hofmann-coherence 则直接从语义出发，证明了任何局部积闭范畴都确实可以给出模型。Clairambault 与 Dybjer~@clairambault 最终证明了局部积闭范畴构成的 $2$-范畴的确与外延类型论的模型构成的 $2$-范畴等价。现在，我们已经有许多处理融贯问题的工具。
 
-...
+大致来说，从下表中右侧到左侧需要解决某种融贯问题：
+#columns(2)[
+  - 模型（@def:model）
+  - 具族范畴、自然模型（@def:natural-model）
+  - 具集范畴（@def:cwa）
+  - 语境范畴（又称 C-系统）
+  #colbreak(weak: true)
+  - 概括范畴（@def:comprehension-category）
+  - 展映射范畴（@def:display-map-category）
+  - 宗与门范畴
+  - 类型论模型范畴
+  - 局部积闭范畴（@def:lccc）与意象 (定义 ...)
+]
+我们以局部积闭范畴为例讨论融贯问题的一般解法。
 
-- Natural solution using coproducts of display maps
 - Hofmann's solution
 - Lumsdaine local universes and Bocquet's generalization @bocquet-strictification
+  - Rephrased using coproducts of display maps (mentioned in @natural-model)
+- https://www2.mathematik.tu-darmstadt.de/~streicher/FIBR/natmod.pdf
 - Can be avoided using dedicated dependent structures
 
 (also mention universes in sheaf topos)
