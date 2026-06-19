@@ -207,7 +207,7 @@ canvas({
 // Bibliography
 #[
 #set text(lang: "en")
-#show regex("[A-Z]\. "): it => it.text.slice(0,2) + sym.space.thin
+#show regex("([A-Z]|vd)\. "): it => it.text.slice(0,-1) + sym.space.thin
 #show link: set text(font: "DejaVu Sans Mono", size: 0.8em, fill: blue.darken(10%))
 #show regex("(10\.|http).+"): it => text(
   for i in it.text {
