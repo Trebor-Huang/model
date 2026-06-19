@@ -400,3 +400,20 @@ clairambault:
     issue: 6
     volume: 24
 
+local-universes:
+  type: article
+  title: 'The Local Universes Model: An Overlooked Coherence Construction for Dependent Type Theories'
+  author:
+  - Lumsdaine, Peter Lefanu
+  - Warren, Michael A.
+  date: 2015-07
+  page-range: 1-31
+  serial-number:
+    doi: 10.1145/2754931
+  parent:
+    type: periodical
+    title: ACM Transactions on Computational Logic
+    publisher: Association for Computing Machinery (ACM)
+    issue: 3
+    volume: 16
+

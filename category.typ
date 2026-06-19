@@ -390,24 +390,24 @@ $))
 ] <thm:cwa-coh>
 #proof[
   只需再定义 $"Tm"(Gamma, A)$ 并证明 $(Gamma dot A)$ 是语境扩展。我们令 #eq($ "Tm"(Gamma, A) = {f : Gamma -> (Gamma dot A) mid(|) frak(p)_A compose f = id_Gamma}. $) 定义 $frak(q)$ 为如图所示的箭头。这里省略 $frak(p)$ 的下标。
-  #eq(diagram({
-    node((0,0), $Gamma dot A dot A frak(p)$, name: <Sq>)
-    pullback("dr")
-    node((1,0), $Gamma dot A$, name: <A>)
-    edge(<Sq>, "->", <A>, $bold(q)_(A, frak(p))$)
+#eq(diagram({
+  node((0,0), $Gamma dot A dot A frak(p)$, name: <Sq>)
+  pullback("dr")
+  node((1,0), $Gamma dot A$, name: <A>)
+  edge(<Sq>, "->", <A>, $bold(q)_(A, frak(p))$)
 
-    node((0,1), $Gamma dot A$, name: <GammaA>)
-    node((1,1), $Gamma$, name: <Gamma>)
-    edge(<GammaA>, "->", <Gamma>, $frak(p)$)
+  node((0,1), $Gamma dot A$, name: <GammaA>)
+  node((1,1), $Gamma$, name: <Gamma>)
+  edge(<GammaA>, "->", <Gamma>, $frak(p)$)
 
-    edgeL(<Sq>, "->", <GammaA>, $frak(p)$)
-    edge(<A>, "->", <Gamma>)
+  edgeL(<Sq>, "->", <GammaA>, $frak(p)$)
+  edge(<A>, "->", <Gamma>)
 
-    node((-1,-1), $Gamma dot A$, name: <Dom>)
-    edgeM(<Dom>, "-->", <Sq>, $frak(q)$)
-    edge(<Dom>, "->", <A>, bend: 15deg, $id$)
-    edge(<Dom>, "->", <GammaA>, bend: -20deg, $id$)
-  }))
+  node((-1,-1), $Gamma dot A$, name: <Dom>)
+  edgeM(<Dom>, "-->", <Sq>, $frak(q)$)
+  edge(<Dom>, "->", <A>, bend: 15deg, $id$)
+  edge(<Dom>, "->", <GammaA>, bend: -20deg, $id$)
+}))
   其存在性是由拉回的性质保证的。由于左侧的三角形交换，可知 $frak(p) compose frak(q) = id$，因此 $frak(q)$ 属于 $"Tm"(Gamma dot A, A frak(p))$。最后，映射的扩展 $[sigma, a]$ 可以靠此拉回的追图得到。
 ]
 
@@ -442,17 +442,82 @@ $))
   - 展映射范畴（@def:display-map-category）
   - 宗与门范畴
   - 类型论模型范畴
-  - 局部积闭范畴（@def:lccc）与意象 (定义 ...)
+  - 局部积闭范畴（@def:lccc）与意象 (..)
 ]
-我们以局部积闭范畴为例讨论融贯问题的一般解法。
+我们以局部积闭范畴为例讨论融贯问题的一般解法。这些办法都源自范畴逻辑学中 Giraud 与 Bénabou 的工作，但是做了适应类型论的修改。
 
-- Hofmann's solution
-- Lumsdaine local universes and Bocquet's generalization @bocquet-strictification
-  - Rephrased using coproducts of display maps (mentioned in @natural-model)
+=== 兼蓄法
+
+既然定义 $"Ty"(Gamma)$ 为射向 $Gamma$ 的箭头的集合的问题是需要选出满足严格函子性的拉回，Hofmann 的解法是将其改为 “选好全部拉回的箭头” 的集合。换句话说，$"Ty"(Gamma)$ 的元素是有序对 $(f, F)$，其中 $f : Gamma' -> Gamma$，而 $F$ 是个映射，将 $sigma : Delta -> Gamma$ 映射到 $sigma$ 与 $f$ 的某个拉回方。这样，同一个箭头可以搭配不同的拉回 (不过它们都彼此同构)，而 $"Ty"$ 将它们一律收纳。
+
+给定类型 $(f, F) in "Ty"(Gamma)$ 与代换 $sigma : Delta -> Gamma$，类型代换的结果也是有序对 $(g, G) in "Ty"(Delta)$，其中 $g$ 不难想到就是靠 $F(sigma)$ 选定的拉回。而 $G$ 需要将 $delta : Xi -> Delta$ 映射到拉回方，这也有现成的答案：注意到 $F(sigma compose delta)$ 已经给出了下图外侧的拉回：
+#eq(diagram({
+  node((0,0), $Xi'$, name: <Xi1>)
+  edge("->", "rr", bend: 25deg)
+  edge("->", "d")
+  pullback("dr")
+  edge("-->", "r")
+
+  node((1,0), $Delta'$, name: <Delta1>)
+  edge("->")
+  edge("->", "d", $g$)
+  pullback("dr")
+
+  node((2,0), $Gamma'$, name: <Gamma1>)
+  edgeL("->", "d", $f$)
+
+  node((0,1), $Xi$, name: <Xi>)
+  edge("->", $delta$)
+  node((1,1), $Delta$, name: <Delta>)
+  edge("->", $sigma$)
+  node((2,1), $Gamma$, name: <Gamma>)
+}))
+而右侧的拉回来自 $F(sigma)$。由范畴论中拉回的粘贴引理可以得到左侧可以构造唯一的拉回方，使得全图表交换。我们可定此为 $G(delta)$。读者可以证明这的确满足严格函子性。
+
+接下来，可以定义 $"Tm"(Gamma, (f, F))$ 为 $f$ 的截面的集合，即 ${u : Gamma' -> Gamma mid(|) f compose u = id_Gamma}$。证明与@thm:cwa-coh 类似。
+
+=== 自由法
+
+反过来，我们也可以悬置拉回选择的问题，直接将 $"Ty"(Gamma)$ 的元素定义为 “待选择拉回的图表” 的集合，如下图。
+#eq(diagram({
+  node((1,0), $Delta'$)
+  edgeL("->", "d", $f$)
+  node((1,1), $Delta$)
+  node((0,1), $Gamma$)
+  edge("->", "r", $sigma$)
+  node((-1, 0.55), $"Ty"(Gamma) = {(f, sigma) mid(|) dom f = Gamma, space cod f = cod sigma}$)
+}), top: -1em)
+这个图表一旦选择了拉回，就会得到射向 $Gamma$ 的箭头，但是实际上不选择拉回，直接对此图表操作也无妨.#footnote[这类似数学上从自然数构造整数的办法。定义整数为自然数对 $(m, n)$ 的等价类，直观上代表整数 $m - n$。但无需真的计算减法，直接在有序对上操作即可。这是从交换幺半群_自由_构造交换群的办法。] 此时，定义 $delta : Xi -> Gamma$ 的代换操作将 $(f, sigma)$ 变为 $(f, sigma compose delta)$ 即可。因为范畴中箭头复合满足严格的结合律，这个代换操作满足严格的函子性。
+
+至于 $"Tm"$ 的定义，如果我们取了拉回，则 $"Tm"(Gamma, (f, sigma))$ 就应当是拉回的截面 $a$：
+#eq(diagram({
+  node((0,0), $Gamma'$)
+  edge("-->", "d")
+  edge("-->", "r")
+  pullback("dr")
+  node((1,0), $Delta'$)
+  edgeL("->", "d", $f$)
+  node((1,1), $Delta$)
+  node((0,1), $Gamma$)
+  edge("->", "u", bend: 25deg, $a$)
+  edge("->", "r", $sigma$)
+}))
+由拉回的泛性质，可知它由 $Gamma -> Gamma$ 与 $Gamma -> Delta'$ 的一对映射决定。截面的等式要求前者是恒等映射，因此可得 $"Tm"(Gamma, (f, sigma)) = {t : Gamma -> Delta' mid(|) f compose t = sigma}$。
+
+Awodey~@natural-model 用自然模型的语言给出了另一个等价的描述方法。回忆自然模型需要预层的映射 $"typeof" : "Tm" -> "Tp"$，使得展映射 $Gamma dot A -> Gamma$ 恰好是那些从可表对象到 $"Tp"$ 的映射的拉回。我们现在有了所需的展映射，需要找到 $"Tm" -> "Tp"$。对于某个具体的展映射 $Gamma' -> Gamma$，显然取 $yo(Gamma') -> yo(Gamma)$ 可以满足要求。但我们需要找到 $"typeof"$ 配合所有的展映射，因此不妨直接取不交并 #eq($ (product.co_(f : Gamma' -> Gamma) yo(Gamma')) -> (product.co_(f : Gamma' -> Gamma) yo(Gamma)). $) 展开定义之后可以证明这里的 $"Ty"$ 与 $"Tm"$ 与上面的定义吻合。
+
+这套方法也称作#define[局部宇宙法][local universes construction]，由 Lumsdaine 与 Warren~@local-universes 发展。Bocquet~@bocquet-strictification 进一步推广了这个方法。
+
+=== 类型结构的融贯问题
+
+Benefit of local universes: intensional type constructors
+
 - https://www2.mathematik.tu-darmstadt.de/~streicher/FIBR/natmod.pdf
-- Can be avoided using dedicated dependent structures
 
-(also mention universes in sheaf topos)
+// TODO
+// Also mention universes in sheaf topos:
+// - https://cj-xu.github.io/notes/sheaf_universe.pdf
+// - https://arxiv.org/pdf/2202.12012
 
 == 自然模型的类型结构 <sec:natural-type-structure>
 
