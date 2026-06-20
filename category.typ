@@ -60,7 +60,7 @@
 ]<def:natural-model>
 这个定义与@def:model 相比，简洁性不言而喻。不过，范畴语言的功力还不止于此。例如对于每个类型构造子，都有相对的代换规则。无参数类型构造子有 $Bool sigma = Bool$ 与 $Unit sigma = Unit$，而如不交并类型则有 $(A + B) sigma = A sigma + B sigma$ 等。在范畴论的语言中，可以把类型构造子的参数打包为预层。如二元类型构造子的参数预层是 $X(Gamma) = {(A, B) mid(|) A, B in "Tp"(Gamma)}$，零元的参数预层则是 $X(Gamma) = 1$，均为单元素集。这也可以处理依值类型构造子，如 $Pi$ 类型的参数是 $X(Gamma) = {(A, B) mid(|) A in "Tp"(Gamma), B in "Tp"(Gamma, A)}$。此时，如果要求模型中给出预层之间的自然变换 $X -> "Tp"$，就相当于给出类型构造子，而其自然性就对应这些代换的等式。
 
-有了类型构造子，元素的构造子也可同样操作，将参数写成预层 $Y$。例如对于二元乘积类型，$X(Gamma) = {(A, B) mid(|) A, B in "Tp"(Gamma)}$，而 $Y(Gamma) = {(A,B,a,b) mid(|) a in "Tm"(Gamma, A), b in "Tm"(Gamma, B)}$ (注意这里一并写出了它的类型参数)。这样类型构造子是自然变换 $X -> "Ty"$，而元素构造子是自然变换 $Y -> "Tm"$。同时还有以下交换方
+有了类型构造子，元素的构造子也可同样操作，将参数写成预层 $Y$。例如对于二元乘积类型，$X(Gamma) = {(A, B) mid(|) A, B in "Tp"(Gamma)}$，而 $Y(Gamma) = {(A,B,a,b) mid(|) a in "Tm"(Gamma, A), b in "Tm"(Gamma, B)}$ (注意这里一并写出了它的类型参数)。这样类型构造子是自然变换 $X -> "Tp"$，而元素构造子是自然变换 $Y -> "Tm"$。同时还有以下交换方
 #eq(diagram($
   Y edge(->) edge("d", ->) & "Tm" edgeL("d", ->, typeof)\
   X edgeR(->) & "Tp"
@@ -86,7 +86,7 @@ $))
 
 本节中我们介绍从展映射视角定义的几种类型论模型的概念，并讨论它们之间的联系。从这个视角定义的模型与类型论的关联没有那么直接，但是能更好地与范畴论和同伦论中的概念联系起来。在 #[@sec:coherence-problem]中我们会讨论这些模型与具族范畴的转化关系。
 
-=== 局部积闭范畴的语言
+=== 局部积闭范畴的语言 <sec:lccc-language>
 
 考虑集合族 $A_x$ 与对应的展映射 $p : (Gamma dot A) -> Gamma$。假如有映射 $sigma : Delta -> Gamma$，那么 $Delta$ 上对应的集合族是 $(A sigma)_x = A_(sigma(x))$，因此有
 #eq($ Delta dot A sigma &= {(x, a) mid(|) x in Delta, a in A_(sigma(x))} \ &tilde.equiv {(x, y) mid(|) x in Delta, y in Gamma dot A, p(y) = sigma(x)} $)
@@ -348,7 +348,7 @@ $))
 第三种办法则是反其道而行之，不去修改概括范畴使得语义匹配语法，而是修改语法使得它匹配概括范畴。这就需要添加一类新的语法，描述类型之间的映射。它可以用于包含子类型的系统，是前沿研究的课题 @comprehension-type-theory。
 
 #definition[
-  *具集范畴*由以下资料组成：一个范畴 $cal(C)$ 与预层 $"Ty" : cal(C)^"op" -> Set$，使得对任何 $Gamma in cal(C)$ 与 $A in "Ty"(Gamma)$，都有对象 $(Gamma dot A) in cal(C)$ 与箭头 $frak(p)_A : (Gamma dot A) -> Gamma$。对任何箭头 $sigma : Gamma -> Delta$ 与元素 $A in "Ty"(A)$，都有箭头 $bold(q)_(A, sigma)$ 构成拉回方
+  *具集范畴*由以下资料组成：一个范畴 $cal(C)$ 与预层 $"Tp" : cal(C)^"op" -> Set$，使得对任何 $Gamma in cal(C)$ 与 $A in "Tp"(Gamma)$，都有对象 $(Gamma dot A) in cal(C)$ 与箭头 $frak(p)_A : (Gamma dot A) -> Gamma$。对任何箭头 $sigma : Gamma -> Delta$ 与元素 $A in "Tp"(A)$，都有箭头 $bold(q)_(A, sigma)$ 构成拉回方
   #eq(diagram({
     node((0,0), $Gamma dot A sigma$, name: <B>)
     pullback("dr")
@@ -413,9 +413,9 @@ $))
 
 还可以进一步给出模型与具集范畴的互相转换，并证明来回转换之后得到的与原先的东西同构。这就说明具集范畴是与模型的概念完全等价的。
 
-然而，对于展映射范畴、概括范畴或者局部积闭范畴而言，仿照@thm:cwa-coh 构造对应的模型时会遇到困难。例如，我们希望证明局部积闭范畴的概念等价于带 $Sigma$、$Pi$ 与外延相等类型的模型，或者至少可以从前者构造后者。某个语境 $Gamma$ 上的类型，在局部积闭范畴中对应值域是 $Gamma$ 的映射。假如我们定义 $"Ty"(Gamma) = {f mid(|) cod f = Gamma}$，暂不考虑这是集合还是真类的问题，下一步就是定义代换在 $"Ty"$ 上的操作。
+然而，对于展映射范畴、概括范畴或者局部积闭范畴而言，仿照@thm:cwa-coh 构造对应的模型时会遇到困难。例如，我们希望证明局部积闭范畴的概念等价于带 $Sigma$、$Pi$ 与外延相等类型的模型，或者至少可以从前者构造后者。某个语境 $Gamma$ 上的类型，在局部积闭范畴中对应值域是 $Gamma$ 的映射。假如我们定义 $"Tp"(Gamma) = {f mid(|) cod f = Gamma}$，暂不考虑这是集合还是真类的问题，下一步就是定义代换在 $"Tp"$ 上的操作。
 
-局部积闭范畴中，给定代换 $sigma : Delta -> Gamma$ 与类型 $Gamma' -> Gamma$，类型的代换对应拉回。这可以给出映射 $sigma^* : "Ty"(Gamma) -> "Ty"(Delta)$。我们还需要证明 $"Ty"$ 的函子性，即 $(sigma compose tau)^* = tau^* compose sigma^*$。由范畴的基本理论可以知道，连续取两次拉回，同构于沿着其复合取拉回。然而，这仅仅证明了同构性，但模型的定义要求相等。由于范畴论的语言只精确到唯一同构意义下的唯一性，我们还需要设法选出拉回，使得它在严格相等的意义下满足函子性。
+局部积闭范畴中，给定代换 $sigma : Delta -> Gamma$ 与类型 $Gamma' -> Gamma$，类型的代换对应拉回。这可以给出映射 $sigma^* : "Tp"(Gamma) -> "Tp"(Delta)$。我们还需要证明 $"Tp"$ 的函子性，即 $(sigma compose tau)^* = tau^* compose sigma^*$。由范畴的基本理论可以知道，连续取两次拉回，同构于沿着其复合取拉回。然而，这仅仅证明了同构性，但模型的定义要求相等。由于范畴论的语言只精确到唯一同构意义下的唯一性，我们还需要设法选出拉回，使得它在严格相等的意义下满足函子性。
 
 这类问题就是#define[融贯问题][coherence problem]。前文提到 Seely~@seely-lccc 提出了局部积闭范畴与外延类型论的关系。但是他的证明没有处理融贯问题，是有漏洞的。Curien~@curien-coherence 首先尝试解决了这个问题。他的做法是从语法出发，将原先的规则
 #eq($ rule(
@@ -444,13 +444,13 @@ $))
   - 类型论模型范畴
   - 局部积闭范畴（@def:lccc）与意象 (..)
 ]
-我们以局部积闭范畴为例讨论融贯问题的一般解法。这些办法都源自范畴逻辑学中 Giraud 与 Bénabou 的工作，但是做了适应类型论的修改。
+我们以局部积闭范畴为例简介融贯问题的一般解法。这些办法都源自范畴逻辑学中 Giraud 与 Bénabou 的工作，但是做了适应类型论的修改。
 
 === 兼蓄法
 
-既然定义 $"Ty"(Gamma)$ 为射向 $Gamma$ 的箭头的集合的问题是需要选出满足严格函子性的拉回，Hofmann 的解法是将其改为 “选好全部拉回的箭头” 的集合。换句话说，$"Ty"(Gamma)$ 的元素是有序对 $(f, F)$，其中 $f : Gamma' -> Gamma$，而 $F$ 是个映射，将 $sigma : Delta -> Gamma$ 映射到 $sigma$ 与 $f$ 的某个拉回方。这样，同一个箭头可以搭配不同的拉回 (不过它们都彼此同构)，而 $"Ty"$ 将它们一律收纳。
+既然定义 $"Tp"(Gamma)$ 为射向 $Gamma$ 的箭头的集合的问题是需要选出满足严格函子性的拉回，Hofmann 的解法是将其改为 “选好全部拉回的箭头” 的集合。换句话说，$"Tp"(Gamma)$ 的元素是有序对 $(f, F)$，其中 $f : Gamma' -> Gamma$，而 $F$ 是个映射，将 $sigma : Delta -> Gamma$ 映射到 $sigma$ 与 $f$ 的某个拉回方。这样，同一个箭头可以搭配不同的拉回 (不过它们都彼此同构)，而 $"Tp"$ 将它们一律收纳。
 
-给定类型 $(f, F) in "Ty"(Gamma)$ 与代换 $sigma : Delta -> Gamma$，类型代换的结果也是有序对 $(g, G) in "Ty"(Delta)$，其中 $g$ 不难想到就是靠 $F(sigma)$ 选定的拉回。而 $G$ 需要将 $delta : Xi -> Delta$ 映射到拉回方，这也有现成的答案：注意到 $F(sigma compose delta)$ 已经给出了下图外侧的拉回：
+给定类型 $(f, F) in "Tp"(Gamma)$ 与代换 $sigma : Delta -> Gamma$，类型代换的结果也是有序对 $(g, G) in "Tp"(Delta)$，其中 $g$ 不难想到就是靠 $F(sigma)$ 选定的拉回。而 $G$ 需要将 $delta : Xi -> Delta$ 映射到拉回方，这也有现成的答案：注意到 $F(sigma compose delta)$ 已经给出了下图外侧的拉回：
 #eq(diagram({
   node((0,0), $Xi'$, name: <Xi1>)
   edge("->", "rr", bend: 25deg)
@@ -478,14 +478,14 @@ $))
 
 === 自由法
 
-反过来，我们也可以悬置拉回选择的问题，直接将 $"Ty"(Gamma)$ 的元素定义为 “待选择拉回的图表” 的集合，如下图。
+反过来，我们也可以悬置拉回选择的问题，直接将 $"Tp"(Gamma)$ 的元素定义为 “待选择拉回的图表” 的集合，如下图。
 #eq(diagram({
   node((1,0), $Delta'$)
   edgeL("->", "d", $f$)
   node((1,1), $Delta$)
   node((0,1), $Gamma$)
   edge("->", "r", $sigma$)
-  node((-1, 0.55), $"Ty"(Gamma) = {(f, sigma) mid(|) dom f = Gamma, space cod f = cod sigma}$)
+  node((-1, 0.55), $"Tp"(Gamma) = {(f, sigma) mid(|) dom f = Gamma, space cod f = cod sigma}$)
 }), top: -1em)
 这个图表一旦选择了拉回，就会得到射向 $Gamma$ 的箭头，但是实际上不选择拉回，直接对此图表操作也无妨.#footnote[这类似数学上从自然数构造整数的办法。定义整数为自然数对 $(m, n)$ 的等价类，直观上代表整数 $m - n$。但无需真的计算减法，直接在有序对上操作即可。这是从交换幺半群_自由_构造交换群的办法。] 此时，定义 $delta : Xi -> Gamma$ 的代换操作将 $(f, sigma)$ 变为 $(f, sigma compose delta)$ 即可。因为范畴中箭头复合满足严格的结合律，这个代换操作满足严格的函子性。
 
@@ -504,15 +504,15 @@ $))
 }))
 由拉回的泛性质，可知它由 $Gamma -> Gamma$ 与 $Gamma -> Delta'$ 的一对映射决定。截面的等式要求前者是恒等映射，因此可得 $"Tm"(Gamma, (f, sigma)) = {t : Gamma -> Delta' mid(|) f compose t = sigma}$。
 
-Awodey~@natural-model 用自然模型的语言给出了另一个等价的描述方法。回忆自然模型需要预层的映射 $"typeof" : "Tm" -> "Tp"$，使得展映射 $Gamma dot A -> Gamma$ 恰好是那些从可表对象到 $"Tp"$ 的映射的拉回。我们现在有了所需的展映射，需要找到 $"Tm" -> "Tp"$。对于某个具体的展映射 $Gamma' -> Gamma$，显然取 $yo(Gamma') -> yo(Gamma)$ 可以满足要求。但我们需要找到 $"typeof"$ 配合所有的展映射，因此不妨直接取不交并 #eq($ (product.co_(f : Gamma' -> Gamma) yo(Gamma')) -> (product.co_(f : Gamma' -> Gamma) yo(Gamma)). $) 展开定义之后可以证明这里的 $"Ty"$ 与 $"Tm"$ 与上面的定义吻合。
+Awodey~@natural-model 用自然模型的语言给出了另一个等价的描述方法。回忆自然模型需要预层的映射 $"typeof" : "Tm" -> "Tp"$，使得展映射 $Gamma dot A -> Gamma$ 恰好是那些从可表对象到 $"Tp"$ 的映射的拉回。我们现在有了所需的展映射，需要找到 $"Tm" -> "Tp"$。对于某个具体的展映射 $Gamma' -> Gamma$，显然取 $yo(Gamma') -> yo(Gamma)$ 可以满足要求。但我们需要找到 $"typeof"$ 配合所有的展映射，因此不妨直接取不交并 #eq($ (product.co_(f : Gamma' -> Gamma) yo(Gamma')) -> (product.co_(f : Gamma' -> Gamma) yo(Gamma)). $) 展开定义之后可以证明这里的 $"Tp"$ 与 $"Tm"$ 与上面的定义吻合。
 
 这套方法也称作#define[局部宇宙法][local universes construction]，由 Lumsdaine 与 Warren~@local-universes 发展。Bocquet~@bocquet-strictification 进一步推广了这个方法。
 
 === 类型结构的融贯问题
 
-Benefit of local universes: intensional type constructors
+以上仅仅解决了依值类型论本体的模型，还未考虑模型上的类型结构。事实上，兼蓄法适合处理外延类型结构，即可以写成 $"Tm"(Gamma, T)$ 与某集合有双射的情况。自由法则更加灵活，可以处理内涵相等、Boole 类型等等情况。读者可以阅读 Hofmann~@hofmann-coherence 或者 Lumsdaine 与 Warren~@local-universes 的论文了解构造。
 
-- https://www2.mathematik.tu-darmstadt.de/~streicher/FIBR/natmod.pdf
+// - https://www2.mathematik.tu-darmstadt.de/~streicher/FIBR/natmod.pdf
 
 // TODO
 // Also mention universes in sheaf topos:
@@ -521,11 +521,29 @@ Benefit of local universes: intensional type constructors
 
 == 自然模型的类型结构 <sec:natural-type-structure>
 
-// 介绍局部积闭范畴与概括范畴，除了展示自然模型之外的另一种定义类型论模型的思路之外，另一个重要目的是为接下来的范畴论操作提供一种语言。
+介绍局部积闭范畴与概括范畴，除了展示自然模型之外的另一种定义类型论模型的思路之外，另一个重要目的是为接下来的范畴论操作提供一种语言。
 
-// 换句话说，我们在自然模型的研究中需要用到一些范畴论构造。这些构造用范畴论表述比较复杂，但是我们往往可以在类型论（具体来说是带有 $Sigma$、$Pi$ 与外延相等的类型论）中写下一些表达式，再用 #[@sec:lccc-language]的办法解释为范畴中的构造，并且这正是我们想要表达的构造。
+换句话说，我们在自然模型的研究中需要用到一些范畴论构造。这些构造用范畴论表述比较复杂，但是我们往往可以在类型论（具体来说是带有 $Sigma$、$Pi$ 与外延相等的类型论）中写下一些表达式，再用 #[@sec:lccc-language]与 #[@sec:coherence-problem]的办法解释为范畴中的构造。
 
-(...) reexpress constructs in natural models using the LCCC language, because these constructions are more categorical, but we still want to retain the type theoretic syntax
+上文提到二元乘积类型对应拉回
+#eq(diagram({
+  node((0,0), $Y$)
+  edge("->", "r")
+  edge("->", "d")
+  pullback("dr")
+  node((0,1), $"Tp"^2$)
+  edge("->", "r", $times$)
+  node((1,0), $"Tm"$)
+  edgeL("->", "d", $"typeof"$)
+  node((1,1), $"Tp"$)
+}))
+其中 $Y(Gamma) = {(A, B, a, b) mid(|) a in "Tm"(Gamma, A), b in "Tm"(Gamma, B)}$。下方的映射对应类型构造子 $times$，而上方映射是有序对的构造子。拉回方给出消去子以及 $beta eta$ 等式。
+
+因为预层范畴 $Psh(cal(C))$ 本身是局部积闭的，我们可以将这个拉回方翻译成外延类型论的语言。注意这个外延类型论与模型原本对应的类型论没有关系，完全属于元语言。
+
+(...) use color to distinguish LF language
+
+Logical framework
 
 == 语法与自由模型
 
