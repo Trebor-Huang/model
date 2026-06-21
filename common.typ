@@ -56,7 +56,7 @@
 #let numbered-figure = figure.with(kind: "numbered-figure", supplement: "图表", numbering: "1", gap: 1em)
 
 // Equations
-#let eq(content, top: 0pt, bottom: 0pt) = [\
+#let eq(content, top: 0pt, bottom: 0pt, ..style) = [\
   #box(align(center, content), width: 1fr, inset: (top: top, bottom: bottom))\
 ] // TODO manually tune some vertical spacing
 
@@ -75,6 +75,18 @@
 #let partir(..rules) = for rule in rules.pos() {
   box(math.equation(rule, block: true), inset: (left: 1em, right: 1em))
 }
+
+// Logical framework
+#let LF = box.with(
+  fill: color.oklch(70%, 80%, 140deg).transparentize(80%),
+  outset: (left: 0.1em, right: 0.1em, top: 0.3em, bottom: 0.35em), radius: 0.2em)
+// TODO replace with  highlight.with(fill: color.oklch(70%, 80%, 140deg).transparentize(80%), ...)  once it is fixed
+#let eqLF(content) = eq(box(
+  fill: color.oklch(70%, 80%, 140deg).transparentize(80%),
+  outset: (left: 0.3em, right: 0.3em, top: 0.3em, bottom: 0.35em), radius: 0.2em, content))
+#let lfTp = math.italic("Tp")
+#let lfEl = math.italic("El")
+
 // Other type theoretic stuff
 #let istype = math.op(math.sans("type"))
 #let isnf = math.op(text(fill: color.oklch(50%, 80%, 200deg), math.sans("nf")))
