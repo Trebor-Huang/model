@@ -577,35 +577,47 @@ Phrase explicitly as LCCC functor (... maybe swap this entire section with next 
 
 == 语法与自由模型
 
-语法构成的模型， (...) 用于表述语法的性质 (举例)
+由于模型的定义与语法的定义完全平行，语法本身不出所料应当构成一个模型。具体来说，定义该模型中的语义语境为语法语境的集合，语义代换为语法代换，语义类型为语法类型，语义元素为语法元素。上述集合均商去判值相等。这个模型称作#define[表达式模型][term model]。许多关于语法的性质可以改述为表达式模型的性质。例如自洽性说的是空语境中类型 $Empty$ 没有元素，这等价于表达式模型中 $"Tm"(1, Empty)$ 是空集。
 
+=== 始模型与自由模型
 
-(...) #define[表达式模型][term model]，总是模型的范畴中的始对象，因此也称作#define[始模型][initial model] 或者#define[自由模型][free model]。
+由于语法可以解释为任何模型，不难猜测表达式模型在全体模型构成的范畴中具备特殊地位。讨论之前，我们首先需要定义全体模型构成的范畴。
 
-=== 语法不等同于表达式模型
+#definition[
+给定两模型 $scr(M)$ 与 $scr(N)$，其间*同态* $F$ 由如下资料组成：
+  - 语境的映射 $"Ctx"_scr(M) -> "Ctx"_scr(N)$，
+  - 代换的映射 $hom_scr(M) (Gamma, Delta) -> hom_scr(N) (F(Gamma), F(Delta))$，使其保持恒等代换与代换复合，
+  - 类型的映射 $"Ty"_scr(M) (Gamma) -> "Ty"_scr(N) (F(Gamma))$，
+  - 元素的映射 $"Tm"_scr(M) (Gamma, A) -> "Tm"_scr(N) (F(Gamma), F(A))$，
+  - 语境的映射保持空语境与语境扩展，即 $F(1) = 1$，$F(Gamma dot A) = F(Gamma) dot F(A)$，
+  - 同理 $F(frak(p)) = frak(p)$，$F(frak(q)) = frak(q)$。
+模型与同态构成范畴 $sans("CwF")$。
+] <def:morphism>
+带各种类型结构的模型同样构成范畴，其中的箭头也需类似地保持一切类型结构。
 
-- We can form the term model, but it cannot be syntax itself, because this needs a definition of model to make sense, which does not exist before models.
-  - Syntax _is_ the specification of models
-- Statements about syntax can be interpreted as statements about free models
-  - For most type theories, initial models usually suffice
-  - Counterexample: simply typed lambda calculus with no base types. The models can have non-trivial structure, but the term model is empty.
-  - Usual solution: add enough base type to prevent degeneration.
+类型论模型定义的重要特性是其中只要求等式。并非所有数学结构都可以这样定义。例如域是拥有四则运算的集合，其中除法的除数必须非零。因此在域的定义中就必须用到_不等式_。相对地，环则只拥有加法、减法与乘法，其中的结合律、分配律等等都是纯等式。这种数学结构称作*代数结构*。群、环、向量空间都是代数结构，而域、全序、拓扑空间不是。
 
-=== 自由模型
-
-What are morphisms between models?
-
-mention sconing and gluing (dependent elimination)
-
-will use to prove canonicity etc later down the line
-
-/*
-类型论模型定义的重要特性是其中只要求等式。并非所有数学结构都可以这样定义。例如域是拥有四则运算的集合，其中除法的除数必须非零。因此在域的定义中就必须用到_不等式_。相对地，环则只拥有加法、减法与乘法，其中的结合律、分配律等等都是纯等式。这种数学结构称作#define[代数结构][algebraic structure]。群、环、向量空间都是代数结构，而域、全序、拓扑空间不是.#footnote[代数结构可以包含多个集合，而不一定只在一个集合上配备运算。这称作#define[多类][multi-sorted] 代数结构。类型论模型的另一个特别之处在于涉及的集合以元素为指标，例如 $"Tp"(Gamma)$ 对每个元素 $Gamma in "Ctx"$ 都有一个集合。这样的代数理论称作#define[广义代数理论][generalized algebraic theory]，或者 Cartmell 理论。]
+代数结构可以包含多个集合，而不一定只在一个集合上配备运算。这称作#define[多类][multi-sorted] 代数结构。类型论模型的另一个特别之处在于涉及的集合以元素为指标，例如 $"Tp"(Gamma)$ 对每个元素 $Gamma in "Ctx"$ 都有一个集合。这样的代数理论称作#define[广义代数理论][generalized algebraic theory]，或者 Cartmell 理论。
 
 代数结构的一大特征是可以自由生成。换言之，给定一些元素，可以构造出_仅仅_满足代数结构本身要求的等式的结构。例如，一个元素 $x$ 在环的加法、减法、乘法下可以生成表达式 $x^2 + x - 2x$。这些表达式构成的环称作多项式环 $ZZ[x]$。具体来说，我们将给定的元素利用代数结构中的运算自由组合，将构造出的所有表达式商去需要满足的等式关系，得到的就是自由代数结构。
 
-当然，假如这个代数结构中有指定元素 (也就是零元运算，例如环公理要求乘法单位元 $1$)，那么不用给定元素，也能生成非平凡的代数结构。 (expand on this, syntax of groups vs free groups)
-*/
+当然，假如这个代数结构中有指定元素 (也就是零元运算，例如环公理要求乘法单位元 $1$)，那么不用给定元素，也能生成非平凡的代数结构。这对应范畴里的始对象。
+
+#theorem[始模型][
+  表达式模型是模型范畴的始对象。
+]
+#proof[
+  这是@thm:soundness 的变种.#footnote[由于本书对语法的定义就是由规则自由生成的结构，故证明比较简单。如果采用传统的办法定义语法，即先定义原始表达式，再定义良类型表达式子集，取判值相等的商，则需要较多笔墨证明此事。这就是#translate[始模型猜想][initiality conjecture]。对于一大类类型论，都已有工具解决始模型猜想，因此一般认为该猜想已经解决。]
+]
+
+// todo mention dependent elimination??
+
+=== 语法不等同于表达式模型
+
+将语法与表达式模型完全等同是极常见的误区。
+构造表达式模型之前，需要先定义模型。但语法总是先于模型的定义而存在。因此语法等同于表达式模型是荒谬的。
+
+例如，设类型论 $bold("T")_0$ 没有任何类型构造子，而 $bold("T")_->$ 只有函数类型与乘积类型 (即简单类型 $lambda$-演算)。因为这些类型构造子都只能从已有的类型构造新类型，所以 $bold("T")_->$ 无法写出任何类型表达式。此时，类型论的表达式模型为空。倘若认为 $bold("T")_->$ 的语法也为空，就势必要认为其等价于 $bold("T")_0$。然而，简单类型 $lambda$-演算的模型对应积闭范畴，与 $bold("T")_0$ 不同。这与代数结构中的情况类似：群范畴与幺半群范畴的始对象都是单点集，但这两者显然是不相同的。
 
 == 模型的函子观点
 
