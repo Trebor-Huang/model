@@ -45,6 +45,8 @@ Internal universes
 problems with cubical models: they don't represent space
 $==>$ equivariant cubical model etc
 
+(some history on cubical type theory via Carlo)
+
 == 同伦类型论的内模型
 
 idea of using HoTT/2LTT to synthetically define infinity-models

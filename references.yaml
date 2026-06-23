@@ -69,6 +69,18 @@ natural-model:
   serial-number:
     doi: 10.48550/arXiv.1406.3219
 
+gs-framework:
+  type: misc
+  title: 'Syntactic categories for dependent type theory: sketching and adequacy'
+  author:
+  - Gratzer, Daniel
+  - Sterling, Jonathan
+  date: 2021
+  note: ArXiv preprint
+  serial-number:
+    doi: 10.48550/arXiv.2012.10783
+
+
 girard-paradox:
   type: thesis
   note: Doctoral dissertation
@@ -416,4 +428,32 @@ local-universes:
     publisher: Association for Computing Machinery (ACM)
     issue: 3
     volume: 16
+
+general-framework:
+  type: article
+  title: A general framework for the semantics of type theory
+  author: Uemura, Taichi
+  date: 2023-03
+  page-range: 134-179
+  serial-number:
+    doi: 10.1017/s0960129523000208
+    issn: 1469-8072
+  parent:
+    type: periodical
+    title: Mathematical Structures in Computer Science
+    publisher: Cambridge University Press (CUP)
+    issue: 3
+    volume: 33
+
+sterling-thesis:
+  type: thesis
+  title: 'First Steps in Synthetic {Tait} Computability: The Objective Metatheory of Cubical Type Theory'
+  author: Sterling, Jonathan
+  date: 2021
+  organization: Carnegie Mellon University
+  issue: CMU-CS-21-142
+  serial-number:
+    doi: 10.5281/zenodo.6990769
+  note: PhD thesis
+
 
