@@ -7,6 +7,7 @@
 - direct construction of the model
   - "tracking elements", pretending simple types
   - contexts are $(X, Gamma, sigma : X -> hom(1, Gamma))$, types are $(Y_(x in X), A, Y_x -> A sigma_x)$, elements are a tracking element together with a corresponding real element
+- motivation: usually, true in syntax -> true in model, or false in model -> false in syntax. To deduce something true in syntax, we need the model to have pieces of syntax, "tracking"
 
 - dependent elimination, displayed models and gluing
 

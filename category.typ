@@ -573,7 +573,8 @@ $)
 
 “逻辑框架” 这个词指的是一大类描述类型论的办法。其主要特征是将类型论中变量与代换的机制交给元语言的变量及函数类型处理。读者可参阅 @general-framework @gs-framework 以及 @sterling-thesis 的第一章。其中也有对逻辑框架发展历史的介绍。
 
-Phrase explicitly as LCCC functor (... maybe swap this entire section with next section?)
+// Phrase explicitly as LCCC functor (... maybe swap this entire section with next section?)
+// Probably no.
 
 == 语法与自由模型
 
@@ -621,6 +622,25 @@ Phrase explicitly as LCCC functor (... maybe swap this entire section with next 
 
 == 模型的函子观点
 
+Lawvere 在博士论文中提出了著名的*函子语义*~@functorial-semantics。其主旨是将代数理论（语法）视作某种范畴，而代数结构（语义）是从这些范畴出发的函子。以群论为例：
+#theorem[
+  令 $cal(T)$ 为有限生成自由群构成的范畴。则 $cal(T)^"op" -> Set$ 保持有限乘积的函子构成的范畴与群范畴 $sans("Grp")$ 等价。
+]
+#proof[
+  $cal(T)$ 的对象是自由群 $"F"_n$。注意到 $"F"_n$ 是 $n$ 个 $"F"_1$ 的余积，因此 $cal(T)^"op"$ 中每个对象都是 $"F"_1$ 的有限积。假如函子 $G : cal(T)^"op" -> Set$ 保持有限乘积，那么 $G("F"_n)$ 与 $G("F"_1)^n$ 有双射。记 $G("F"_1)$ 为 $G_1$。
+
+  注意到有同态 $m : "F"_1 -> "F"_2$ 将生成元 $x$ 映射到 $x y$。由函子性可得函数 $G(m) : G_1^2 -> G_1$。类似地有同态 $i : "F"_1 -> "F"_1$ 将生成元 $x$ 映射到 $x^(-1)$，给出函数 $G(i) : G_1 -> G_1$。还有常函数同态 $e : "F"_1 -> "F"_0$，对应 $G(e) : 1 -> G_1$，也即给出了集合 $G_1$ 中的元素。 由于 $G$ 是保持有限乘积的函子，$m$、$i$、$e$ 以及其范畴乘积之间的等式反映为 $G(m)$、$G(i)$、$G(e)$ 之间的等式。可以验证这构成集合 $G_1$ 上的群结构。
+
+  反过来，如果有群 $G_1$，定义函子 $G("F"_n) = hom("F"_n, G_1)$。不难验证这保持有限乘积。进一步，可以验证这两个操作构成所需的范畴等价。
+]
+可以将范畴 $cal(T)^"op"$ 视作群理论的 “蓝图”。其中第 $n$ 个对象（以免与 $cal(T)$ 混淆，记作 $X^n$）指代某个群 $G$ 的 $n$ 元乘积。映射 $X^n -> X$ 对应 $"F"_n$ 的元素，即由 $n$ 个变量在群理论下可以写出的表达式，商去群公理。这样看，$cal(T)^"op"$ 同时记录了群的运算和等式。
+
+同时，$cal(T)^"op"$ 的记录是#translate[无偏][unbiased] 的，即它不取决于我们选择的具体公理。群的理论可以由乘法、单位元与逆元描述，但是也可以由单位元与右除法运算 $x \/ y$ 描述。即使采用前者，也可以选择不同的等式公理，如结合律、左右单位元与左右逆元律，也可以只选择结合律、左单位元与左逆元，等等。由于 $cal(T)^"op"$ 包含了一切可以写出的表达式，并且商去了一切可以推出的等式，这些无关紧要的细节就不影响 $cal(T)^"op"$ 这个数学对象。
+
+#definition[
+  若某个（小）范畴 $cal(C)$ 的对象集是 ${X_n mid(|) n in NN}$，具有有限乘积，并且 $X_n$ 是 $X_1$ 的 $n$ 次幂，就称 $cal(C)$ 是 *Lawvere 代数理论*。$cal(C)$ 的*模型*是保持有限乘积的函子 $cal(C) -> Set$。
+]
+
 (a category of algebras, model is a map from an algebra to a specified subcategory)
 
 - diagram as functor from small categories
@@ -629,7 +649,7 @@ Phrase explicitly as LCCC functor (... maybe swap this entire section with next 
 - model as functor preserving representable maps into presheaf categories
   - Compare with direct encoding, left exact functor into Set
 
-上村太一 (罗马字：Taichi Uemura)
+上村太一 (罗马字：Uemura Taichi)
 
 == 变量的结构
 

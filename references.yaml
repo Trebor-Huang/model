@@ -456,4 +456,19 @@ sterling-thesis:
     doi: 10.5281/zenodo.6990769
   note: PhD thesis
 
+functorial-semantics:
+  type: article
+  title: Functorial Semantics Of Algebraic Theories
+  author: Lawvere, F. William
+  date: 1963-11
+  page-range: 869-872
+  serial-number:
+    doi: 10.1073/pnas.50.5.869
+    issn: 1091-6490
+  parent:
+    type: periodical
+    title: Proceedings of the National Academy of Sciences
+    publisher: National Academy of Sciences
+    issue: 5
+    volume: 50
 
