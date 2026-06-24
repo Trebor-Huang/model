@@ -8,7 +8,7 @@
 == 集合模型 <sec:set-model>
 
 直观上说，对于大多数类型论而言，每个类型可以理解为集合，函数类型对应集合之间的函数构成的集合，乘积类型对应集合的 Descartes 乘积，等等。(同伦类型论不在此列.) 因此，我们理应能够构造出类型论的集合模型。
-依值类型论中，依值类型 $x : A tack B(x) istype$ 可以解释为集合族 ${B(x)}_(x in A)$，即为每个元素 $x in A$ 赋予一个集合 $B(x)$。
+依值类型论中，依值类型 $x : A tack B(x) istype$ 可以解释为集合族 ${B(x)}_(x in A)$，即为每个元素 $x in A$ 赋予集合 $B(x)$。
 
 #let odot(pos) = draw.circle(pos, stroke: none, fill: black, radius: 0.09)
 #let family(A, B, x, Bx) = {
@@ -47,7 +47,7 @@
 另一方面，我们还需要区分语法与它们对应的解释。例如可以将 $Gamma$ 的解释记作 $interpret(Gamma)$。这样就能给出完整的集合模型：
 - 语境 $Gamma$ 解释为集合，记作 $interpret(Gamma)$。
 - 类型 $Gamma tack A istype$ 解释为集合族，记作 $interpret(A)_x$，其中 $x in interpret(Gamma)$。
-- 空语境解释为单元素集合，即 $interpret(()) = {star}$。需要注意的是，空语境不是空集。因为空语境的 “空” 表示没有变量，因此变量的取值就只有一种情况。这与零个集合的乘积是单元素集，或者幂 $n^0 = 1$ 的道理是一样的。
+- 空语境解释为单元素集合，即 $interpret(()) = {star}$。需要注意的是，空语境不是空集。因为空语境的 “空” 表示没有变量，因此变量的取值就只有一种情况。这与零个集合的乘积是单元素集，或者幂 $n^0 = 1$ 的道理一样。
 - 语境扩展解释为不交并 $interpret(Gamma dot A) = product.co_(x in interpret(Gamma)) interpret(A)_x$。
 - $Gamma tack t : A$ 解释为集合族 $interpret(A)$ 的元素族 $interpret(t)$。即对于每个 $x in interpret(Gamma)$ 都有 $interpret(t)_x in interpret(A)_x$。
 - 变量代换 $Gamma tack sigma : Delta$ 解释为集合之间的函数 $interpret(Gamma) -> interpret(Delta)$。
@@ -71,7 +71,7 @@
 
 我们从上文讨论的直观里抽取出模型的一套定义。为了区分某个语法概念与它对应的语义解释，我们将语境的解释称作*语义语境*，类型的解释称为*语义类型*，以此类推。例如在集合模型中，语义语境的意思就是集合。不过，我们仍然会采用同样的字母指代这些对象，例如语法语境与语义语境都用 $Gamma, Delta, Theta$ 等字母表示，否则排版容易叠床架屋。
 
-在 #[@sec:explicit-substitution]中，我们提到不应该将语境的长度视为本质属性，因此变量代换需要视作新的语法构造，而非在语法上递归定义的函数。在模型的定义中这样的好处是明显的：我们将表达式解释为数学对象之后，递归定义的代换就行不通了。因为两个语法上不同的表达式在模型中可能对应相同的数学对象，因此在这套模型中就不能靠递归定义这两个表达式的代换.#footnote[那么，干脆去掉代换的概念，能否行得通呢? 类型论里有许多规则需要用代换来表达，例如 $beta$ 判值相等 $(lambda x. t) s = t[x\/s]$。倘若能不用代换表达此类规则，那么在模型中也能免去讨论代换结构。留给读者思考。]
+在 #[@sec:explicit-substitution]中，我们提到不应该将语境的长度视为本质属性，因此变量代换需要视作新的语法构造，而非在语法上递归定义的函数。在模型的定义中这样的好处是明显的：我们将表达式解释为数学对象之后，递归定义的代换就行不通了。因为两个语法上不同的表达式在模型中可能对应相同的数学对象，因此在这套模型中就不能靠递归定义这两个表达式的代换.#footnote[那么，干脆去掉代换的概念，能否行得通呢? 类型论里有许多规则需要用代换来表达，例如 $beta$ 判值相等 $(lambda x bind t) s = t[x\/s]$。如果去掉代换，这些规则也难以表述。]
 
 === 基本框架
 
@@ -116,7 +116,7 @@
 不同的类型论会在以上的基础上添加各自的类型，因此在模型中也会相应的按照这些类型的规则定义类型结构。我们以几个常见的类型为例，展示这些类型结构的一般定义办法。这些定义只消对类型论规则作机械地改写即可得到，读者观察出规律即可跳过。读者也可以试着用定理证明助手形式化集合模型的构造，有助于消化其中微妙之处。
 
 ==== 单元素类型
-对于每个语义语境 $Gamma$，选择语义类型 $Unit in "Tp"(Gamma)$。严格来说，应该写作 $Unit_Gamma$，因为每个语境下的类型是不同的。单元素类型的规则如下：
+对于每个语义语境 $Gamma$，选择语义类型 $Unit in "Tp"(Gamma)$。严格来说，应该写作 $Unit_Gamma$，因为每个语境下的类型互不相同。单元素类型的规则如下：
 #let star = math.class("normal", sym.star)
 #eq($
   rule(
@@ -140,7 +140,7 @@ $)
     Gamma tack sigma : Delta
   )
 $)
-因此模型的定义中需要添加等式要求 $Unit_Delta sigma = Unit_Gamma$ 以及 $star_Delta sigma = star_Gamma$。之后的规则中我们会省略下标，写作 $star sigma = star$.#footnote[由于 $"Tm"(Gamma, Unit)$ 都只有一个元素，因此等式 $star sigma = star$ 是自动满足的。别的类型则不然。]
+因此模型的定义中需要添加等式要求 $Unit_Delta sigma = Unit_Gamma$ 以及 $star_Delta sigma = star_Gamma$。之后的规则中我们会省略下标，写作 $star sigma = star$.#footnote[由于 $"Tm"(Gamma, Unit)$ 都只有一个元素，因此等式 $star sigma = star$ 自动成立。别的类型则不然。]
 
 在集合模型中，我们已经构造了集合族 $Unit_Gamma$，它为元素 $x in Gamma$ 赋予的集合是 ${star}$。其中 $star$ 是集合论中任意一个对象。而 $star_Gamma$ 对应显然的平凡元素族。
 
@@ -153,7 +153,7 @@ $)
     Gamma tack b : B[id, a]
   )
 $)
-注意使用了代换 $[id, a] : Gamma -> (Gamma dot A)$ 使得类型正确，表示语境中的其他变量不改变，而将最后一个变量换为 $a$。用具名变量的语言，就是 $B[x\/a]$。在模型中，这就对应一个二元运算 $"pair"(a,b)$，将 $a in "Tm"(Gamma, A)$ 与 $b in "Tm"(Gamma, B[id, a])$ 映射到 $"Tm"(Gamma, Sigma A B)$。
+注意使用了代换 $[id, a] : Gamma -> (Gamma dot A)$ 使得类型正确，表示语境中的其他变量不改变，而将最后一个变量换为 $a$。用具名变量的语言，就是 $B[x\/a]$。在模型中，这就对应二元运算 $"pair"(a,b)$，将 $a in "Tm"(Gamma, A)$ 与 $b in "Tm"(Gamma, B[id, a])$ 映射到 $"Tm"(Gamma, Sigma A B)$。
 
 $Sigma$ 类型的消去子是投影操作：
 #eq($
@@ -182,7 +182,7 @@ $)
 #eq($
   (Sigma A B)sigma = Sigma (A sigma) (B sigma')
 $)
-这里，我们需要一个代换 $sigma' : (Delta dot A sigma) -> (Gamma dot A)$ 表示除了最后一个变量不变以外，对其他所有变量用 $sigma$ 代换。观察代换的规则可以得到 $sigma' = [sigma compose frak(p), frak(q)]$。同样，对表达式也有等式
+这里，我们需要构造代换 $sigma' : (Delta dot A sigma) -> (Gamma dot A)$ 表示除了最后一个变量不变以外，对其他所有变量用 $sigma$ 代换。由代换的规则可以得到 $sigma' = [sigma compose frak(p), frak(q)]$。同样，对表达式也有等式
 #eq($
   "pair"(a, b) sigma &= "pair"(a sigma, b sigma) \
   "proj"_1 (p) sigma &= "proj"_1 (p sigma) \
@@ -233,7 +233,7 @@ $)
     Gamma tack t : A
   ).
 $)
-换句话说，如果集合 $"Tm"(Gamma, Empty)$ 有元素，那么所有集合 $"Tm"(Gamma, A)$ 都必须有唯一的元素。在集合模型中这是成立的。但是在语法中，这意味着如果 $Gamma$ 可以推出矛盾，则 $Gamma$ 下任意类型的所有元素都相等，那么类型检查就需要能判定任意语境是否能推出矛盾，这是不现实的。
+换句话说，如果集合 $"Tm"(Gamma, Empty)$ 有元素，那么所有集合 $"Tm"(Gamma, A)$ 都必须有唯一的元素。这在集合模型中成立。但是在语法中，这意味着如果 $Gamma$ 可以推出矛盾，则 $Gamma$ 下任意类型的所有元素都相等，那么类型检查就需要能判定任意语境是否能推出矛盾，这不现实。
 
 ==== 不交并
 不交并是类型上的二元运算 $"Tp"(Gamma) times "Tp"(Gamma) -> "Tp"(Gamma)$，满足 $(A + B)sigma = A sigma + B sigma$。有两个函数
@@ -262,7 +262,7 @@ $)
 $)
 $eta$ 等式虽然困难不及空类型的情形，但是仍可产生神奇的推论。注意到 Boole 类型与 $Unit + Unit$ 基本相同，考虑 $f : Bool -> Bool$，则有判值相等 $f(f(f(x))) = f(x)$。读者可以观察 Gabriel Scherer~@stlc-sum-eta 的工作。
 
-在集合模型中，不交并的解释就是集合族的不交并，即 $(A + B)_x = A_x + B_x$，其中后者的 $+$ 是集合的不交并。$"case"$ 的定义略显繁琐，不过也是十分自然的。
+在集合模型中，不交并的解释就是集合族的不交并，即 $(A + B)_x = A_x + B_x$，其中后者的 $+$ 是集合的不交并。$"case"$ 的定义略显繁琐，不过也十分自然。
 
 // ==== 自然数类型
 
@@ -291,7 +291,7 @@ $)
     Gamma tack p : "Id"(A, t, t)
   )
 $)
-其中前者称作#define[等式反映][equality reflection]。换句话说，如果相等类型有元素，那么就有判值相等。有 J 消去子的情况下，$eta$ 等式等价于等式反映，并且它可以推出之前提到的空类型与不交并的 $eta$ 规则。另外，如果不加入 J 消去子，那么这两条规则合起来可以推出 J。在@sec:K-equivalences 中有证明。 Martin-Löf 类型论加上这些规则称作#define[外延类型论][extensional type theory]。这两条规则在模型中可以表达成一个双射：
+其中前者称作#define[等式反映][equality reflection]。换句话说，如果相等类型有元素，那么就有判值相等。有 J 消去子的情况下，$eta$ 等式等价于等式反映，并且它可以推出之前提到的空类型与不交并的 $eta$ 规则。另外，如果不加入 J 消去子，那么这两条规则合起来可以推出 J。在@sec:K-equivalences 中有证明。 Martin-Löf 类型论加上这些规则称作#define[外延类型论][extensional type theory]。这两条规则在模型中可以表达成双射：
 #eq($
   "Tm"(Gamma, "Id"(A, s, t)) tilde.equiv {star mid(|) s = t},
 $)
@@ -330,7 +330,7 @@ $)
   - 空语境与语境扩展 $ev(()) = ()$，$ev(Gamma dot A) = ev(Gamma) dot ev(A)$，
   - 语境扩展的投影代换 $ev(frak(p)) = frak(p)$，$ev(frak(q)) = frak(q)$，
   - 代换扩展 $ev([sigma, a]) = [ev(sigma), ev(a)]$。
-  并且满足这些条件的映射 $ev(-)$ 是唯一的。
+  并且满足这些条件的映射 $ev(-)$ 唯一。
 ] <thm:soundness>
 如果模型支持各种类型结构，那么它们各自也有对应的等式要求。这条定理保证了@def:model 对模型的定义是正确且完整的，是语义研究的基石。这条定理将会在#[@ch:examples]中反复应用。
 #proof[
@@ -339,18 +339,18 @@ $)
 
 == 相容性与独立性
 
-在数理逻辑中，模型的一大用途是说明某个命题无法在公理系统中证明或者证伪。如果类型论 $TT$ 中，某个类型 $A$ (视作命题) 没有元素，就说此命题#define[不可证][unprovable]。特别地，如果空类型没有元素，就说这个类型论是#define[自洽][consistent] 的。倘若类型论 $TT$ 添加了公理 $A$ 后仍然自洽，就说它们是#define[相容][consistent] 的。
+在数理逻辑中，模型的一大用途是说明某个命题无法在公理系统中证明或者证伪。如果类型论 $bold("T")$ 中，某个类型 $A$ (视作命题) 没有元素，就说此命题#define[不可证][unprovable]。特别地，如果空类型没有元素，就说这个类型论是#define[自洽][consistent] 的。倘若类型论 $bold("T")$ 添加了公理 $A$ 后仍然自洽，就说它们是#define[相容][consistent] 的。
 
 不难看出，某个命题的否定不可证，等价于这个命题本身与类型论相容。不过在没有排中律的情况下，某个命题不可证要弱于这个命题的否定与类型论相容。如果这两者都和类型论相容，我们就说这个命题是#define[独立][independent] 于该类型论的。不熟悉逻辑学的读者对这些术语之间的联系感到困惑十分正常，多做辨析，熟练即可。
 
 证明这些性质的办法是构造模型。具体来说，假如类型 $A$ 有元素 $tack t : A$，那么根据可靠性 (@thm:soundness)，任何模型中都会有其解释 $interpret(t) in "Tm"(1, interpret(A))$。那么，如果能构造某套模型，使得 $"Tm"(1, interpret(A))$ 是空集，就可以说明不存在这样的语法表达式 $t$。我们称之为 $A$ 的#define[反模型][counter-model]。读者可以类推写出相容性、独立性等等的证明办法，以此熟悉定义。
 
-在 #[@sec:set-model]中，我们已经定义了集合模型。不难在集合模型中给出空类型的语义 —— 就是空集。因此，这就证明了类型论的自洽性。具体是哪个类型论的自洽性，取决于我们为集合模型构造了哪些类型结构。例如，上文中已经讨论了 Martin-Löf 类型论中所有的类型结构，所以这就说明了 Martin-Löf 类型论是自洽的。更具体来说，由于我们使用了 ZFC 集合论加上 Tarski–Grothendieck @ax:tarski-grothendieck，所以以上的讨论证明了 Tarski–Grothendieck 集合论可以推出 Martin-Löf 类型论是自洽的。
+在 #[@sec:set-model]中，我们已经定义了集合模型。不难在集合模型中给出空类型的语义 —— 就是空集。因此，这就证明了类型论的自洽性。具体是哪个类型论的自洽性，取决于我们为集合模型构造了哪些类型结构。例如，上文中已经讨论了 Martin-Löf 类型论中所有的类型结构，所以这就说明了 Martin-Löf 类型论自洽。更具体来说，由于我们使用了 ZFC 集合论加上 Tarski–Grothendieck @ax:tarski-grothendieck，所以以上的讨论证明了 Tarski–Grothendieck 集合论可以推出 Martin-Löf 类型论自洽。
 
 集合模型还可以给出许多公理的相容性。例如#define[函数外延性][function extensionality]
 #eq($
   (f, g : A -> B) -> [(x : A) -> f(x) = g(x)] -> f = g.
 $)
-在集合模型中这是显然成立的。因此函数外延性与 Martin-Löf 类型论相容。读者也可以验证 Martin-Löf 类型论与#define[相等证明的唯一性][uniqueness of identity proofs]
+在集合模型中这显然成立。因此函数外延性与 Martin-Löf 类型论相容。读者也可以验证 Martin-Löf 类型论与#define[相等证明的唯一性][uniqueness of identity proofs]
 #eq($ (x,y : A) -> (p,q : x = y) -> p = q $)
 相容。之后我们会介绍这两条公理各自的反模型，也就能分别说明它们与 Martin-Löf 类型论独立。
