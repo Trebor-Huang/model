@@ -77,12 +77,13 @@
 }
 
 // Logical framework
+#let LFcolor = color.oklch(70%, 80%, 140deg).transparentize(85%)
 #let LF = box.with(
-  fill: color.oklch(70%, 80%, 140deg).transparentize(80%),
+  fill: LFcolor,
   outset: (left: 0.1em, right: 0.1em, top: 0.3em, bottom: 0.35em), radius: 0.2em)
 // TODO replace with  highlight.with(fill: color.oklch(70%, 80%, 140deg).transparentize(80%), ...)  once it is fixed
 #let eqLF(content) = eq(box(
-  fill: color.oklch(70%, 80%, 140deg).transparentize(80%),
+  fill: LFcolor,
   outset: (left: 0.3em, right: 0.3em, top: 0.3em, bottom: 0.35em), radius: 0.2em, content))
 #let lfTp = math.italic("Tp")
 #let lfEl = math.italic("El")
