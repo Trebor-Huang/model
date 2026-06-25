@@ -31,13 +31,13 @@ $)
 
 === 语境与代换 <sec:explicit-substitution>
 
-代换的方向对初学者或许有些反直觉。例如假设 $Delta = (x : NN, y : NN)$ 与 $Gamma = (z : NN)$，那么 $sigma = [x \/ 3, y \/ f(z)]$ 乍看应当是从 $Delta$ 到 $Gamma$ 的代换。不过，如果 $Delta = (x : A)$ 与 $Gamma = (y : B)$ 都只有一个类型，那么代换 $sigma = [x \/ t]$ 就与从 $B$ 到 $A$ 的函数一一对应。因此我们将代换的方向写作 $Gamma -> Delta$，或者仿照元素的写法 $Gamma tack sigma : Delta$。
+代换的方向对初学者或许有些反直觉。例如假设 $Delta = (x : NN, y : NN)$ 与 $Gamma = (z : NN)$，那么 $sigma = [3 \/ x, f(z) \/ y]$ 乍看应当是从 $Delta$ 到 $Gamma$ 的代换。不过，如果 $Delta = (x : A)$ 与 $Gamma = (y : B)$ 都只有一个类型，那么代换 $sigma = [t \/ x]$ 就与从 $B$ 到 $A$ 的函数一一对应。因此我们将代换的方向写作 $Gamma -> Delta$，或者仿照元素的写法 $Gamma tack sigma : Delta$。
 
-给定 $Gamma -> Delta$ 的代换 $sigma$，我们可以在 $Delta$ 中添加一个变量 $(Delta, x : A)$，那么代换也需要增加对新变量的代换结果，我们写作 $[sigma, x\/t]$。在不使用变量名的写法中，则写作 $[sigma, t] : Gamma -> (Delta dot A)$。我们把空语境写作 $()$，空代换写作 $[]$。
+给定 $Gamma -> Delta$ 的代换 $sigma$，我们可以在 $Delta$ 中添加一个变量 $(Delta, x : A)$，那么代换也需要增加对新变量的代换结果，我们写作 $[sigma, t\/x]$。在不使用变量名的写法中，则写作 $[sigma, t] : Gamma -> (Delta dot A)$。我们把空语境写作 $()$，空代换写作 $[]$。
 
 在类型论的规则中，语境和代换有两种解释方式。通常的介绍中，会认为代换是从当前变量集到表达式的映射。
 代换在表达式上的操作是在表达式上递归定义的，例如
-#eq($ (A + B)[x \/ M] = (A[x \/ M] + B[x \/ M]) $)
+#eq($ (A + B)[M \/ x] = (A[M \/ x] + B[M \/ x]) $)
 等等。这种定义要求所有的语境都有明确的层次结构：如果 $Gamma = Delta$，那么这两个语境长度必须相同。如果 $(Gamma, x : A) = (Gamma', x' : A')$，那么除了变量名可以修改之外，必须满足 $Gamma = Gamma'$ 与 $A = A'$。否则，代换就无法做递归定义。这样，我们可以认为某条规则
 #eq($
   rule(Gamma tack F(A) istype, Gamma tack A istype)
@@ -205,7 +205,7 @@ $)
       Gamma\, x : A tack t : B isnf
     )$,
     $rule(
-      Gamma tack f(t) : B[x\/t] isne,
+      Gamma tack f(t) : B[t\/x] isne,
       Gamma tack f : product_(x : A) B isne,
       Gamma tack t : B isnf
     )$,
@@ -218,14 +218,14 @@ $)
     $rule(
       Gamma tack (a, b) : sum_(x : A) B isnf,
       Gamma tack a : A isnf,
-      Gamma tack b : B[x\/a] isnf
+      Gamma tack b : B[a\/x] isnf
     )$,
     $rule(
       Gamma tack pi_1 p : A isne,
       Gamma tack p : sum_(x : A) B isne
     )$,
     $rule(
-      Gamma tack pi_2 p : B[x\/pi_1 p] isne,
+      Gamma tack pi_2 p : B[pi_1 p\/x] isne,
       Gamma tack p : sum_(x : A) B isne
     )$,
     // Boolean
@@ -239,11 +239,11 @@ $)
       Gamma tack "false" : Bool isnf
     )$,
     $rule(
-      Gamma tack ite(b, s, t) : A[x\/b] isne,
+      Gamma tack ite(b, s, t) : A[b\/x] isne,
       Gamma\, x : Bool tack A istype,
       Gamma tack b : Bool isne,
-      Gamma tack s : A[x\/"true"] isnf,
-      Gamma tack t : A[x\/"false"] isnf,
+      Gamma tack s : A["true"\/x] isnf,
+      Gamma tack t : A["false"\/x] isnf,
     )$,
     // Variable
     $rule(
@@ -310,7 +310,7 @@ $)
   )
 $)
 
-代换 $Gamma tack sigma : Delta$ 也可以规定正规形式，直观上说 $sigma = [x_1 \/ t_1, x_2 \/ t_2, ...]$ 是正规形式当且仅当每个 $t_i$ 都是正规形式。严格来说可以写成如下规则：
+代换 $Gamma tack sigma : Delta$ 也可以规定正规形式，直观上说 $sigma = [t_1 \/ x_1, t_2 \/ x_2, ...]$ 是正规形式当且仅当每个 $t_i$ 都是正规形式。严格来说可以写成如下规则：
 #eq($
   rule(Gamma tack [] : () isnf) quad
   rule(
@@ -390,7 +390,7 @@ $)
 
 一般而言，泛性质有一半可以写成某个对象 $X$ 配备自然同构 $hom(-, X) tilde.equiv F(-)$，其中 $F$ 是从 $cal(C)^"op"$ 到 $Set$ 的函子。另一半则是对偶地描述 $hom(X, -) tilde.equiv F(-)$，这里 $F : cal(C) -> Set$。换言之，我们描述指向 $X$ 的箭头或者从 $X$ 出发的箭头，从而定义对象 $X$。这种定义的合理性由以下引理保证。
 
-#lemma[米田#footnote[罗马字为 Yoneda。]][
+#lemma[米田#footnote[米田信夫，罗马字为 Yoneda Nobuo。]][
   给定对象 $X in "Obj"(cal(C))$ 与函子 $F : cal(C)^"op" -> Set$，定义 $yo(X)$ 为函子 $hom(-, X)$，则集合 $F(X)$ 与自然变换 $yo(X) -> F$ 的集合构成双射。特别地，$yo(X) -> yo(Y)$ 的自然变换与箭头 $X -> Y$ 的集合构成双射。
 ] <lemma:yoneda>
 

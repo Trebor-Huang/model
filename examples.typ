@@ -732,9 +732,9 @@ while True:
 $)
 正好符合我们的结论。
 
-照惯例，我们需要定义依值容器的概念。给定容器 $Gamma = (I lt.closed E)$，依值容器是个集合族的有序对，写作 $A = (scr(I) lt.closed scr(E))$，其中 $scr(I)_i$ 是 $I$ 上的集合族，而 $scr(E)_(i, j)$ 下标为 $i in I$，$j in scr(I)_i$。可以定义依值容器的全空间 $integral A = (I' lt.closed E')$，其中
+照惯例，我们需要定义依值容器的概念。给定容器 $Gamma = (I lt.closed E)$，依值容器是个集合族的有序对，写作 $A = (scr(I) lt.closed scr(E))$，其中 $scr(I)_i$ 是 $I$ 上的集合族，而 $scr(E)_(i, j)$ 下标为 $i in I$，$j in scr(I)_i$。可以定义依值容器的全空间 $integral A = (I' lt.closed E')$，是语境扩展的语义，其中
 #eq($ I' = product.co_(i in I) scr(I)_i quad E'_(i, j) = E_i union.sq scr(E)_(i,j). $)
-注意这里的 $scr(E)$ 依赖 $I$ 与 $scr(I)$，但不依赖 $E$。这是语境扩展的语义。这个构造由 von Glehn~@polynomial-model 提出。
+注意这里的 $scr(E)$ 依赖 $I$ 与 $scr(I)$，但不依赖 $E$。这个构造由 von Glehn~@polynomial-model 提出。
 
 我们在此省略各种类型的语义。读者可以参考 Kovács 的 Agda 形式化 @polynomial-agda。
 

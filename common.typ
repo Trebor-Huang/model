@@ -28,7 +28,7 @@
 #let define(zh, en, key:none) = [*#zh* #text(fill: luma(40%))[(#en)]#add-entry(zh,en,key)]
 
 // Defintions
-#import "@preview/ctheorems:1.1.3": *  // todo replace
+#import "@preview/ctheorems:1.1.3": *
 #let thmstyle = thmplain.with(
   separator: [*.* ],
   titlefmt: strong,

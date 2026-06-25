@@ -66,7 +66,7 @@ $)
 
 进一步，等式反映还可以推出函数外延性。如果 $p : forall x bind f(x) = g(x)$，那么就有判值相等 $x : A tack f(x) = g(x)$，从而判值相等 $(lambda x bind f(x)) = (lambda x bind g(x))$ 也成立，再由 $eta$ 等式得 $f = g$。
 
-另一方面，如果有等式反映与判值相等版本的相等证明唯一性，那么就能推导出 J 原理。这也非常直观。给定 $p : "Id"(A, s, t)$，则类型论中任何 $s$ 都能直接替换成 $t$，并且 $p$ 能直接替换成 $refl(s)$。因此如果有 $z : A tack r : P(z, z, refl(z))$，就能直接推出 $r[z\/s] : P(s, s, refl(s))$ 成立，故 $r[z\/s] : P(s, t, p)$ 也成立。
+另一方面，如果有等式反映与判值相等版本的相等证明唯一性，那么就能推导出 J 原理。这也非常直观。给定 $p : "Id"(A, s, t)$，则类型论中任何 $s$ 都能直接替换成 $t$，并且 $p$ 能直接替换成 $refl(s)$。因此如果有 $z : A tack r : P(z, z, refl(z))$，就能直接推出 $r[s\/z] : P(s, s, refl(s))$ 成立，故 $r[s\/z] : P(s, t, p)$ 也成立。
 
 
 == 泛等公理 <sec:univalence-equivalences>
