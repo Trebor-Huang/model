@@ -746,9 +746,87 @@ $)
 
 == 操作语义与意义解释
 
+#let evaluate = math.class("relation", sym.arrow.b)
 编程语言中最简单，也是人们最熟悉的语义，是#translate[操作语义][operational semantics]，即通过某种方法规定每个程序的运行过程与结果。其中常见的有小步语义与大步语义。前者定义每个程序每一步运行的规则，例如规定 $(1 + 1) times 2$ 计算一步得到 $2 times 2$，再得 $4$。后者则递归地定义求值规则，如规定若 $p$、$q$ 求值结果为 $2$，则 $p times q$ 求值结果为 $4$。
 
-既然这个概念也称作 “语义”，我们不禁要问，带有类型的编程语言的操作语义是否构成本书中所讨论的模型? 答案是肯定的。
+既然这个概念也称作 “语义”，我们不禁要问，带有编程语言的操作语义是否构成本书中所讨论的模型? 答案是肯定的。
+
+=== 小步语义
+
+#let isvalue = math.class("relation", math.sans("value"))
+本文以小步语义为例简介操作语义原理。读者可参考 @pfpl 进一步了解编程语言的语义。考虑带有函数、有序对与 Boole 值的编程语言。其语法包含 $lambda$ 表达式、函数应用、有序对、投影映射 $pi_1$ 与 $pi_2$、$"true"$、$"false"$ 与 $ite(b, t, f)$。程序则是_无自由变量_的表达式。
+
+其中，若 $t$ 是已经求值完毕的程序,#footnote[较简单的操作语义中，值是特殊的程序，求值过程是将程序不断化简。这足以处理我们的情况。] 就说 $t isvalue$。它由如下规则定义：
+#eq(partir(
+  rule($lambda x bind t isvalue$),
+  rule(
+    $(v_1, v_2) isvalue$,
+    $v_1 isvalue$, $v_2 isvalue$
+  ),
+  rule($"true" isvalue$),
+  rule($"false" isvalue$),
+))
+注意任何 $lambda$ 表达式都是值，因为不得在含自由变量的情况下求值。
+
+接下来，我们定义程序的归约化简关系 $t ~> t'$。它满足以下规则：
+#eq(partir(
+  rule(
+    $f thin t ~> f' thin t$,
+    $f ~> f'$
+  ),
+  rule(
+    $(lambda x bind t_1) thin t_2 ~> (lambda x bind t_1) thin t'_2$,
+    $t_2 ~> t'_2$
+  ),
+  rule(
+    $(lambda x bind t_1) thin v_2 ~> t_1[v_2\/x]$,
+    $v isvalue$
+  ),
+))
+遇到函数应用，先对函数求值，再对参数求值，最后代入。
+#eq(partir(
+  rule(
+    $(t_1, t_2) ~> (t'_1, t_2)$,
+    $t_1 ~> t'_1$
+  ),
+  rule(
+    $(v_1, t_2) ~> (v_1, t'_2)$,
+    $v_1 isvalue$, $t_2 ~> t'_2$
+  ),
+  rule(
+    $pi_i (t) ~> pi_i (t')$,
+    $t ~> t'$
+  ),
+  rule(
+    $pi_i ((v_1, v_2)) ~> v_i$,
+    $v_1 isvalue$, $v_2 isvalue$
+  )
+))
+遇到有序对时，先对左边求值，再对右边求值。投影映射需要先将参数求值再取出分量。
+#eq(partir(
+  rule(
+    $ite(b, t_1, t_2) ~> ite(b', t_1, t_2)$,
+    $b ~> b'$
+  ),
+  rule(
+    $ite("true", t_1, t_2) ~> t_1$
+  ),
+  rule(
+    $ite("false", t_1, t_2) ~> t_2$
+  )
+))
+条件表达式先对 Boole 表达式求值，而未选中的一侧不必求值，直接抛弃。
+
+这样定义的二元关系满足*确定性*，即任何程序 $t$ 都至多可归约为一个程序 $t ~> t'$。不过，不是所有程序都可以归约。已经求值完毕的程序显然不可归约。但如函数应用 $"false"("true")$，既不是值，也无法归约。它在数学上表现为无法继续归约的程序，而在计算机实现上可能表现为#translate[段错误][segfault] 等。类型系统在编程语言中的作用就是提前阻止此类错误出现。
+
+无论是小步语义还是大步语义，最终都可以得到二元关系 $t evaluate v$，表示 $t$ 的求值结果为 $v$。对于确定性的编程语言来说，每个 $t$ 最多对应一个 $v$。但某一些程序无法求值，例如类型不正确，或者不停机的表达式，因此 $t$ 可能不对应 $v$。
+
+对每个类型，都有一些程序与一些值属于该类型。此时求值关系给出了从程序的集合到值的集合的_偏函数_，并且是满射。
+
+(...) values are arbitrary, so PERs remove that part
+
+
+=== 模型构造
 
 #translate[意义解释][meaning explanation]，也称#translate[部分等价关系][partial equivalence relation] 模型。 (...)
 
@@ -756,7 +834,8 @@ operational semantics
 
 relation with extensional type theory, nuprl
 
-https://www.cs.cornell.edu/courses/cs6862/2011sp/4-21-2011%20Harper-JSC92.pdf
+- https://ecommons.cornell.edu/entities/publication/bef60b4e-2daf-4e41-b5f3-046862435277
+- https://www.cs.cornell.edu/courses/cs6862/2011sp/4-21-2011%20Harper-JSC92.pdf
 
 emphasize on a priori untypedness. compare with assemblies/modest sets
 

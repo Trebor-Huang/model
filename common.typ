@@ -89,10 +89,10 @@
 #let lfEl = math.italic("El")
 
 // Other type theoretic stuff
-#let istype = math.op(math.sans("type"))
-#let isnf = math.op(text(fill: color.oklch(50%, 80%, 200deg), math.sans("nf")))
-#let isne = math.op(text(fill: color.oklch(50%, 80%, 80deg), math.sans("ne")))
-#let isvar = math.op(text(fill: color.oklch(50%, 0%, 0deg), math.sans("var")))
+#let istype = math.class("relation", math.sans("type"))
+#let isnf = math.class("relation",text(fill: color.oklch(50%, 80%, 200deg), math.sans("nf")))
+#let isne = math.class("relation",text(fill: color.oklch(50%, 80%, 80deg), math.sans("ne")))
+#let isvar = math.class("relation",text(fill: color.oklch(50%, 0%, 0deg), math.sans("var")))
 #let typeof = math.op("typeof")
 #let interpret(x) = math.lr(math.class("opening",sym.bracket.stroked) + x + math.class("closing",sym.bracket.stroked.r))
 #let bind = math.class("punctuation", ".")
