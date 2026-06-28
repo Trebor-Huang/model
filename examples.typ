@@ -710,7 +710,7 @@ while True:
 
 == 容器与多项式 <sec:polynomial>
 
-此节选读。多项式模型是函数外延性的另一个反模型。它有许多不同的理解方式。
+多项式模型是函数外延性的另一个反模型。它有许多不同的理解方式。
 
 在编程中，#define[容器][container] 是能装载一系列元素的数据结构。例如列表 $"List"(X)$ 可以装载零个或多个元素，有序对 $X times X$ 恰好可以装载两个，等等。从数学的角度描述容器，可以考虑有序对 $(I, E)$，其中 $I$ 是个集合，表示容器可能的形状，而 $E_i$ 是个集合族，其中 $i in I$，表示形状为 $i$ 的情况可以装载多少元素。这样，列表就可以表述为 $I = NN$，而 $E_n$ 是恰有 $n$ 个元素的集合。
 
@@ -838,7 +838,7 @@ emphasize on a priori untypedness. compare with assemblies/modest sets
 
 We might not try to actually define it?
 
-Do we want to include this section at all?
+Do we want to include this section at all? (Move these to a separate section where we just quickly given an overview and references)
 
 == 语法翻译
 
