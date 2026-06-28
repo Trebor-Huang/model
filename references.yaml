@@ -479,3 +479,53 @@ pfpl:
   date: 2016
   publisher: Cambridge University Press
   url: https://www.cs.cmu.edu/~rwh/pfpl.html
+
+meaning-explanation:
+  type: article
+  title: Constructive Mathematics and Computer Programming
+  author: Martin-Löf, Per
+  date: 1982
+  editor:
+  - Cohen, L. Jonathan
+  - Łoś, Jerzy
+  - Pfeiffer, Helmut
+  - Podewski, Klaus-Peter
+  page-range: 153-175
+  serial-number:
+    doi: 10.1016/S0049-237X(09)70189-2
+    issn: 0049-237X
+  parent:
+    type: book
+    title: Logic, Methodology and Philosophy of Science VI
+    publisher: Elsevier
+    volume: 104
+
+nuprl-book:
+  type: book
+  title: Implementing Mathematics with the {NuPRL} Proof Development System
+  author:
+  - Constable, Robert L.
+  - Allen, Stuart F.
+  - Bromley, H. M.
+  - Cleaveland, W. R.
+  - Cremer, J. F.
+  - Harper, R. W.
+  - Howe, Douglas J.
+  - Knoblock, T. B.
+  - Mendler, N. P.
+  - Panangaden, P.
+  - Sasaki, James T.
+  - Smith, Scott F.
+  date: 1986
+  publisher:
+    name: Prentice-Hall
+    location: New Jersey
+
+js-meaning-explanation:
+  type: misc
+  note: ArXiv preprint
+  title: Type Theory and its Meaning Explanations
+  author: Sterling, Jonathan
+  date: 2016
+  serial-number:
+    doi: 10.48550/arXiv:1512.01837

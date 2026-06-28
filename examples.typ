@@ -744,7 +744,7 @@ $)
 
 最后需要提醒读者注意，在容器上另有一套模型~@container-model，其语义语境相同，但是语义类型与这个模型不相同。为了区分，或许可以将本节介绍的模型称作 von Glehn 模型，而另一套模型称作 Altenkirch 容器模型。
 
-== 操作语义与意义解释
+== 操作语义与含义诠释
 
 #let evaluate = math.class("relation", sym.arrow.b)
 编程语言中最简单，也是人们最熟悉的语义，是#translate[操作语义][operational semantics]，即通过某种方法规定每个程序的运行过程与结果。其中常见的有小步语义与大步语义。前者定义每个程序每一步运行的规则，例如规定 $(1 + 1) times 2$ 计算一步得到 $2 times 2$，再得 $4$。后者则递归地定义求值规则，如规定若 $p$、$q$ 求值结果为 $2$，则 $p times q$ 求值结果为 $4$。
@@ -819,16 +819,13 @@ $)
 
 这样定义的二元关系满足*确定性*，即任何程序 $t$ 都至多可归约为一个程序 $t ~> t'$。不过，不是所有程序都可以归约。已经求值完毕的程序显然不可归约。但如函数应用 $"false"("true")$，既不是值，也无法归约。它在数学上表现为无法继续归约的程序，而在计算机实现上可能表现为#translate[段错误][segfault] 等。类型系统在编程语言中的作用就是提前阻止此类错误出现。
 
-无论是小步语义还是大步语义，最终都可以得到二元关系 $t evaluate v$，表示 $t$ 的求值结果为 $v$。对于确定性的编程语言来说，每个 $t$ 最多对应一个 $v$。但某一些程序无法求值，例如类型不正确，或者不停机的表达式，因此 $t$ 可能不对应 $v$。
+=== 含义诠释
 
-对每个类型，都有一些程序与一些值属于该类型。此时求值关系给出了从程序的集合到值的集合的_偏函数_，并且是满射。
+#translate[含义诠释][meaning explanation] 是 Martin-Löf~@meaning-explanation 提出的，将 Martin-Löf 类型论与编程联系起来的办法。NuPRL 证明助理~@nuprl-book 的类型论就是在其指导下设计的。
 
-(...) values are arbitrary, so PERs remove that part
+@meaning-explanation
 
-
-=== 模型构造
-
-#translate[意义解释][meaning explanation]，也称#translate[部分等价关系][partial equivalence relation] 模型。 (...)
+也称#translate[部分等价关系][partial equivalence relation] 模型。 (...)
 
 operational semantics
 
@@ -838,6 +835,10 @@ relation with extensional type theory, nuprl
 - https://www.cs.cornell.edu/courses/cs6862/2011sp/4-21-2011%20Harper-JSC92.pdf
 
 emphasize on a priori untypedness. compare with assemblies/modest sets
+
+We might not try to actually define it?
+
+Do we want to include this section at all?
 
 == 语法翻译
 
